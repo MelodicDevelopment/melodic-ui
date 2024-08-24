@@ -15,7 +15,7 @@ const IconCache: { [key: string]: SafeHtml } = {};
 	styleUrl: './icon.component.scss',
 	encapsulation: ViewEncapsulation.None
 })
-export class IconComponent implements OnInit {
+export class MDIconComponent implements OnInit {
 	private _http: HttpClient = inject(HttpClient);
 	private _sanitizer: DomSanitizer = inject(DomSanitizer);
 

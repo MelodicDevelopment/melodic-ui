@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 	templateUrl: './progress-bar.component.html',
 	styleUrl: './progress-bar.component.scss'
 })
-export class ProgressBarComponent {
+export class MDProgressBarComponent {
 	public progress: InputSignal<number> = input(0);
 	public height: InputSignal<number> = input(0);
 

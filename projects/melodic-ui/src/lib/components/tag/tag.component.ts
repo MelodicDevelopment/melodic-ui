@@ -10,7 +10,7 @@ export type TagType = 'default' | 'primary' | 'secondary' | 'warning';
 	templateUrl: './tag.component.html',
 	styleUrl: './tag.component.scss'
 })
-export class TagComponent implements OnInit {
+export class MDTagComponent implements OnInit {
 	@HostBinding('class.default') private _isDefault: boolean = false;
 	@HostBinding('class.primary') private _isPrimary: boolean = false;
 	@HostBinding('class.secondary') private _isSecondary: boolean = true;

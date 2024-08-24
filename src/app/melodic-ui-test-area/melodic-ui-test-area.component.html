@@ -1,10 +1,26 @@
+<md-header size="lg" variant="regular">Melodic UI Test Area</md-header>
+
 <div class="component-group">
-	<h1>Progress</h1>
-	<md-progress-bar [progress]="progressBarValue"></md-progress-bar>
+	<md-header underline size="xs" variant="regular">Headers</md-header>
+
+	<div class="vertical-spacer">
+		<md-header size="xs" variant="regular">XS / Regular</md-header>
+		<md-header size="xs" variant="bold">XS / Bold</md-header>
+		<md-header size="sm" variant="regular">SM / Regular</md-header>
+		<md-header size="lg" variant="medium">LG / Medium</md-header>
+	</div>
 </div>
 
 <div class="component-group">
-	<h1>Indicators</h1>
+	<md-header underline size="xs" variant="regular">Progress</md-header>
+
+	<div class="spacer">
+		<md-progress-bar [progress]="progressBarValue"></md-progress-bar>
+	</div>
+</div>
+
+<div class="component-group">
+	<md-header underline size="xs" variant="regular">Indicators</md-header>
 
 	<div class="horizontal-spacer">
 		<md-tag>Default</md-tag>
@@ -15,7 +31,7 @@
 </div>
 
 <div class="component-group">
-	<h1>Buttons</h1>
+	<md-header underline size="xs" variant="regular">Buttons</md-header>
 
 	<div class="horizontal-spacer">
 		<a href="#" md-button>Link</a>
@@ -54,11 +70,21 @@
 </div>
 
 <div class="component-group">
-	<h1>Icons</h1>
+	<md-header underline size="xs" variant="regular">Icons</md-header>
 
 	<div class="horizontal-spacer">
 		<md-icon icon="untitled-ui/general/plus" style="width: 50px; height: 50px">add</md-icon>
 		<md-icon icon="untitled-ui/alerts/alert-triangle">add</md-icon>
 		<md-icon md-border icon="untitled-ui/alerts/alert-triangle">add</md-icon>
+	</div>
+</div>
+
+<div class="component-group">
+	<md-header underline size="xs" variant="regular">Content Box</md-header>
+
+	<div class="vertical-spacer">
+		<md-content-box>Some content goes here!</md-content-box>
+		<md-content-box>Some content goes here!</md-content-box>
+		<md-content-box>Some content goes here!</md-content-box>
 	</div>
 </div>

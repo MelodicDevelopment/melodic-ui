@@ -1,0 +1,11 @@
+:host {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	background-color: var(--md-colors-bg-primary);
+	color: var(--md-text-colors-primary);
+	border-radius: var(--md-radius-md);
+	border: 1px solid var(--md-border-color-primary);
+	box-shadow: var(--md-drop-shadow-md);
+	padding: var(--md-spacing-xl);
+}

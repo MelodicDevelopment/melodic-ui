@@ -1,0 +1,7 @@
+:host {
+	display: block;
+
+	&[underline] {
+		border-bottom: 1px solid var(--md-border-color-primary);
+	}
+}

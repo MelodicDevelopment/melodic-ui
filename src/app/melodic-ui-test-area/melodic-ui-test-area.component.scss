@@ -7,9 +7,21 @@
 		border-top: 1px solid var(--md-colors-gray-300);
 		padding: var(--md-spacing-xl);
 
+		div.spacer {
+			margin-top: var(--md-spacing-4xl);
+		}
+
 		div.horizontal-spacer {
 			display: flex;
 			gap: var(--md-spacing-lg);
+			margin-top: var(--md-spacing-4xl);
+		}
+
+		div.vertical-spacer {
+			display: flex;
+			flex-direction: column;
+			gap: var(--md-spacing-lg);
+			margin-top: var(--md-spacing-4xl);
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 @each $size, $variants in $text-typography {
 	@each $variant, $styles in $variants {
-		.text-#{$size}-#{$variant} {
+		.md-text-#{$size}-#{$variant} {
 			@include text-styles($styles...);
 		}
 	}
@@ -10,7 +10,7 @@
 
 @each $size, $variants in $display-typography {
 	@each $variant, $styles in $variants {
-		.display-#{$size}-#{$variant} {
+		.md-display-#{$size}-#{$variant} {
 			@include display-styles($styles...);
 		}
 	}
