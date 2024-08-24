@@ -1,36 +1,15 @@
 // css variables
-@import './dsl/background-colors';
 @import './dsl/borders';
 @import './dsl/colors';
 @import './dsl/effects';
-//@import './dsl/fonts';
-@import './dsl/foreground-colors';
+@import './dsl/fonts';
 @import './dsl/font-colors';
-@import './dsl/utility-colors';
 @import './dsl/radius';
-@import './dsl/sizes';
 @import './dsl/spacing';
 @import './dsl/widths';
 
 // partials
-@import './dsl/scss/partials/typography.mixins';
+@import './dsl/partials/typography.mixins';
 
 // scss
-@import './dsl/scss/typography';
-
-html,
-body {
-	margin: var(--lbds-spacing-none);
-	padding: var(--lbds-spacing-none);
-	height: 100%;
-	@include text-styles(get-text(sm, regular)...);
-}
-
-a {
-	color: var(--lbds-text-colors-tertiary-brand);
-	text-decoration: none;
-
-	&:hover {
-		color: var(--lbds-text-colors-tertiary-brand-hover);
-	}
-}
+@import './dsl/typography';

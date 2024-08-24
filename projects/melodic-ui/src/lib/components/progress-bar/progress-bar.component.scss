@@ -1,13 +1,13 @@
 :host {
 	display: block;
-	border-radius: var(--lbds-radius-md);
-	background-color: var(--lbds-colors-gray-200);
-	height: var(--lbds-size-6);
+	border-radius: var(--md-radius-md);
+	background-color: var(--md-colors-gray-200);
+	height: 24px;
 	overflow: hidden;
 
 	div[progress] {
 		height: 100%;
-		background-color: var(--lbds-colors-brand-500);
+		background-color: var(--md-colors-brand-primary-500);
 		transition: width 0.3s ease;
 	}
 }

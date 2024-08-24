@@ -1,1 +1,9 @@
 @import '../projects/melodic-ui/src/lib/styles/melodic-ui.scss';
+
+html,
+body {
+	margin: var(--md-spacing-none);
+	padding: var(--md-spacing-none);
+	height: 100%;
+	@include text-styles(get-text(sm, regular)...);
+}

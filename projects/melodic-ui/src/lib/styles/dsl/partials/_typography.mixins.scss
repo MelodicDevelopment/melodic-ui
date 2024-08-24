@@ -62,7 +62,7 @@ $text-typography: (
 }
 
 @mixin text-styles($weight: 400, $style: normal, $fontSize: 12px, $lineHeight: 18px, $letterSpacing: 0, $decoration: none) {
-	font-family: var(--lbds-font-family-primary);
+	font-family: var(--md-font-family-primary);
 	font-weight: $weight;
 	font-style: $style;
 	font-size: $fontSize;
@@ -91,25 +91,25 @@ $display-typography: (
 		regular: 400 normal 36px 44px,
 		medium: 500 normal 36px 44px,
 		semibold: 600 normal 36px 44px,
-		bold: 700 normal 36px 44px -2%
+		bold: 700 normal 36px 44px 0
 	),
 	lg: (
 		regular: 400 normal 48px 60px,
 		medium: 500 normal 48px 60px,
 		semibold: 600 normal 48px 60px,
-		bold: 700 normal 48px 60px -2%
+		bold: 700 normal 48px 60px 0
 	),
 	xl: (
 		regular: 400 normal 60px 72px,
 		medium: 500 normal 60px 72px,
 		semibold: 600 normal 60px 72px,
-		bold: 700 normal 60px 72px -2%
+		bold: 700 normal 60px 72px 0
 	),
 	2xl: (
 		regular: 400 normal 72px 90px,
 		medium: 500 normal 72px 90px,
 		semibold: 600 normal 72px 90px,
-		bold: 700 normal 72px 90px -2%
+		bold: 700 normal 72px 90px 0
 	)
 );
 
@@ -119,7 +119,7 @@ $display-typography: (
 }
 
 @mixin display-styles($weight: 400, $style: normal, $fontSize: 24px, $lineHeight: 32px, $letterSpacing: 0) {
-	font-family: var(--lbds-font-family-primary);
+	font-family: var(--md-font-family-primary);
 	font-weight: $weight;
 	font-style: $style;
 	font-size: $fontSize;

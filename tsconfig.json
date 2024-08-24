@@ -10,7 +10,8 @@
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
 		"paths": {
-			"melodic-ui": ["./dist/melodic-ui"]
+			"@melodic-ui-dist": ["./dist/melodic-ui"],
+			"@melodic-ui": ["./projects/melodic-ui/src/public-api.ts"]
 		},
 		"skipLibCheck": true,
 		"isolatedModules": true,

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ProgressBarComponent } from 'melodic-ui';
+import { ProgressBarComponent } from '@melodic-ui';
 
 @Component({
 	selector: 'app-melodic-ui-test-area',

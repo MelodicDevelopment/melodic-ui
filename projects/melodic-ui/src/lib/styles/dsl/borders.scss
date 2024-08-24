@@ -1,12 +1,6 @@
 :root {
-	--lbds-border-color-secondary: var(--lbds-colors-gray-200);
-	--lbds-border-color-error: var(--lbds-colors-error-300);
-	--lbds-border-color-primary: var(--lbds-colors-gray-300);
-	--lbds-border-color-brand: var(--lbds-colors-brand-300);
-	--lbds-border-color-brand-solid: var(--lbds-colors-brand-600);
-	--lbds-border-color-disabled: var(--lbds-colors-gray-300);
-	--lbds-border-color-error-solid: var(--lbds-colors-error-600);
-	--lbds-border-color-disabled_subtle: var(--lbds-colors-gray-200);
-	--lbds-border-color-tertiary: var(--lbds-colors-gray-100);
-	--lbds-border-color-brand-solid_alt: var(--lbds-colors-brand-600);
+	--md-border-color-primary: var(--md-colors-gray-300);
+	--md-border-color-secondary: var(--md-colors-brand-primary-500);
+	--md-border-color-disabled: var(--md-colors-gray-200);
+	--md-border-color-error: var(--md-colors-error-300);
 }

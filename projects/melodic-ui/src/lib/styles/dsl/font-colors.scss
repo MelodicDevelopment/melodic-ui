@@ -1,32 +1,14 @@
 :root {
-	--lbds-text-colors-white: var(--lbds-colors-base-white);
-	--lbds-text-colors-black: var(--lbds-colors-base-black);
+	--md-text-colors-primary: var(--md-colors-gray-800);
+	--md-text-colors-primary-on-brand: var(--md-colors-base-white);
 
-	--lbds-text-colors-primary: var(--lbds-colors-gray-900);
-	--lbds-text-colors-primary-on-brand: var(--lbds-colors-base-white);
-	--lbds-text-colors-primary-brand: var(--lbds-colors-brand-900);
-	--lbds-text-colors-primary-brand-hover: var(--lbds-colors-brand-700);
+	--md-text-colors-brand-primary: var(--md-colors-brand-primary-900);
+	--md-text-colors-brand-primary-hover: var(--md-colors-brand-primary-700);
 
-	--lbds-text-colors-secondary: var(--lbds-colors-gray-700);
-	--lbds-text-colors-secondary-hover: var(--lbds-colors-gray-800);
-	--lbds-text-colors-secondary-on-brand: var(--lbds-colors-brand-200);
-	--lbds-text-colors-secondary-brand: var(--lbds-colors-brand-800);
+	--md-text-colors-success-primary: var(--md-colors-success-600);
+	--md-text-colors-error-primary: var(--md-colors-error-600);
+	--md-text-colors-warning-primary: var(--md-colors-warning-600);
 
-	--lbds-text-colors-tertiary: var(--lbds-colors-gray-600);
-	--lbds-text-colors-tertiary-hover: var(--lbds-colors-gray-700);
-	--lbds-text-colors-tertiary-on-brand: var(--lbds-colors-brand-200);
-	--lbds-text-colors-tertiary-brand: var(--lbds-colors-brand-600);
-	--lbds-text-colors-tertiary-brand-hover: var(--lbds-colors-brand-400);
-	--lbds-text-colors-tertiary-brand-alt: var(--lbds-colors-brand-600);
-
-	--lbds-text-colors-quaternary: var(--lbds-colors-gray-500);
-	--lbds-text-colors-quaternary-on-brand: var(--lbds-colors-brand-300);
-
-	--lbds-text-colors-success-primary: var(--lbds-colors-success-600);
-	--lbds-text-colors-error-primary: var(--lbds-colors-error-600);
-	--lbds-text-colors-warning-primary: var(--lbds-colors-warning-600);
-
-	--lbds-text-colors-disabled: var(--lbds-colors-gray-500);
-	--lbds-text-colors-placeholder: var(--lbds-colors-gray-500);
-	--lbds-text-colors-placeholder-subtle: var(--lbds-colors-gray-300);
+	--md-text-colors-disabled: var(--md-colors-gray-500);
+	--md-text-colors-placeholder: var(--md-colors-gray-500);
 }
