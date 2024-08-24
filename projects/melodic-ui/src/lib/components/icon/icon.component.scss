@@ -1,0 +1,19 @@
+md-icon {
+	display: inline-block;
+	line-height: 0;
+
+	&[md-border] {
+		border: 1px solid var(--md-border-color-primary);
+		border-radius: var(--md-radius-md);
+		padding: var(--md-spacing-none) var(--md-spacing-lg);
+	}
+
+	span {
+		line-height: 0;
+
+		svg {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}

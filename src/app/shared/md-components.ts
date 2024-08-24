@@ -1,3 +1,3 @@
-import { ProgressBarComponent, TagComponent } from '@melodic-ui/components';
+import { IconComponent, ProgressBarComponent, TagComponent } from '@melodic-ui/components';
 
-export const MD_COMPONENTS = [ProgressBarComponent, TagComponent];
+export const MD_COMPONENTS = [IconComponent, ProgressBarComponent, TagComponent];

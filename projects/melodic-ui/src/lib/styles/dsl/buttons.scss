@@ -1,11 +1,13 @@
 @import './partials/typography.mixins';
 
 button[md-button],
+button[md-button-link],
 button[md-button-primary],
 button[md-button-error],
 button[md-button-warning],
 button[md-button-success],
 a[md-button],
+a[md-button-link],
 a[md-button-primary],
 a[md-button-error],
 a[md-button-warning],
@@ -17,55 +19,74 @@ a[md-button-success] {
 	align-items: center;
 	gap: var(--md-spacing-xs);
 	@include text-styles(get-text(sm, semibold)...);
+	color: var(--md-text-colors-secondary);
 	cursor: pointer;
 
-	box-shadow: var(--md-drop-shadow-xs);
-	color: var(--md-text-colors-secondary);
-	border-radius: var(--md-radius-md);
-	border: 1px solid var(--md-border-color-primary);
-	background: var(--md-background-colors-primary);
-
 	&:hover {
-		background: var(--md-background-colors-primary-hover);
+		color: var(--md-text-colors-secondary-on-hover);
 	}
 
-	&[md-button-primary] {
-		color: var(--md-text-colors-primary-on-brand);
-		border-color: var(--md-border-color-secondary);
-		background: var(--md-background-colors-secondary);
+	&:not([md-button-link]) {
+		box-shadow: var(--md-drop-shadow-xs);
+		border-radius: var(--md-radius-md);
+		border: 1px solid var(--md-border-color-primary);
+		background: var(--md-background-colors-primary);
 
 		&:hover {
-			background: var(--md-background-colors-secondary-hover);
+			background: var(--md-background-colors-primary-hover);
+		}
+
+		&[md-button-primary] {
+			color: var(--md-text-colors-primary-on-brand);
+			border-color: var(--md-border-color-secondary);
+			background: var(--md-background-colors-secondary);
+
+			&:hover {
+				background: var(--md-background-colors-secondary-hover);
+			}
+		}
+
+		&[md-button-success] {
+			color: var(--md-text-colors-success-on-success-bg);
+			border-color: var(--md-border-color-success);
+			background: var(--md-background-colors-success);
+
+			&:hover {
+				background: var(--md-background-colors-success-hover);
+			}
+		}
+
+		&[md-button-warning] {
+			color: var(--md-text-colors-warning-on-warning-bg);
+			border-color: var(--md-border-color-warning);
+			background: var(--md-background-colors-warning);
+
+			&:hover {
+				background: var(--md-background-colors-warning-hover);
+			}
+		}
+
+		&[md-button-error] {
+			color: var(--md-text-colors-error-on-error-bg);
+			border-color: var(--md-border-color-error);
+			background: var(--md-background-colors-error);
+
+			&:hover {
+				background: var(--md-background-colors-error-hover);
+			}
 		}
 	}
 
-	&[md-button-success] {
-		color: var(--md-text-colors-success-on-success-bg);
-		border-color: var(--md-border-color-success);
-		background: var(--md-background-colors-success);
+	&[md-button-circle] {
+		width: var(--md-spacing-9);
+		height: var(--md-spacing-9);
+		border-radius: var(--md-radius-full);
+		padding: var(--md-spacing-none);
+		line-height: 0px;
 
-		&:hover {
-			background: var(--md-background-colors-success-hover);
-		}
-	}
-
-	&[md-button-warning] {
-		color: var(--md-text-colors-warning-on-warning-bg);
-		border-color: var(--md-border-color-warning);
-		background: var(--md-background-colors-warning);
-
-		&:hover {
-			background: var(--md-background-colors-warning-hover);
-		}
-	}
-
-	&[md-button-error] {
-		color: var(--md-text-colors-error-on-error-bg);
-		border-color: var(--md-border-color-error);
-		background: var(--md-background-colors-error);
-
-		&:hover {
-			background: var(--md-background-colors-error-hover);
+		svg {
+			width: var(--md-spacing-5);
+			height: var(--md-spacing-5);
 		}
 	}
 
@@ -74,5 +95,9 @@ a[md-button-success] {
 		border-color: var(--md-border-color-disabled);
 		background: var(--md-background-colors-disabled);
 		cursor: not-allowed;
+
+		&:hover {
+			background: var(--md-background-colors-disabled);
+		}
 	}
 }
