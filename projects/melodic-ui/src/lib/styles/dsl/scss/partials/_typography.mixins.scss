@@ -1,0 +1,128 @@
+@use 'sass:map';
+
+/** TEXT STYLES */
+$text-typography: (
+	xs: (
+		regular: 400 normal 12px 18px,
+		medium: 500 normal 12px 18px,
+		semibold: 600 normal 12px 18px,
+		bold: 700 normal 12px 18px
+	),
+	sm: (
+		regular: 400 normal 14px 20px,
+		regular-underline: 400 normal 14px 20px 0 underline,
+		medium: 500 normal 14px 20px,
+		medium-underline: 500 normal 14px 20px 0 underline,
+		semibold: 600 normal 14px 20px,
+		semibold-underline: 600 normal 14px 20px 0 underline,
+		bold: 700 normal 14px 20px
+	),
+	md: (
+		regular: 400 normal 16px 24px,
+		regular-italic: 400 italic 16px 24px,
+		regular-underline: 400 normal 16px 24px 0 underline,
+		medium: 500 normal 16px 24px,
+		medium-italic: 500 italic 16px 24px,
+		medium-underline: 500 normal 16px 24px 0 underline,
+		semibold: 600 normal 16px 24px,
+		semibold-italic: 600 italic 16px 24px,
+		semibold-underline: 600 normal 16px 24px 0 underline,
+		bold: 700 normal 16px 24px,
+		bold-italic: 700 italic 16px 24px
+	),
+	lg: (
+		regular: 400 normal 18px 28px,
+		regular-italic: 400 italic 18px 28px,
+		regular-underline: 400 normal 18px 28px 0 underline,
+		medium: 500 normal 18px 28px,
+		medium-italic: 500 italic 18px 28px,
+		medium-underline: 500 normal 18px 28px 0 underline,
+		semibold: 600 normal 18px 28px,
+		semibold-italic: 600 italic 18px 28px,
+		semibold-underline: 600 normal 18px 28px 0 underline,
+		bold: 700 normal 18px 28px,
+		bold-italic: 700 italic 18px 28px
+	),
+	xl: (
+		regular: 400 normal 20px 30px,
+		regular-italic: 400 italic 20px 30px,
+		regular-underline: 400 normal 20px 30px 0 underline,
+		medium: 500 normal 20px 30px,
+		medium-italic: 500 italic 20px 30px,
+		semibold: 600 normal 20px 30px,
+		semibold-italic: 600 italic 20px 30px,
+		bold: 700 normal 20px 30px,
+		bold-italic: 700 italic 20px 30px
+	)
+);
+
+@function get-text($size, $variant) {
+	$text: map.get($text-typography, $size);
+	@return map.get($text, $variant);
+}
+
+@mixin text-styles($weight: 400, $style: normal, $fontSize: 12px, $lineHeight: 18px, $letterSpacing: 0, $decoration: none) {
+	font-family: var(--lbds-font-family-primary);
+	font-weight: $weight;
+	font-style: $style;
+	font-size: $fontSize;
+	line-height: $lineHeight;
+	letter-spacing: $letterSpacing;
+	text-decoration: $decoration;
+}
+
+/*** DISPLAY STYLES */
+$display-typography: (
+	xs: (
+		regular: 400 normal 24px 32px,
+		medium: 500 normal 24px 32px,
+		medium-italic: 500 italic 24px 36px,
+		semibold: 600 normal 24px 32px 0,
+		bold: 700 normal 24px 32px 0
+	),
+	sm: (
+		regular: 400 normal 30px 38px,
+		medium: 500 normal 30px 38px,
+		medium-italic: 500 italic 30px 44px,
+		semibold: 600 normal 30px 38px 0,
+		bold: 700 normal 30px 38px 0
+	),
+	md: (
+		regular: 400 normal 36px 44px,
+		medium: 500 normal 36px 44px,
+		semibold: 600 normal 36px 44px,
+		bold: 700 normal 36px 44px -2%
+	),
+	lg: (
+		regular: 400 normal 48px 60px,
+		medium: 500 normal 48px 60px,
+		semibold: 600 normal 48px 60px,
+		bold: 700 normal 48px 60px -2%
+	),
+	xl: (
+		regular: 400 normal 60px 72px,
+		medium: 500 normal 60px 72px,
+		semibold: 600 normal 60px 72px,
+		bold: 700 normal 60px 72px -2%
+	),
+	2xl: (
+		regular: 400 normal 72px 90px,
+		medium: 500 normal 72px 90px,
+		semibold: 600 normal 72px 90px,
+		bold: 700 normal 72px 90px -2%
+	)
+);
+
+@function get-display-text($size, $variant) {
+	$text: map.get($display-typography, $size);
+	@return map.get($text, $variant);
+}
+
+@mixin display-styles($weight: 400, $style: normal, $fontSize: 24px, $lineHeight: 32px, $letterSpacing: 0) {
+	font-family: var(--lbds-font-family-primary);
+	font-weight: $weight;
+	font-style: $style;
+	font-size: $fontSize;
+	line-height: $lineHeight;
+	letter-spacing: $letterSpacing;
+}
