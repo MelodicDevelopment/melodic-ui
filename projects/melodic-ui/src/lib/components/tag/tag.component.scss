@@ -1,0 +1,29 @@
+@import '../../styles/dsl/partials/typography.mixins';
+
+:host {
+	display: inline-block;
+	padding: var(--md-spacing-xxs) var(--md-spacing-md);
+	border-radius: var(--md-radius-sm);
+	border: 1px solid var(--md-colors-gray-300);
+	background-color: var(--md-colors-base-white);
+	color: var(--md-colors-gray-600);
+	@include text-styles(get-text(xs, medium)...);
+
+	&.primary {
+		border-color: var(--md-colors-brand-primary-200);
+		background-color: var(--md-colors-brand-primary-50);
+		color: var(--md-colors-brand-primary-700);
+	}
+
+	&.secondary {
+		border-color: var(--md-colors-gray-200);
+		background-color: var(--md-colors-gray-50);
+		color: var(--md-colors-gray-700);
+	}
+
+	&.warning {
+		border-color: var(--md-colors-warning-200);
+		background-color: var(--md-colors-warning-50);
+		color: var(--md-colors-warning-700);
+	}
+}

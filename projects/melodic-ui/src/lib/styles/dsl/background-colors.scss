@@ -1,0 +1,18 @@
+:root {
+	--md-background-colors-primary: var(--md-colors-base-white);
+	--md-background-colors-primary-hover: var(--md-colors-gray-50);
+
+	--md-background-colors-secondary: var(--md-colors-brand-primary-600);
+	--md-background-colors-secondary-hover: var(--md-colors-brand-primary-650);
+
+	--md-background-colors-success: var(--md-colors-success-600);
+	--md-background-colors-success-hover: var(--md-colors-success-650);
+
+	--md-background-colors-warning: var(--md-colors-warning-600);
+	--md-background-colors-warning-hover: var(--md-colors-warning-650);
+
+	--md-background-colors-error: var(--md-colors-error-500);
+	--md-background-colors-error-hover: var(--md-colors-error-550);
+
+	--md-background-colors-disabled: var(--md-colors-gray-100);
+}

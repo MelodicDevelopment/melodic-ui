@@ -1,4 +1,5 @@
-// css variables
+/** primitives & tokens */
+@import './dsl/background-colors';
 @import './dsl/borders';
 @import './dsl/colors';
 @import './dsl/effects';
@@ -8,8 +9,15 @@
 @import './dsl/spacing';
 @import './dsl/widths';
 
-// partials
+/** typography */
 @import './dsl/partials/typography.mixins';
-
-// scss
 @import './dsl/typography';
+
+/** component styling */
+@import './dsl/buttons';
+
+html,
+body {
+	color: var(--md-text-colors-primary);
+	background-color: var(--md-background-colors-primary);
+}

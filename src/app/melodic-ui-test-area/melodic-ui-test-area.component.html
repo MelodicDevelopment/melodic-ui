@@ -1,7 +1,30 @@
-<div class="status-indicators">
-	<h1>Status Indicators</h1>
+<div class="component-group">
+	<h1>Progress</h1>
+	<md-progress-bar [progress]="progressBarValue"></md-progress-bar>
+</div>
 
-	<div class="progress-bar">
-		<md-progress-bar [progress]="50"></md-progress-bar>
+<div class="component-group">
+	<h1>Indicators</h1>
+
+	<div class="horizontal-spacer">
+		<md-tag>Default</md-tag>
+		<md-tag type="primary">Primary</md-tag>
+		<md-tag type="secondary">Secondary</md-tag>
+		<md-tag type="warning">Warning</md-tag>
+	</div>
+</div>
+
+<div class="component-group">
+	<h1>Buttons</h1>
+
+	<div class="horizontal-spacer">
+		<a href="#" md-button>Link</a>
+		<button md-button>Default</button>
+		<button md-button-primary>Primary</button>
+		<button md-button-success>Success</button>
+		<button md-button-warning>Warning</button>
+		<button md-button-error>Error</button>
+
+		<button md-button disabled>Disabled</button>
 	</div>
 </div>

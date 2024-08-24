@@ -1,4 +1,4 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, HostBinding, input, InputSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,4 +10,14 @@ import { CommonModule } from '@angular/common';
 })
 export class ProgressBarComponent {
 	public progress: InputSignal<number> = input(0);
+	public height: InputSignal<number> = input(0);
+
+	@HostBinding('style.height')
+	private get _height() {
+		if (this.height() === 0) {
+			return;
+		}
+
+		return `${this.height()}px`;
+	}
 }

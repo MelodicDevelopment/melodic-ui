@@ -2,13 +2,18 @@
 	--md-text-colors-primary: var(--md-colors-gray-800);
 	--md-text-colors-primary-on-brand: var(--md-colors-base-white);
 
-	--md-text-colors-brand-primary: var(--md-colors-brand-primary-900);
-	--md-text-colors-brand-primary-hover: var(--md-colors-brand-primary-700);
+	--md-text-colors-secondary: var(--md-colors-gray-600);
+	--md-text-colors-secondary-on-brand: var(--md-colors-base-white);
 
 	--md-text-colors-success-primary: var(--md-colors-success-600);
-	--md-text-colors-error-primary: var(--md-colors-error-600);
-	--md-text-colors-warning-primary: var(--md-colors-warning-600);
+	--md-text-colors-success-on-success-bg: var(--md-colors-base-white);
 
-	--md-text-colors-disabled: var(--md-colors-gray-500);
-	--md-text-colors-placeholder: var(--md-colors-gray-500);
+	--md-text-colors-error-primary: var(--md-colors-error-600);
+	--md-text-colors-error-on-error-bg: var(--md-colors-base-white);
+
+	--md-text-colors-warning-primary: var(--md-colors-warning-600);
+	--md-text-colors-warning-on-warning-bg: var(--md-colors-base-white);
+
+	--md-text-colors-disabled: var(--md-colors-gray-300);
+	--md-text-colors-placeholder: var(--md-colors-gray-300);
 }

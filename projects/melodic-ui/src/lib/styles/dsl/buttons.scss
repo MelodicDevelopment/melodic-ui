@@ -1,0 +1,78 @@
+@import './partials/typography.mixins';
+
+button[md-button],
+button[md-button-primary],
+button[md-button-error],
+button[md-button-warning],
+button[md-button-success],
+a[md-button],
+a[md-button-primary],
+a[md-button-error],
+a[md-button-warning],
+a[md-button-success] {
+	display: flex;
+	width: auto;
+	padding: var(--md-spacing-sm) var(--md-spacing-2xl);
+	justify-content: center;
+	align-items: center;
+	gap: var(--md-spacing-xs);
+	@include text-styles(get-text(sm, semibold)...);
+	cursor: pointer;
+
+	box-shadow: var(--md-drop-shadow-xs);
+	color: var(--md-text-colors-secondary);
+	border-radius: var(--md-radius-md);
+	border: 1px solid var(--md-border-color-primary);
+	background: var(--md-background-colors-primary);
+
+	&:hover {
+		background: var(--md-background-colors-primary-hover);
+	}
+
+	&[md-button-primary] {
+		color: var(--md-text-colors-primary-on-brand);
+		border-color: var(--md-border-color-secondary);
+		background: var(--md-background-colors-secondary);
+
+		&:hover {
+			background: var(--md-background-colors-secondary-hover);
+		}
+	}
+
+	&[md-button-success] {
+		color: var(--md-text-colors-success-on-success-bg);
+		border-color: var(--md-border-color-success);
+		background: var(--md-background-colors-success);
+
+		&:hover {
+			background: var(--md-background-colors-success-hover);
+		}
+	}
+
+	&[md-button-warning] {
+		color: var(--md-text-colors-warning-on-warning-bg);
+		border-color: var(--md-border-color-warning);
+		background: var(--md-background-colors-warning);
+
+		&:hover {
+			background: var(--md-background-colors-warning-hover);
+		}
+	}
+
+	&[md-button-error] {
+		color: var(--md-text-colors-error-on-error-bg);
+		border-color: var(--md-border-color-error);
+		background: var(--md-background-colors-error);
+
+		&:hover {
+			background: var(--md-background-colors-error-hover);
+		}
+	}
+
+	&[disabled] {
+		color: var(--md-text-colors-disabled);
+		border-color: var(--md-border-color-disabled);
+		background: var(--md-background-colors-disabled);
+		cursor: not-allowed;
+	}
+}

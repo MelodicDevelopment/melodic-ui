@@ -1,3 +1,15 @@
 :host {
-	display: block;
+	display: flex;
+	flex-direction: column;
+	gap: var(--md-spacing-2xl);
+
+	div.component-group {
+		border-top: 1px solid var(--md-colors-gray-300);
+		padding: var(--md-spacing-xl);
+
+		div.horizontal-spacer {
+			display: flex;
+			gap: var(--md-spacing-lg);
+		}
+	}
 }
