@@ -78,8 +78,10 @@ a[md-button-success] {
 	}
 
 	&[md-button-circle] {
-		width: var(--md-spacing-9);
-		height: var(--md-spacing-9);
+		min-width: var(--md-spacing-9);
+		max-width: var(--md-spacing-9);
+		min-height: var(--md-spacing-9);
+		max-height: var(--md-spacing-9);
 		border-radius: var(--md-radius-full);
 		padding: var(--md-spacing-none);
 		line-height: 0px;
