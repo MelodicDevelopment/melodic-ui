@@ -3,16 +3,8 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-import { MD_ICON_BASE_URL } from '@melodic-ui/components';
+import { provideMD } from '@melodic-ui/configuration';
 
 export const appConfig: ApplicationConfig = {
-	providers: [
-		provideZoneChangeDetection({ eventCoalescing: true }),
-		provideRouter(routes),
-		provideHttpClient(),
-		{
-			provide: MD_ICON_BASE_URL,
-			useValue: './public/icons'
-		}
-	]
+	providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(), provideMD({ iconBaseUrl: './public/icons' })]
 };
