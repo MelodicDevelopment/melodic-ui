@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, ElementRef, output, OutputEmitterRef, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, ElementRef, input, InputSignal, output, OutputEmitterRef, Signal, signal, WritableSignal } from '@angular/core';
 import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
 
@@ -25,9 +25,10 @@ export class MDDatePickerComponent {
 	private _currentDate: Date = new Date();
 	private _calendarMonth: WritableSignal<Date> = signal<Date>(new Date());
 
-	public selectedDate: OutputEmitterRef<Date | null> = output<Date | null>();
+	public monthYear: Signal<string> = computed(() => this._calendarMonth().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }));
 
-	monthYear: Signal<string> = computed(() => this._calendarMonth().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }));
+	public isMultiSelect: InputSignal<boolean> = input<boolean>(false);
+	public selectedDate: OutputEmitterRef<Date | null> = output<Date | null>();
 
 	calendarWeeks = computed(() => {
 		const weeks: Week[] = [];
@@ -84,11 +85,13 @@ export class MDDatePickerComponent {
 	changeMonth(delta: number) {
 		const calendarMonth = this._calendarMonth();
 		this._calendarMonth.set(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + delta, 1));
+
 		this.selectedDate.emit(null);
 	}
 
 	selectDate(day: Day) {
 		this.calendarWeeks().forEach((week) => week.days.forEach((day) => (day.selected = false)));
+
 		day.selected = true;
 		this.selectedDate.emit(new Date(this._calendarMonth().getFullYear(), this._calendarMonth().getMonth(), day.date));
 	}
