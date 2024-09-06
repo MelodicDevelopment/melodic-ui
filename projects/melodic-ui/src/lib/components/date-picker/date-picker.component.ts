@@ -42,10 +42,9 @@ export class MDDatePickerComponent {
 			date.setDate(date.getDate() - (firstDay.getDay() - i));
 			lastMonthDays.push({ date: date.getDate(), selected: false, currentMonth: false, currentDay: false });
 		}
-		weeks.push({ days: lastMonthDays });
 
 		// Add days of current month
-		const currentMonthDays: Day[] = [];
+		const currentMonthDays: Day[] = [...lastMonthDays];
 		for (let i = 1; i <= lastDay.getDate(); i++) {
 			currentMonthDays.push({
 				date: i,
@@ -64,9 +63,11 @@ export class MDDatePickerComponent {
 
 		// Add days from next month
 		if (currentMonthDays.length > 0) {
+			let index = 1;
 			for (let i = currentMonthDays.length; i < 7; i++) {
 				const date = new Date(lastDay);
-				date.setDate(date.getDate() + (i - 1));
+				date.setDate(date.getDate() + index);
+				index++;
 				currentMonthDays.push({ date: date.getDate(), selected: false, currentMonth: false, currentDay: false });
 			}
 			weeks.push({ days: currentMonthDays });
