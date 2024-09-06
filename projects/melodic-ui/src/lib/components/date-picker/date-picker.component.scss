@@ -1,0 +1,59 @@
+@import '../../styles/dsl/partials/typography.mixins';
+
+:host {
+	display: block;
+
+	.calendar-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 10px;
+		@include text-styles(get-text(md, semibold)...);
+
+		button {
+			padding: var(--md-spacing-none);
+
+			md-icon {
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+
+	div.calendar-body {
+		div.week-header {
+			display: grid;
+			grid-template-columns: repeat(7, 1fr);
+
+			div.day {
+				@include text-styles(get-text(sm, medium)...);
+			}
+		}
+
+		div.week {
+			display: grid;
+			grid-template-columns: repeat(7, 1fr);
+
+			div.day {
+				cursor: pointer;
+				@include text-styles(get-text(sm, regular)...);
+
+				&.current {
+					background-color: var(--md-colors-gray-200);
+				}
+
+				&.selected {
+					border-radius: var(--md-radius-full);
+					background-color: var(--md-background-colors-secondary);
+					color: var(--md-text-colors-primary-on-brand);
+				}
+			}
+		}
+
+		div.day {
+			border-radius: var(--md-radius-full);
+			text-align: center;
+			padding: 5px;
+		}
+	}
+}

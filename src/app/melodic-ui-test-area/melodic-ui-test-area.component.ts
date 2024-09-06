@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, WritableSignal } from '@angular/core';
 import { MD_COMPONENTS } from '../shared/md-components';
 
 @Component({
@@ -12,4 +12,9 @@ import { MD_COMPONENTS } from '../shared/md-components';
 })
 export class MelodicUiTestAreaComponent {
 	public progressBarValue: number = 75;
+	public selectedDate: WritableSignal<Date | null> = signal<Date | null>(null);
+
+	captureDate(date: Date | null): void {
+		this.selectedDate.set(date);
+	}
 }

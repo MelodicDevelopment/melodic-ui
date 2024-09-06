@@ -1,0 +1,34 @@
+<md-content-box>
+	<div class="calendar-header">
+		<button md-button-link (click)="changeMonth(-1)">
+			<md-icon icon="untitled-ui/arrows/chevron-left"></md-icon>
+		</button>
+		<button md-button-link (click)="resetMonth()">
+			<span>{{ monthYear() }}</span>
+		</button>
+		<button md-button-link (click)="changeMonth(1)">
+			<md-icon icon="untitled-ui/arrows/chevron-right"></md-icon>
+		</button>
+	</div>
+
+	<div class="calendar-body">
+		<div class="week-header">
+			<div class="day">S</div>
+			<div class="day">M</div>
+			<div class="day">T</div>
+			<div class="day">W</div>
+			<div class="day">T</div>
+			<div class="day">F</div>
+			<div class="day">S</div>
+		</div>
+		@for (week of calendarWeeks(); let index = $index; track index) {
+			<div class="week">
+				@for (day of week.days; track day.date) {
+					<div class="day" [ngClass]="{ selected: day.selected, current: day.currentDay }" (click)="selectDate(day)">
+						{{ day.date }}
+					</div>
+				}
+			</div>
+		}
+	</div>
+</md-content-box>

@@ -26,6 +26,12 @@ a[md-button-success] {
 		color: var(--md-text-colors-secondary-on-hover);
 	}
 
+	&[md-button-link] {
+		padding: var(--md-spacing-md);
+		background-color: transparent;
+		border: none;
+	}
+
 	&:not([md-button-link]) {
 		box-shadow: var(--md-drop-shadow-xs);
 		border-radius: var(--md-radius-md);
