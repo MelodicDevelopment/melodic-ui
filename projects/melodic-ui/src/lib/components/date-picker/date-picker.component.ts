@@ -28,10 +28,12 @@ export class MDDatePickerComponent {
 	private _calendarMonth: WritableSignal<Date> = signal<Date>(new Date());
 	private _selectedDates: Date[] = [];
 
-	public monthYear: Signal<string> = computed(() => this._calendarMonth().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }));
-
 	public isMultiSelect: InputSignal<boolean> = input<boolean>(false);
-	public selectedDate: OutputEmitterRef<Date | Date[] | null> = output<Date | Date[] | null>();
+	public initDates: InputSignal<Date[]> = input<Date[]>([]);
+
+	public change: OutputEmitterRef<Date[]> = output<Date[]>();
+
+	public monthYear: Signal<string> = computed(() => this._calendarMonth().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }));
 
 	calendarWeeks = computed(() => {
 		const weeks: Week[] = [];
@@ -44,24 +46,22 @@ export class MDDatePickerComponent {
 		for (let i = 0; i < firstDay.getDay(); i++) {
 			const date = new Date(firstDay);
 			date.setDate(date.getDate() - (firstDay.getDay() - i));
-			lastMonthDays.push({ timestamp: date.getTime(), date: date, dayOfMonth: date.getDate(), selected: false, currentMonth: false, currentDay: false });
+			lastMonthDays.push(this.createDay(date, () => false));
 		}
 
 		// Add days of current month
 		const currentMonthDays: Day[] = [...lastMonthDays];
 		for (let i = 1; i <= lastDay.getDate(); i++) {
 			const date = new Date(this._calendarMonth().getFullYear(), this._calendarMonth().getMonth(), i);
-			currentMonthDays.push({
-				timestamp: date.getTime(),
-				date: date,
-				dayOfMonth: date.getDate(),
-				selected: false,
-				currentMonth: true,
-				currentDay:
-					this._currentDate.getDate() === i &&
-					this._currentDate.getMonth() === this._calendarMonth().getMonth() &&
-					this._currentDate.getFullYear() === this._calendarMonth().getFullYear()
-			});
+			currentMonthDays.push(
+				this.createDay(
+					date,
+					() =>
+						this._currentDate.getDate() === i &&
+						this._currentDate.getMonth() === this._calendarMonth().getMonth() &&
+						this._currentDate.getFullYear() === this._calendarMonth().getFullYear()
+				)
+			);
 			if (currentMonthDays.length === 7) {
 				weeks.push({ days: currentMonthDays.slice() });
 				currentMonthDays.length = 0;
@@ -74,14 +74,7 @@ export class MDDatePickerComponent {
 			for (let i = currentMonthDays.length; i < 7; i++) {
 				const date = new Date(lastDay);
 				date.setDate(date.getDate() + index);
-				currentMonthDays.push({
-					timestamp: date.getTime(),
-					date: date,
-					dayOfMonth: date.getDate(),
-					selected: false,
-					currentMonth: false,
-					currentDay: false
-				});
+				currentMonthDays.push(this.createDay(date, () => false));
 				index++;
 			}
 			weeks.push({ days: currentMonthDays });
@@ -92,14 +85,21 @@ export class MDDatePickerComponent {
 
 	resetMonth(): void {
 		this._calendarMonth.set(this._currentDate);
-		this.selectedDate.emit(null);
+
+		if (!this.isMultiSelect()) {
+			this._selectedDates = [];
+			this.change.emit(this._selectedDates);
+		}
 	}
 
 	changeMonth(delta: number) {
 		const calendarMonth = this._calendarMonth();
 		this._calendarMonth.set(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + delta, 1));
 
-		this.selectedDate.emit(null);
+		if (!this.isMultiSelect()) {
+			this._selectedDates = [];
+			this.change.emit(this._selectedDates);
+		}
 	}
 
 	selectDate(day: Day) {
@@ -109,7 +109,7 @@ export class MDDatePickerComponent {
 
 			if (day.selected) {
 				this._selectedDates = [day.date];
-				this.selectedDate.emit(day.date);
+				this.change.emit(this._selectedDates);
 			}
 
 			return;
@@ -119,12 +119,23 @@ export class MDDatePickerComponent {
 
 		if (day.selected) {
 			this._selectedDates.push(day.date);
-		} else {
+		}
+
+		if (!day.selected) {
 			this._selectedDates = this._selectedDates.filter((date) => date.getTime() !== day.timestamp);
 		}
 
-		console.log(this._selectedDates);
+		this.change.emit(this._selectedDates);
+	}
 
-		this.selectedDate.emit(this._selectedDates);
+	private createDay(date: Date, currentDay: () => boolean): Day {
+		return {
+			timestamp: date.getTime(),
+			date: date,
+			dayOfMonth: date.getDate(),
+			selected: this._selectedDates.find((selectedDate) => selectedDate.getTime() === date.getTime()) !== undefined,
+			currentMonth: false,
+			currentDay: currentDay()
+		};
 	}
 }
