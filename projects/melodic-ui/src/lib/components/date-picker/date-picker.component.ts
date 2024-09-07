@@ -25,8 +25,10 @@ type Week = {
 })
 export class MDDatePickerComponent {
 	private _currentDate: Date = new Date();
-	private _calendarMonth: WritableSignal<Date> = signal<Date>(new Date());
 	private _selectedDates: Date[] = [];
+	private _initialized: boolean = false;
+
+	private _calendarMonth: WritableSignal<Date> = signal<Date>(new Date());
 
 	public isMultiSelect: InputSignal<boolean> = input<boolean>(false);
 	public initDates: InputSignal<Date[]> = input<Date[]>([]);
@@ -35,7 +37,12 @@ export class MDDatePickerComponent {
 
 	public monthYear: Signal<string> = computed(() => this._calendarMonth().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }));
 
-	calendarWeeks = computed(() => {
+	public calendarWeeks: Signal<Week[]> = computed(() => {
+		if (!this._initialized) {
+			this._initialized = true;
+			this._selectedDates = this.initDates();
+		}
+
 		const weeks: Week[] = [];
 
 		const firstDay = new Date(this._calendarMonth().getFullYear(), this._calendarMonth().getMonth(), 1);
@@ -129,6 +136,8 @@ export class MDDatePickerComponent {
 	}
 
 	private createDay(date: Date, currentDay: () => boolean): Day {
+		console.log(this._selectedDates[0], date);
+		console.log(this._selectedDates[0].getTime(), date.getTime());
 		return {
 			timestamp: date.getTime(),
 			date: date,
