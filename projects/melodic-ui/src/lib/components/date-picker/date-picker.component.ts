@@ -4,7 +4,9 @@ import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
 
 type Day = {
-	date: number;
+	timestamp: number;
+	date: Date;
+	dayOfMonth: number;
 	selected: boolean;
 	currentMonth: boolean;
 	currentDay: boolean;
@@ -24,11 +26,12 @@ type Week = {
 export class MDDatePickerComponent {
 	private _currentDate: Date = new Date();
 	private _calendarMonth: WritableSignal<Date> = signal<Date>(new Date());
+	private _selectedDates: Date[] = [];
 
 	public monthYear: Signal<string> = computed(() => this._calendarMonth().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }));
 
 	public isMultiSelect: InputSignal<boolean> = input<boolean>(false);
-	public selectedDate: OutputEmitterRef<Date | null> = output<Date | null>();
+	public selectedDate: OutputEmitterRef<Date | Date[] | null> = output<Date | Date[] | null>();
 
 	calendarWeeks = computed(() => {
 		const weeks: Week[] = [];
@@ -41,14 +44,17 @@ export class MDDatePickerComponent {
 		for (let i = 0; i < firstDay.getDay(); i++) {
 			const date = new Date(firstDay);
 			date.setDate(date.getDate() - (firstDay.getDay() - i));
-			lastMonthDays.push({ date: date.getDate(), selected: false, currentMonth: false, currentDay: false });
+			lastMonthDays.push({ timestamp: date.getTime(), date: date, dayOfMonth: date.getDate(), selected: false, currentMonth: false, currentDay: false });
 		}
 
 		// Add days of current month
 		const currentMonthDays: Day[] = [...lastMonthDays];
 		for (let i = 1; i <= lastDay.getDate(); i++) {
+			const date = new Date(this._calendarMonth().getFullYear(), this._calendarMonth().getMonth(), i);
 			currentMonthDays.push({
-				date: i,
+				timestamp: date.getTime(),
+				date: date,
+				dayOfMonth: date.getDate(),
 				selected: false,
 				currentMonth: true,
 				currentDay:
@@ -68,8 +74,15 @@ export class MDDatePickerComponent {
 			for (let i = currentMonthDays.length; i < 7; i++) {
 				const date = new Date(lastDay);
 				date.setDate(date.getDate() + index);
+				currentMonthDays.push({
+					timestamp: date.getTime(),
+					date: date,
+					dayOfMonth: date.getDate(),
+					selected: false,
+					currentMonth: false,
+					currentDay: false
+				});
 				index++;
-				currentMonthDays.push({ date: date.getDate(), selected: false, currentMonth: false, currentDay: false });
 			}
 			weeks.push({ days: currentMonthDays });
 		}
@@ -90,9 +103,28 @@ export class MDDatePickerComponent {
 	}
 
 	selectDate(day: Day) {
-		this.calendarWeeks().forEach((week) => week.days.forEach((day) => (day.selected = false)));
+		if (!this.isMultiSelect()) {
+			this.calendarWeeks().forEach((week) => week.days.forEach((day) => (day.selected = false)));
+			day.selected = !day.selected;
 
-		day.selected = true;
-		this.selectedDate.emit(new Date(this._calendarMonth().getFullYear(), this._calendarMonth().getMonth(), day.date));
+			if (day.selected) {
+				this._selectedDates = [day.date];
+				this.selectedDate.emit(day.date);
+			}
+
+			return;
+		}
+
+		day.selected = !day.selected;
+
+		if (day.selected) {
+			this._selectedDates.push(day.date);
+		} else {
+			this._selectedDates = this._selectedDates.filter((date) => date.getTime() !== day.timestamp);
+		}
+
+		console.log(this._selectedDates);
+
+		this.selectedDate.emit(this._selectedDates);
 	}
 }

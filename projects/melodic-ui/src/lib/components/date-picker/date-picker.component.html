@@ -25,7 +25,7 @@
 			<div class="week">
 				@for (day of week.days; track day.date) {
 					<div class="day" [ngClass]="{ selected: day.selected, current: day.currentDay }" (click)="selectDate(day)">
-						{{ day.date }}
+						{{ day.dayOfMonth }}
 					</div>
 				}
 			</div>

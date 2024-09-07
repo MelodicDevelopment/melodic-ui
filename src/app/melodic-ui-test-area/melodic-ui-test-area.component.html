@@ -93,7 +93,7 @@
 	<md-header underline size="xs" variant="regular">Calendar Related</md-header>
 
 	<div class="horizontal-spacer">
-		<md-date-picker (selectedDate)="captureDate($event)"></md-date-picker>
+		<md-date-picker (selectedDate)="captureDate($event)" [isMultiSelect]="true"></md-date-picker>
 		<div>
 			Selected Date:<br />
 			{{ selectedDate() }}

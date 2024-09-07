@@ -12,9 +12,9 @@ import { MD_COMPONENTS } from '../shared/md-components';
 })
 export class MelodicUiTestAreaComponent {
 	public progressBarValue: number = 75;
-	public selectedDate: WritableSignal<Date | null> = signal<Date | null>(null);
+	public selectedDate: WritableSignal<Date[]> = signal<Date[]>([]);
 
-	captureDate(date: Date | null): void {
-		this.selectedDate.set(date);
+	captureDate(date: Date | Date[] | null): void {
+		this.selectedDate.set([...(date as Date[])]);
 	}
 }
