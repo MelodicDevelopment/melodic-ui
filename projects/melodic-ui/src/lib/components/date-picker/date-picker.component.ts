@@ -53,16 +53,18 @@ export class MDDatePickerComponent {
 		for (let i = 0; i < firstDay.getDay(); i++) {
 			const date = new Date(firstDay);
 			date.setDate(date.getDate() - (firstDay.getDay() - i));
-			lastMonthDays.push(this.createDay(date, () => false));
+			date.setHours(0, 0, 0, 0);
+			lastMonthDays.push(this.createDay(date, false, () => false));
 		}
 
 		// Add days of current month
 		const currentMonthDays: Day[] = [...lastMonthDays];
 		for (let i = 1; i <= lastDay.getDate(); i++) {
-			const date = new Date(this._calendarMonth().getFullYear(), this._calendarMonth().getMonth(), i);
+			const date = new Date(this._calendarMonth().getFullYear(), this._calendarMonth().getMonth(), i, 0, 0, 0, 0);
 			currentMonthDays.push(
 				this.createDay(
 					date,
+					true,
 					() =>
 						this._currentDate.getDate() === i &&
 						this._currentDate.getMonth() === this._calendarMonth().getMonth() &&
@@ -81,7 +83,8 @@ export class MDDatePickerComponent {
 			for (let i = currentMonthDays.length; i < 7; i++) {
 				const date = new Date(lastDay);
 				date.setDate(date.getDate() + index);
-				currentMonthDays.push(this.createDay(date, () => false));
+				date.setHours(0, 0, 0, 0);
+				currentMonthDays.push(this.createDay(date, false, () => false));
 				index++;
 			}
 			weeks.push({ days: currentMonthDays });
@@ -135,15 +138,13 @@ export class MDDatePickerComponent {
 		this.change.emit(this._selectedDates);
 	}
 
-	private createDay(date: Date, currentDay: () => boolean): Day {
-		console.log(this._selectedDates[0], date);
-		console.log(this._selectedDates[0].getTime(), date.getTime());
+	private createDay(date: Date, currentMonth: boolean, currentDay: () => boolean): Day {
 		return {
 			timestamp: date.getTime(),
 			date: date,
 			dayOfMonth: date.getDate(),
 			selected: this._selectedDates.find((selectedDate) => selectedDate.getTime() === date.getTime()) !== undefined,
-			currentMonth: false,
+			currentMonth: currentMonth,
 			currentDay: currentDay()
 		};
 	}

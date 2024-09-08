@@ -24,7 +24,11 @@
 		@for (week of calendarWeeks(); let index = $index; track index) {
 			<div class="week">
 				@for (day of week.days; track day.date) {
-					<div class="day" [ngClass]="{ selected: day.selected, current: day.currentDay }" (click)="selectDate(day)">
+					<div
+						class="day"
+						[ngClass]="{ 'selected': day.selected, 'current': day.currentDay, 'outside-month': !day.currentMonth }"
+						(click)="selectDate(day)"
+					>
 						{{ day.dayOfMonth }}
 					</div>
 				}

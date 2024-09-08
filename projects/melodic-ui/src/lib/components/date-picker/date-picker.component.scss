@@ -2,69 +2,78 @@
 
 :host {
 	display: block;
+	background-color: var(--md-background-colors-primary);
 
-	.calendar-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 10px;
-		@include text-styles(get-text(md, semibold)...);
+	md-content-box {
+		position: relative;
 
-		button {
+		div.calendar-header {
 			display: flex;
 			align-items: center;
-			justify-content: center;
-			min-width: 40px;
-			height: 40px;
+			justify-content: space-between;
+			margin-bottom: 10px;
+			@include text-styles(get-text(md, semibold)...);
 
-			md-icon {
-				width: 16px;
-				height: 16px;
-			}
-		}
-	}
+			button {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 40px;
+				height: 40px;
 
-	div.calendar-body {
-		div.week-header {
-			display: grid;
-			grid-template-columns: repeat(7, 1fr);
-			gap: var(--md-spacing-xxs);
-
-			div.day {
-				@include text-styles(get-text(sm, medium)...);
-			}
-		}
-
-		div.week {
-			display: grid;
-			grid-template-columns: repeat(7, 1fr);
-			gap: var(--md-spacing-xxs);
-
-			div.day {
-				cursor: pointer;
-				@include text-styles(get-text(sm, regular)...);
-
-				&:hover,
-				&.current {
-					background-color: var(--md-colors-gray-200);
-				}
-
-				&.selected {
-					border-radius: var(--md-radius-full);
-					background-color: var(--md-background-colors-secondary);
-					color: var(--md-text-colors-primary-on-brand);
+				md-icon {
+					width: 16px;
+					height: 16px;
 				}
 			}
 		}
 
-		div.day {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 40px;
-			height: 40px;
-			border-radius: var(--md-radius-full);
-			text-align: center;
+		div.calendar-body {
+			div.week-header {
+				display: grid;
+				grid-template-columns: repeat(7, 1fr);
+				gap: var(--md-spacing-xxs);
+
+				div.day {
+					@include text-styles(get-text(sm, medium)...);
+				}
+			}
+
+			div.week {
+				display: grid;
+				grid-template-columns: repeat(7, 1fr);
+				gap: var(--md-spacing-xxs);
+
+				div.day {
+					cursor: pointer;
+					@include text-styles(get-text(sm, regular)...);
+
+					&:hover,
+					&.current {
+						background-color: var(--md-colors-gray-200);
+					}
+
+					&.selected {
+						border-radius: var(--md-radius-full);
+						background-color: var(--md-background-colors-secondary);
+						color: var(--md-text-colors-primary-on-brand);
+					}
+
+					&.outside-month {
+						color: var(--md-text-colors-disabled);
+					}
+				}
+			}
+
+			div.day {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 40px;
+				height: 40px;
+				border-radius: var(--md-radius-full);
+				text-align: center;
+			}
 		}
 	}
 }

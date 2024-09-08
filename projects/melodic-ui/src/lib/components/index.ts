@@ -4,3 +4,5 @@ export * from './header/header.component';
 export * from './icon/icon.component';
 export * from './progress-bar/progress-bar.component';
 export * from './tag/tag.component';
+
+export * from './date-picker/date-picker.directive';
