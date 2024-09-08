@@ -8,29 +8,34 @@ import { MDDatePickerComponent } from './date-picker.component';
 export class MDDatePickerDirective implements AfterViewInit {
 	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 	private _elementRef: ElementRef = inject(ElementRef);
+	private _dateInputContainer: HTMLDivElement = document.createElement('div');
+	private _dateInputEl: HTMLInputElement = this._elementRef.nativeElement as HTMLInputElement;
 
 	constructor() {
-		if (this._elementRef.nativeElement.tagName !== 'INPUT' || this._elementRef.nativeElement.type !== 'date') {
+		if (this._dateInputEl.tagName !== 'INPUT' || this._dateInputEl.type !== 'date') {
 			console.error('Date Picker directive must be applied to an input element with type="date"');
 			return;
 		}
 
-		this._elementRef.nativeElement.type = 'text';
+		this._dateInputEl.type = 'text';
+
+		this._dateInputContainer.classList.add('md-date-picker-container');
+		this._dateInputEl.after(this._dateInputContainer);
+
+		this._dateInputContainer.appendChild(this._dateInputEl);
 	}
 
 	ngAfterViewInit() {
 		this._viewContainerRef.clear();
 		const componentRef = this._viewContainerRef.createComponent<MDDatePickerComponent>(MDDatePickerComponent);
 
-		const datePickerComponentRef = componentRef.location.nativeElement as HTMLElement;
-		datePickerComponentRef.style.position = 'fixed';
-		datePickerComponentRef.style.top = `${this._elementRef.nativeElement.offsetTop + this._elementRef.nativeElement.offsetHeight}px`;
-		datePickerComponentRef.style.left = `${this._elementRef.nativeElement.offsetLeft}px`;
-		datePickerComponentRef.style.zIndex = '1000';
+		const datePickerComponent = componentRef.location.nativeElement as HTMLElement;
+		datePickerComponent.classList.add('as-directive');
 
-		// console.log(this._viewContainerRef.element.nativeElement);
-		// console.log(componentRef.location.nativeElement);
+		this._dateInputContainer.appendChild(datePickerComponent);
 
-		// console.log(this._viewContainerRef);
+		this._dateInputEl.addEventListener('focus', () => {
+			datePickerComponent.classList.add('open');
+		});
 	}
 }

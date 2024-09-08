@@ -4,6 +4,17 @@
 	display: block;
 	background-color: var(--md-background-colors-primary);
 
+	&.as-directive {
+		display: none;
+		position: absolute;
+		margin-top: 2px;
+		z-index: 1000;
+
+		&.open {
+			display: block;
+		}
+	}
+
 	md-content-box {
 		position: relative;
 
