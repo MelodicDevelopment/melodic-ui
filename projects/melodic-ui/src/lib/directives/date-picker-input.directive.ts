@@ -1,11 +1,11 @@
 import { AfterViewInit, Directive, ElementRef, inject, ViewContainerRef, WritableSignal } from '@angular/core';
-import { MDDatePickerComponent } from './date-picker.component';
+import { MDDatePickerComponent } from '../components/date-picker/date-picker.component';
 
 @Directive({
 	standalone: true,
-	selector: '[md-date-picker]'
+	selector: '[md-date-picker-input]'
 })
-export class MDDatePickerDirective implements AfterViewInit {
+export class MDDatePickerInputDirective implements AfterViewInit {
 	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 	private _elementRef: ElementRef = inject(ElementRef);
 	private _dateInputContainer: HTMLDivElement = document.createElement('div');
@@ -14,7 +14,7 @@ export class MDDatePickerDirective implements AfterViewInit {
 
 	constructor() {
 		if (this._dateInputEl.tagName !== 'INPUT' || this._dateInputEl.type !== 'date') {
-			console.error('Date Picker directive must be applied to an input element with type="date"');
+			console.error('The md-date-picker-input directive must be applied to an input element with type="date"');
 			return;
 		}
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, ElementRef, Input, input, InputSignal, output, OutputEmitterRef, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, Input, input, InputSignal, output, OutputEmitterRef, Signal, signal, WritableSignal } from '@angular/core';
 import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
 

@@ -107,12 +107,31 @@
 	<div class="horizontal-spacer">
 		<input type="text" placeholder="This is a regular input field" md-form-input />
 		<input type="email" placeholder="This is a email input field" md-form-input />
-		<input type="date" placeholder="YYYY-MM-DD" value="2024-09-27" md-form-input md-date-picker />
+		<input type="date" placeholder="YYYY-MM-DD" value="2024-09-27" md-form-input md-date-picker-input />
 		<input type="text" placeholder="This is placeholder text" md-form-input />
-		<select md-form-input>
+		<select md-form-input md-select-input>
+			<option value="">Select Option...</option>
 			<option value="1">Option 1</option>
 			<option value="2">Option 2</option>
 			<option value="3">Option 3</option>
+		</select>
+		<select md-form-input md-select-input [value]="1">
+			<option value="">Select Option...</option>
+			<option value="1">Option 1</option>
+			<option value="2">Option 2</option>
+			<option value="3">Option 3</option>
+		</select>
+		<select md-form-input md-select-input [(ngModel)]="selectedOptions" multiple>
+			@for (opt of selectOptions; track opt) {
+				<option [value]="opt">{{ opt }}</option>
+			}
+		</select>
+		<select md-form-input md-select-input multiple>
+			<option value="1">Option 1</option>
+			<option value="2">Option 2</option>
+			<option value="3">Option 3</option>
+			<option value="4">Option 4</option>
+			<option value="5">Option 5</option>
 		</select>
 	</div>
 
