@@ -1,5 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, ElementRef, input, InputSignal, output, OutputEmitterRef, Signal, signal, WritableSignal } from '@angular/core';
+import {
+	Component,
+	computed,
+	effect,
+	ElementRef,
+	input,
+	InputSignal,
+	output,
+	OutputEmitterRef,
+	Signal,
+	signal,
+	ViewEncapsulation,
+	WritableSignal
+} from '@angular/core';
 import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
 
@@ -96,20 +109,22 @@ export class MDDatePickerComponent {
 	resetMonth(): void {
 		this._calendarMonth.set(this._currentDate);
 
-		if (!this.isMultiSelect()) {
-			this._selectedDates = [];
-			this.change.emit(this._selectedDates);
-		}
+		// TODO: Should I reset value on month change?
+		// if (!this.isMultiSelect()) {
+		// 	this._selectedDates = [];
+		// 	this.change.emit(this._selectedDates);
+		// }
 	}
 
 	changeMonth(delta: number) {
 		const calendarMonth = this._calendarMonth();
 		this._calendarMonth.set(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + delta, 1));
 
-		if (!this.isMultiSelect()) {
-			this._selectedDates = [];
-			this.change.emit(this._selectedDates);
-		}
+		// TODO: Should I reset value on month change?
+		// if (!this.isMultiSelect()) {
+		// 	this._selectedDates = [];
+		// 	this.change.emit(this._selectedDates);
+		// }
 	}
 
 	selectDate(day: Day) {
