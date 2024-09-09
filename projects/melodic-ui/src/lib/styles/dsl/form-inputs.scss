@@ -122,6 +122,16 @@ input[type='checkbox'][md-form-input] {
 	}
 }
 
+input[type='date'][md-date-picker] {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: textfield;
+
+	&::-webkit-calendar-picker-indicator {
+		display: none;
+	}
+}
+
 div.md-date-picker-container {
 	position: relative;
 }

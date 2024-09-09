@@ -9,6 +9,7 @@ export class MDDatePickerDirective implements AfterViewInit {
 	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 	private _elementRef: ElementRef = inject(ElementRef);
 	private _dateInputContainer: HTMLDivElement = document.createElement('div');
+	private _datePickerComponent: HTMLElement = document.createElement('div');
 	private _dateInputEl: HTMLInputElement = this._elementRef.nativeElement as HTMLInputElement;
 
 	constructor() {
@@ -16,8 +17,6 @@ export class MDDatePickerDirective implements AfterViewInit {
 			console.error('Date Picker directive must be applied to an input element with type="date"');
 			return;
 		}
-
-		this._dateInputEl.type = 'text';
 
 		this._dateInputContainer.classList.add('md-date-picker-container');
 		this._dateInputEl.after(this._dateInputContainer);
@@ -29,13 +28,32 @@ export class MDDatePickerDirective implements AfterViewInit {
 		this._viewContainerRef.clear();
 		const componentRef = this._viewContainerRef.createComponent<MDDatePickerComponent>(MDDatePickerComponent);
 
-		const datePickerComponent = componentRef.location.nativeElement as HTMLElement;
-		datePickerComponent.classList.add('as-directive');
+		componentRef.instance.change.subscribe((dates: Date[]) => this.setDateValue(dates));
 
-		this._dateInputContainer.appendChild(datePickerComponent);
+		this._datePickerComponent = componentRef.location.nativeElement as HTMLElement;
+		this._datePickerComponent.classList.add('as-directive');
+
+		this._dateInputContainer.appendChild(this._datePickerComponent);
 
 		this._dateInputEl.addEventListener('focus', () => {
-			datePickerComponent.classList.add('open');
+			this._datePickerComponent.classList.add('open');
 		});
+
+		document.addEventListener('click', (event: MouseEvent) => {
+			if (!this._dateInputContainer.contains(event.target as Node)) {
+				this._datePickerComponent.classList.remove('open');
+			}
+		});
+	}
+
+	private setDateValue(dates: Date[]): void {
+		let dateValue: string = '';
+
+		if (dates.length === 1) {
+			dateValue = `${dates[0].getFullYear()}-${(dates[0].getMonth() + 1).toString().padStart(2, '0')}-${dates[0].getDate().toString().padStart(2, '0')}`;
+		}
+
+		this._dateInputEl.value = dateValue;
+		this._datePickerComponent.classList.remove('open');
 	}
 }
