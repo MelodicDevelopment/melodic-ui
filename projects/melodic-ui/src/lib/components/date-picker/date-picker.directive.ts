@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, inject, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, inject, ViewContainerRef, WritableSignal } from '@angular/core';
 import { MDDatePickerComponent } from './date-picker.component';
 
 @Directive({
@@ -27,6 +27,10 @@ export class MDDatePickerDirective implements AfterViewInit {
 	ngAfterViewInit() {
 		this._viewContainerRef.clear();
 		const componentRef = this._viewContainerRef.createComponent<MDDatePickerComponent>(MDDatePickerComponent);
+
+		if (this._dateInputEl.value) {
+			componentRef.instance.initDates = [new Date(`${this._dateInputEl.value} 00:00:00`)];
+		}
 
 		componentRef.instance.change.subscribe((dates: Date[]) => this.setDateValue(dates));
 

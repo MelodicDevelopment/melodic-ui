@@ -1,18 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-	Component,
-	computed,
-	effect,
-	ElementRef,
-	input,
-	InputSignal,
-	output,
-	OutputEmitterRef,
-	Signal,
-	signal,
-	ViewEncapsulation,
-	WritableSignal
-} from '@angular/core';
+import { Component, computed, effect, ElementRef, Input, input, InputSignal, output, OutputEmitterRef, Signal, signal, WritableSignal } from '@angular/core';
 import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
 
@@ -44,16 +31,18 @@ export class MDDatePickerComponent {
 	private _calendarMonth: WritableSignal<Date> = signal<Date>(new Date());
 
 	public isMultiSelect: InputSignal<boolean> = input<boolean>(false);
-	public initDates: InputSignal<Date[]> = input<Date[]>([]);
+
+	@Input()
+	public initDates: Date[] = [];
 
 	public change: OutputEmitterRef<Date[]> = output<Date[]>();
 
 	public monthYear: Signal<string> = computed(() => this._calendarMonth().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }));
 
 	public calendarWeeks: Signal<Week[]> = computed(() => {
-		if (!this._initialized) {
+		if (this.initDates.length > 0 && !this._initialized) {
 			this._initialized = true;
-			this._selectedDates = this.initDates();
+			this._selectedDates = this.initDates;
 		}
 
 		const weeks: Week[] = [];
