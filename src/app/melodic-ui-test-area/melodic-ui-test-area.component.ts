@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DialogService } from '@melodic-ui/components/dialog/dialog.service';
 
 @Component({
 	selector: 'app-melodic-ui-test-area',
@@ -13,6 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MelodicUiTestAreaComponent {
+	private _dialogService: DialogService = inject(DialogService);
+
 	public progressBarValue: number = 75;
 	public selectedDates: WritableSignal<Date[]> = signal<Date[]>([]);
 	public initDates: Date[] = [new Date('2024-09-07 00:00:00')]; // NOTE: Zero out times to avoid timezone issues
@@ -21,5 +24,9 @@ export class MelodicUiTestAreaComponent {
 
 	captureDate(dates: Date[]): void {
 		this.selectedDates.set(dates);
+	}
+
+	openDialog(): void {
+		this._dialogService.injectComponent();
 	}
 }
