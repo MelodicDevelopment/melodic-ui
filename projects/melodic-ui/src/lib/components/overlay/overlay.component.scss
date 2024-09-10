@@ -1,0 +1,14 @@
+:host {
+	position: fixed;
+	top: 0;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	background-color: var(--md-background-colors-overlay);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 10000;
+}

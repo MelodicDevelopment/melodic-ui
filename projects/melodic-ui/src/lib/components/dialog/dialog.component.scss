@@ -1,10 +1,7 @@
 :host {
 	display: block;
-	position: fixed;
-	top: 0;
-	right: 0px;
-	bottom: 0px;
-	left: 0px;
 
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: var(--md-background-colors-primary);
+	border-radius: var(--md-radius-md);
+	// padding: var(--md-spacing-4xl);
 }

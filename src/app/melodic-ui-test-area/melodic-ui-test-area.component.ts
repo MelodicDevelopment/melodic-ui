@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, Type, WritableSignal } from '@angular/core';
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogService } from '@melodic-ui/components/dialog/dialog.service';
+import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
 
 @Component({
 	selector: 'app-melodic-ui-test-area',
@@ -27,6 +28,6 @@ export class MelodicUiTestAreaComponent {
 	}
 
 	openDialog(): void {
-		this._dialogService.injectComponent();
+		this._dialogService.open(TestDialogOneComponent as Type<Component>);
 	}
 }
