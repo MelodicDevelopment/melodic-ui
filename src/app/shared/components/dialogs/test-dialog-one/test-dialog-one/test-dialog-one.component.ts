@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ComponentRef, inject } from '@angular/core';
-import { DialogService, MD_DIALOG_REF } from '@melodic-ui/components/dialog/dialog.service';
-import { MDOverlayComponent } from '@melodic-ui/components/overlay/overlay.component';
+import { Component, effect, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { DialogRef, MD_DIALOG_REF } from '@melodic-ui/components/dialog/dialog.service';
 
 @Component({
 	selector: 'app-test-dialog-one',
@@ -10,12 +9,37 @@ import { MDOverlayComponent } from '@melodic-ui/components/overlay/overlay.compo
 	templateUrl: './test-dialog-one.component.html',
 	styleUrl: './test-dialog-one.component.scss'
 })
-export class TestDialogOneComponent {
-	private _dialogService: DialogService = inject(DialogService);
-	private _dialogRef: ComponentRef<MDOverlayComponent> = inject(MD_DIALOG_REF);
+export class TestDialogOneComponent implements OnInit, OnDestroy {
+	private _dialogRef: DialogRef = inject(MD_DIALOG_REF);
+	private _interval: number = 0;
+
+	public seconds: WritableSignal<number> = signal<number>(3);
+
+	constructor() {
+		effect(() => {
+			console.log(this._dialogRef.afterOpened());
+			console.log(this._dialogRef.afterClosed());
+		});
+
+		// setInterval(() => {
+		// 	console.log(this.seconds());
+		// 	this.seconds.set(this.seconds() - 1);
+		// }, 1000);
+	}
+
+	ngOnInit(): void {
+		console.log('TestDialogOneComponent.ngOnInit()');
+	}
+
+	ngOnDestroy(): void {
+		debugger;
+		clearInterval(this._interval);
+		console.log('TestDialogOneComponent.ngOnDestroy()');
+	}
 
 	close(): void {
-		this._dialogService.close(this._dialogRef);
+		this._dialogRef.close();
+		//this._dialogService.close(this._dialogRef);
 		//this._dialogRef.destroy();
 	}
 }

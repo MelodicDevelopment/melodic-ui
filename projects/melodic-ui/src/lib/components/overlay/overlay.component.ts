@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, input, InputSignal, OnDestroy, OnInit, signal, Type, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,11 +9,18 @@ import { CommonModule } from '@angular/common';
 	styleUrl: './overlay.component.scss'
 })
 export class MDOverlayComponent implements OnInit, OnDestroy {
+	public afterOpened: WritableSignal<boolean> = signal<boolean>(false);
+	public afterClosed: WritableSignal<boolean> = signal<boolean>(false);
+
 	ngOnInit(): void {
-		debugger;
+		this.afterOpened.set(true);
+		this.afterClosed.set(false);
+		console.log('MDOverlayComponent.ngOnInit()');
 	}
 
 	ngOnDestroy(): void {
-		debugger;
+		this.afterOpened.set(false);
+		this.afterClosed.set(true);
+		console.log('MDOverlayComponent.ngOnDestroy()');
 	}
 }

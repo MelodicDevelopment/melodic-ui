@@ -28,6 +28,6 @@ export class MelodicUiTestAreaComponent {
 	}
 
 	openDialog(): void {
-		this._dialogService.open(TestDialogOneComponent as Type<Component>);
+		const dialogRef = this._dialogService.open(TestDialogOneComponent as Type<Component>);
 	}
 }
