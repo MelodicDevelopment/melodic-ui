@@ -79,18 +79,6 @@ export class MDSelectInputDirective implements AfterViewInit {
 						option.classList.remove('selected');
 					}
 
-					// if (!this._selectEl.hasAttribute('multiple')) {
-					// 	this._selectEl.value = optionEl.selected ? optionEl.value : '';
-					// } else {
-					// 	const value = Array.from(this._selectEl.selectedOptions)
-					// 		.map((opt: HTMLOptionElement) => opt.value)
-					// 		.join(',');
-					// 	console.log(value);
-					// 	//this._selectEl.value = value;
-					// }
-
-					console.log(this._selectEl.value);
-
 					if (!this._selectEl.hasAttribute('multiple')) {
 						this._selectOptionsListComponent.classList.remove('open');
 					}
