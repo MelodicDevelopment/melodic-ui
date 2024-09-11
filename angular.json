@@ -30,11 +30,11 @@
 							},
 							{
 								"glob": "**/*",
-								"input": "projects/melodic-ui/src/lib/assets",
+								"input": "dist/melodic-ui/src/lib/assets",
 								"output": "public"
 							}
 						],
-						"styles": ["src/styles.scss", "projects/melodic-ui/src/lib/styles/melodic-ui.scss"],
+						"styles": ["src/styles.scss"],
 						"scripts": []
 					},
 					"configurations": {
@@ -86,11 +86,16 @@
 							{
 								"glob": "**/*",
 								"input": "public"
+							},
+							{
+								"glob": "**/*",
+								"input": "dist/melodic-ui/src/lib/assets",
+								"output": "public"
 							}
 						],
-						"styles": ["src/styles.scss", "../projects/melodic-ui/src/lib/styles/melodic-ui.scss"],
+						"styles": ["src/styles.scss"],
 						"stylePreprocessorOptions": {
-							"includePaths": ["projects/melodic-ui/src/lib/styles"]
+							"includePaths": []
 						},
 						"scripts": []
 					}

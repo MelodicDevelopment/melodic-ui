@@ -1,4 +1,5 @@
-@import '../projects/melodic-ui/src/lib/styles/melodic-ui.scss';
+@import '../dist/melodic-ui/lib/melodic-ui.css';
+@import '../dist/melodic-ui/src/lib/styles/dsl/partials/typography.mixins';
 
 html,
 body {

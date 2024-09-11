@@ -1,9 +1,9 @@
-import { Component, inject, Injector, input, InputSignal, OnInit, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
+import { Component, inject, input, InputSignal, OnInit, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, take, map, catchError, of } from 'rxjs';
-import { MD_ICON_BASE_URL } from '@melodic-ui/configuration';
+import { MD_ICON_BASE_URL } from '../../configuration';
 
 // hold icons in memory so we don't have to fetch them multiple times
 const IconCache: { [key: string]: SafeHtml } = {};

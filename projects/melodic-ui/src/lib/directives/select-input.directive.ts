@@ -1,6 +1,5 @@
-import { AfterViewInit, Directive, ElementRef, inject, ViewContainerRef, WritableSignal } from '@angular/core';
-import { MDDatePickerComponent } from '../components/date-picker/date-picker.component';
-import { MDContentBoxComponent } from '@melodic-ui/components';
+import { AfterViewInit, Directive, ElementRef, inject, ViewContainerRef } from '@angular/core';
+import { MDContentBoxComponent } from '../components/content-box/content-box.component';
 
 @Directive({
 	standalone: true,
