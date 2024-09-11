@@ -23,11 +23,11 @@ export class DialogRef {
 	public afterAllClosed: WritableSignal<boolean> = signal<boolean>(false);
 
 	constructor(
-		private _dialog: ComponentRef<MDOverlayComponent>,
+		private _overlayComponentRef: ComponentRef<MDOverlayComponent>,
 		private _dialogService: DialogService
 	) {
-		this.afterOpened = _dialog.instance.afterOpened;
-		this.afterClosed = _dialog.instance.afterClosed;
+		this.afterOpened = _overlayComponentRef.instance.afterOpened;
+		this.afterClosed = _overlayComponentRef.instance.afterClosed;
 	}
 
 	public closeAll(): void {
@@ -36,7 +36,7 @@ export class DialogRef {
 	}
 
 	public close(): void {
-		this._dialogService.close(this._dialog);
+		this._dialogService.close(this._overlayComponentRef);
 	}
 }
 
@@ -51,14 +51,16 @@ export class DialogService {
 	public open<T extends Type<Component>>(component: T, inputs: { [key: string]: Signal<unknown> } = {}): DialogRef {
 		const overlayComponentRef = this.createOverlayComponent();
 		const dialogComponentRef = this.createDialogComponent(overlayComponentRef);
-		const dialogRef = this.createProvidedComponent(overlayComponentRef, dialogComponentRef, component, inputs);
+		const providedComponentRefWithDialogRef = this.createProvidedComponent(overlayComponentRef, dialogComponentRef, component, inputs);
 
 		this._dialogs.push(overlayComponentRef);
 
-		return dialogRef;
+		return providedComponentRefWithDialogRef.dialogRef;
 	}
 
 	public close(dialog: ComponentRef<MDOverlayComponent>) {
+		dialog.instance.dialogComponentRef().instance.providedComponentRef().destroy();
+		dialog.instance.dialogComponentRef().destroy();
 		dialog.destroy();
 		this._dialogs = this._dialogs.filter((d) => d !== dialog);
 	}
@@ -81,13 +83,15 @@ export class DialogService {
 		return overlayComponentRef;
 	}
 
-	private createDialogComponent(overlayComponent: ComponentRef<MDOverlayComponent>): ComponentRef<MDDialogComponent> {
+	private createDialogComponent(overlayComponentRef: ComponentRef<MDOverlayComponent>): ComponentRef<MDDialogComponent> {
 		const dialogComponentRef: ComponentRef<MDDialogComponent> = createComponent(MDDialogComponent, {
 			environmentInjector: this._appRef.injector
 		});
 
 		this._appRef.attachView(dialogComponentRef.hostView);
-		overlayComponent.location.nativeElement.appendChild(dialogComponentRef.location.nativeElement);
+		overlayComponentRef.location.nativeElement.appendChild(dialogComponentRef.location.nativeElement);
+
+		overlayComponentRef.setInput('dialogComponentRef', dialogComponentRef);
 
 		return dialogComponentRef;
 	}
@@ -97,17 +101,27 @@ export class DialogService {
 		dialogComponentRef: ComponentRef<MDDialogComponent>,
 		component: T,
 		inputs: { [key: string]: Signal<unknown> } = {}
-	): DialogRef {
+	): { dialogRef: DialogRef; providedComponentRef: ComponentRef<Component> } {
 		const dialogRef = new DialogRef(overlayComponentRef, this);
 
 		const dialogInjector = Injector.create({
 			providers: [{ provide: MD_DIALOG_REF, useValue: dialogRef }]
 		});
 
-		dialogComponentRef.setInput('component', component);
-		dialogComponentRef.setInput('inputs', inputs);
-		dialogComponentRef.setInput('injector', dialogInjector);
+		const providedComponentRef: ComponentRef<Component> = createComponent(component, {
+			environmentInjector: this._appRef.injector,
+			elementInjector: dialogInjector
+		});
 
-		return dialogRef;
+		Object.keys(inputs).forEach(([key, signal]) => {
+			providedComponentRef.setInput(key, signal);
+		});
+
+		this._appRef.attachView(providedComponentRef.hostView);
+		dialogComponentRef.location.nativeElement.appendChild(providedComponentRef.location.nativeElement);
+
+		dialogComponentRef.setInput('providedComponentRef', providedComponentRef);
+
+		return { dialogRef, providedComponentRef };
 	}
 }

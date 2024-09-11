@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { DialogRef, MD_DIALOG_REF } from '@melodic-ui/components/dialog/dialog.service';
+import { TestDialogOneInnerComponent } from './test-dialog-one-inner.component';
 
 @Component({
 	selector: 'app-test-dialog-one',
 	standalone: true,
-	imports: [CommonModule],
+	imports: [CommonModule, TestDialogOneInnerComponent],
 	templateUrl: './test-dialog-one.component.html',
 	styleUrl: './test-dialog-one.component.scss'
 })
@@ -32,7 +33,6 @@ export class TestDialogOneComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		debugger;
 		clearInterval(this._interval);
 		console.log('TestDialogOneComponent.ngOnDestroy()');
 	}

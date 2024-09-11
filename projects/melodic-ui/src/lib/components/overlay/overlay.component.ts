@@ -1,5 +1,6 @@
-import { Component, input, InputSignal, OnDestroy, OnInit, signal, Type, WritableSignal } from '@angular/core';
+import { Component, ComponentRef, input, InputSignal, OnDestroy, OnInit, signal, Type, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MDDialogComponent } from '../dialog/dialog.component';
 
 @Component({
 	selector: 'md-overlay',
@@ -11,6 +12,8 @@ import { CommonModule } from '@angular/common';
 export class MDOverlayComponent implements OnInit, OnDestroy {
 	public afterOpened: WritableSignal<boolean> = signal<boolean>(false);
 	public afterClosed: WritableSignal<boolean> = signal<boolean>(false);
+
+	public dialogComponentRef: InputSignal<ComponentRef<MDDialogComponent>> = input.required<ComponentRef<MDDialogComponent>>();
 
 	ngOnInit(): void {
 		this.afterOpened.set(true);
