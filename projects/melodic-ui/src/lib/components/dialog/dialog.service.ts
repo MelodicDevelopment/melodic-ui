@@ -59,8 +59,8 @@ export class DialogService {
 	}
 
 	public close(dialog: ComponentRef<MDOverlayComponent>) {
-		dialog.instance.dialogComponentRef().instance.providedComponentRef().destroy();
-		dialog.instance.dialogComponentRef().destroy();
+		(dialog.instance.innerComponentRef().instance as MDDialogComponent).providedComponentRef().destroy();
+		dialog.instance.innerComponentRef().destroy();
 		dialog.destroy();
 		this._dialogs = this._dialogs.filter((d) => d !== dialog);
 	}
@@ -91,7 +91,7 @@ export class DialogService {
 		this._appRef.attachView(dialogComponentRef.hostView);
 		overlayComponentRef.location.nativeElement.appendChild(dialogComponentRef.location.nativeElement);
 
-		overlayComponentRef.setInput('dialogComponentRef', dialogComponentRef);
+		overlayComponentRef.setInput('innerComponentRef', dialogComponentRef);
 
 		return dialogComponentRef;
 	}

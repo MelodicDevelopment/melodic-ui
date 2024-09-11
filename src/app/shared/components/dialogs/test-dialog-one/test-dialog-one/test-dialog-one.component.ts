@@ -12,7 +12,7 @@ import { TestDialogOneInnerComponent } from './test-dialog-one-inner.component';
 })
 export class TestDialogOneComponent implements OnInit, OnDestroy {
 	private _dialogRef: DialogRef = inject(MD_DIALOG_REF);
-	private _interval: number = 0;
+	private _interval: number;
 
 	public seconds: WritableSignal<number> = signal<number>(3);
 
@@ -22,10 +22,14 @@ export class TestDialogOneComponent implements OnInit, OnDestroy {
 			console.log(this._dialogRef.afterClosed());
 		});
 
-		// setInterval(() => {
-		// 	console.log(this.seconds());
-		// 	this.seconds.set(this.seconds() - 1);
-		// }, 1000);
+		this._interval = window.setInterval(() => {
+			console.log(this.seconds());
+			this.seconds.set(this.seconds() - 1);
+
+			if (this.seconds() === 0) {
+				this.close();
+			}
+		}, 1000);
 	}
 
 	ngOnInit(): void {
@@ -39,7 +43,5 @@ export class TestDialogOneComponent implements OnInit, OnDestroy {
 
 	close(): void {
 		this._dialogRef.close();
-		//this._dialogService.close(this._dialogRef);
-		//this._dialogRef.destroy();
 	}
 }

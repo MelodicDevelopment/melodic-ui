@@ -8,14 +8,6 @@ import { CommonModule } from '@angular/common';
 	template: '<ng-content></ng-content>',
 	styleUrl: './dialog.component.scss'
 })
-export class MDDialogComponent implements OnInit, OnDestroy {
+export class MDDialogComponent {
 	public providedComponentRef: InputSignal<ComponentRef<Component>> = input.required<ComponentRef<Component>>();
-
-	ngOnInit(): void {
-		console.log('MDDialogComponent.ngOnInit()');
-	}
-
-	ngOnDestroy(): void {
-		console.log('MDDialogComponent.ngOnDestroy()');
-	}
 }
