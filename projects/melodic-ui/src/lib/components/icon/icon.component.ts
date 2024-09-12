@@ -1,4 +1,4 @@
-import { Component, inject, input, InputSignal, OnInit, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
+import { Component, Host, HostBinding, inject, input, InputSignal, OnInit, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
@@ -21,11 +21,17 @@ export class MDIconComponent implements OnInit {
 	private _sanitizer: DomSanitizer = inject(DomSanitizer);
 	private _iconUrlBase: string = inject(MD_ICON_BASE_URL);
 
-	public icon: InputSignal<string> = input.required();
+	@HostBinding('class.material-icons') private _isMaterialIcon = false;
+
+	public icon: InputSignal<string> = input('');
 	public iconString: WritableSignal<SafeHtml> = signal('');
 
 	async ngOnInit(): Promise<void> {
-		this.iconString.set(await this.getIcon(this.icon()));
+		if (this.icon().length > 0) {
+			this.iconString.set(await this.getIcon(this.icon()));
+		} else {
+			this._isMaterialIcon = true;
+		}
 	}
 
 	private getIcon(iconName: string): Promise<SafeHtml> {

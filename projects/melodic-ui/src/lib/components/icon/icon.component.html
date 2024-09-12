@@ -1,1 +1,5 @@
-<span [innerHTML]="iconString()"></span>
+@if (iconString()) {
+	<span [innerHTML]="iconString()"></span>
+} @else {
+	<ng-content></ng-content>
+}
