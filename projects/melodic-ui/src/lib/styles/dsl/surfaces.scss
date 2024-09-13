@@ -1,0 +1,58 @@
+:root {
+	// primary surface (white)
+	--md-surface-primary-background-color: var(--md-colors-base-white);
+	--md-surface-primary-border-color: var(--md-colors-gray-200);
+	--md-surface-primary-font-color: var(--md-colors-gray-600);
+
+	// primary surface with alternates
+	--md-surface-primary-border-color-brand: var(--md-colors-brand-300);
+	--md-surface-primary-border-color-brand-variant-2: var(--md-colors-brand-600);
+
+	// secondary surface (brand 600 green)
+	--md-surface-secondary-background-color: var(--md-colors-brand-600);
+	--md-surface-secondary-border-color: var(--md-colors-brand-600);
+	--md-surface-secondary-font-color: var(--md-colors-base-white);
+
+	// tertiary surface (gray 50)
+	--md-surface-tertiary-background-color: var(--md-colors-gray-50);
+	--md-surface-tertiary-border-color: var(--md-colors-gray-300);
+	--md-surface-tertiary-font-color: var(--md-colors-gray-700);
+
+	// success surface (brand 25)
+	--md-surface-success-background-color: var(--md-colors-brand-25);
+	--md-surface-success-border-color: var(--md-colors-brand-300);
+	--md-surface-success-font-color: var(--md-colors-gray-600);
+
+	// warning surface (warning 40)
+	--md-surface-warning-background-color: var(--md-colors-warning-40);
+	--md-surface-warning-border-color: var(--md-colors-warning-590);
+	--md-surface-warning-font-color: var(--md-colors-gray-600);
+
+	// warning alternates
+	--md-surface-warning-background-color-variant: var(--md-colors-warning-50);
+	--md-surface-warning-border-color-variant: var(--md-colors-warning-200);
+	--md-surface-warning-font-color-variant: var(--md-colors-warning-700);
+
+	// error surface (error 25)
+	--md-surface-error-background-color: var(--md-colors-error-25);
+	--md-surface-error-border-color: var(--md-colors-error-300);
+	--md-surface-error-font-color: var(--md-colors-gray-600);
+
+	// disabled surface (gray 100)
+	--md-surface-disabled-background-color: var(--md-colors-gray-100);
+	--md-surface-disabled-border-color: var(--md-colors-gray-200);
+	--md-surface-disabled-font-color: var(--md-colors-gray-400);
+
+	// green surface variants
+	--md-surface-green-50-background-color: var(--md-colors-brand-50);
+	--md-surface-green-50-border-color: var(--md-colors-brand-200);
+	--md-surface-green-50-font-color: var(--md-colors-brand-700);
+
+	--md-surface-green-100-background-color: var(--md-colors-brand-100);
+	--md-surface-green-100-border-color: var(--md-colors-brand-100);
+	--md-surface-green-100-font-color: var(--md-colors-brand-800);
+
+	--md-surface-green-200-background-color: var(--md-colors-brand-200);
+	--md-surface-green-200-border-color: var(--md-colors-brand-200);
+	--md-surface-green-200-font-color: var(--md-colors-brand-800);
+}

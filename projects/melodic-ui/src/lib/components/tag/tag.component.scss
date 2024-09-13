@@ -2,10 +2,10 @@
 
 :host {
 	display: inline-block;
-	padding: var(--md-spacing-xxs) var(--md-spacing-md);
+	padding: var(--md-spacing-xxs) var(--md-spacing-lg);
 	border-radius: var(--md-radius-sm);
-	border: 1px solid var(--md-colors-gray-300);
-	background-color: var(--md-colors-base-white);
+	border: 1px solid var(--md-border-color-primary);
+	background-color: var(--md-background-colors-primary);
 	color: var(--md-colors-gray-600);
 	@include text-styles(get-text(xs, medium)...);
 

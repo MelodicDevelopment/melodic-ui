@@ -11,7 +11,7 @@
 		"noFallthroughCasesInSwitch": true,
 		"paths": {
 			"@melodic-ui-dist": ["./dist/melodic-ui"],
-			"@melodic-ui/*": ["./projects/melodic-ui/src/lib/*"]
+			"@melodic-ui": ["./projects/melodic-ui/src/lib"]
 		},
 		"skipLibCheck": true,
 		"isolatedModules": true,

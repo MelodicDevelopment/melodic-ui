@@ -36,49 +36,49 @@ a[md-button-success] {
 		box-shadow: var(--md-drop-shadow-xs);
 		border-radius: var(--md-radius-md);
 		border: 1px solid var(--md-border-color-primary);
-		background: var(--md-background-colors-primary);
+		background: var(--md-colors-bg-primary);
 
 		&:hover {
-			background: var(--md-background-colors-primary-hover);
+			background: var(--md-colors-bg-primary-hover);
 		}
 
 		&[md-button-primary] {
 			color: var(--md-text-colors-primary-on-brand);
 			border-color: var(--md-border-color-secondary);
-			background: var(--md-background-colors-secondary);
+			background: var(--md-colors-bg-secondary);
 
 			&:hover {
-				background: var(--md-background-colors-secondary-hover);
+				background: var(--md-colors-bg-secondary-hover);
 			}
 		}
 
 		&[md-button-success] {
 			color: var(--md-text-colors-success-on-success-bg);
 			border-color: var(--md-border-color-success);
-			background: var(--md-background-colors-success);
+			background: var(--md-colors-bg-success-solid);
 
 			&:hover {
-				background: var(--md-background-colors-success-hover);
+				background: var(--md-colors-bg-success-hover);
 			}
 		}
 
 		&[md-button-warning] {
 			color: var(--md-text-colors-warning-on-warning-bg);
 			border-color: var(--md-border-color-warning);
-			background: var(--md-background-colors-warning);
+			background: var(--md-colors-bg-warning);
 
 			&:hover {
-				background: var(--md-background-colors-warning-hover);
+				background: var(--md-colors-bg-warning-hover);
 			}
 		}
 
 		&[md-button-error] {
 			color: var(--md-text-colors-error-on-error-bg);
 			border-color: var(--md-border-color-error);
-			background: var(--md-background-colors-error);
+			background: var(--md-colors-bg-error);
 
 			&:hover {
-				background: var(--md-background-colors-error-hover);
+				background: var(--md-colors-bg-error-hover);
 			}
 		}
 	}
@@ -101,11 +101,11 @@ a[md-button-success] {
 	&[disabled] {
 		color: var(--md-text-colors-disabled);
 		border-color: var(--md-border-color-disabled);
-		background: var(--md-background-colors-disabled);
+		background: var(--md-colors-bg-disabled);
 		cursor: not-allowed;
 
 		&:hover {
-			background: var(--md-background-colors-disabled);
+			background: var(--md-colors-bg-disabled);
 		}
 	}
 }
