@@ -1,26 +1,9 @@
 :root {
 	// border sizes
-	--md-border-size: 1px;
-	--md-border-size-strong: 2px;
+	--md-border-size-primary: 1px;
+	--md-border-size-secondary: 2px;
 
 	// border shapes
-	--md-border-shape: solid;
-	--md-border-shape-dashed: dashed;
-
-	--md-border-color-primary: var(--md-colors-gray-300);
-
-	--md-border-color-secondary: var(--md-colors-gray-200);
-
-	--md-border-color-tertiary: var(--md-colors-gray-100);
-
-	--md-border-color-brand: var(--md-colors-brand-300);
-	--md-border-color-brand-solid: var(--md-colors-brand-600);
-	--md-border-color-brand-solid_alt: var(--md-colors-brand-600);
-
-	--md-border-color-success: var(--md-colors-success-200);
-	--md-border-color-warning: var(--md-colors-warning-200);
-	--md-border-color-error: var(--md-colors-error-200);
-
-	--md-border-color-disabled: var(--md-colors-gray-300);
-	--md-border-color-disabled_subtle: var(--md-colors-gray-200);
+	--md-border-shape-primary: solid;
+	--md-border-shape-secondary: dashed;
 }

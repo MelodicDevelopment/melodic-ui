@@ -1,7 +1,7 @@
 <md-header size="lg" variant="regular">Melodic UI Test Area</md-header>
 
 <div class="component-group">
-	<md-header underline size="xs" variant="regular">Headers</md-header>
+	<md-header size="xs" variant="regular">Headers</md-header>
 
 	<div class="vertical-spacer">
 		<md-header size="xs" variant="regular">XS / Regular</md-header>
@@ -12,7 +12,7 @@
 </div>
 
 <div class="component-group">
-	<md-header underline size="xs" variant="regular">Progress</md-header>
+	<md-header size="xs" variant="regular">Progress</md-header>
 
 	<div class="spacer">
 		<md-progress-bar [progress]="progressBarValue"></md-progress-bar>
@@ -20,18 +20,20 @@
 </div>
 
 <div class="component-group">
-	<md-header underline size="xs" variant="regular">Indicators</md-header>
+	<md-header size="xs" variant="regular">Indicators</md-header>
 
 	<div class="horizontal-spacer">
 		<md-tag>Default</md-tag>
-		<md-tag type="primary">Primary</md-tag>
-		<md-tag type="secondary">Secondary</md-tag>
+		<md-tag type="brand">Brand</md-tag>
+		<md-tag type="info">Information</md-tag>
+		<md-tag type="success">Success</md-tag>
 		<md-tag type="warning">Warning</md-tag>
+		<md-tag type="error">Error</md-tag>
 	</div>
 </div>
 
 <div class="component-group">
-	<md-header underline size="xs" variant="regular">Buttons</md-header>
+	<md-header size="xs" variant="regular">Buttons</md-header>
 
 	<div class="horizontal-spacer">
 		<a href="#" md-button>Link</a>
@@ -42,9 +44,14 @@
 		</button>
 		<button md-button>Default</button>
 
-		<button md-button-primary>Primary</button>
-		<button md-button-primary md-button-circle>
+		<button md-button-brand>Brand</button>
+		<button md-button-brand md-button-circle>
 			<md-icon icon="untitled-ui/general/plus">add</md-icon>
+		</button>
+
+		<button md-button-info>Information</button>
+		<button md-button-info md-button-circle>
+			<md-icon icon="untitled-ui/general/check">add</md-icon>
 		</button>
 
 		<button md-button-success>Success</button>
@@ -70,17 +77,18 @@
 </div>
 
 <div class="component-group">
-	<md-header underline size="xs" variant="regular">Icons</md-header>
+	<md-header size="xs" variant="regular">Icons</md-header>
 
 	<div class="horizontal-spacer">
 		<md-icon style="font-size: 50px">add</md-icon>
-		<md-icon icon="untitled-ui/alerts/alert-triangle">add</md-icon>
-		<md-icon md-border icon="untitled-ui/alerts/alert-triangle">add</md-icon>
+		<md-icon style="font-size: 50px" md-border>add</md-icon>
+		<md-icon icon="untitled-ui/alerts/alert-triangle"></md-icon>
+		<md-icon md-border icon="untitled-ui/alerts/alert-triangle"></md-icon>
 	</div>
 </div>
 
 <div class="component-group">
-	<md-header underline size="xs" variant="regular">Content Box</md-header>
+	<md-header size="xs" variant="regular">Content Box</md-header>
 
 	<div class="vertical-spacer">
 		<md-content-box>Some content goes here!</md-content-box>
@@ -90,7 +98,7 @@
 </div>
 
 <div class="component-group">
-	<md-header underline size="xs" variant="regular">Calendar Related</md-header>
+	<md-header size="xs" variant="regular">Calendar Related</md-header>
 
 	<div class="horizontal-spacer">
 		<md-date-picker (change)="captureDate($event)" [isMultiSelect]="true" [initDates]="initDates"></md-date-picker>
@@ -102,7 +110,7 @@
 </div>
 
 <div class="component-group">
-	<md-header underline size="xs" variant="regular">Text Input</md-header>
+	<md-header size="xs" variant="regular">Text Input</md-header>
 
 	<div class="horizontal-spacer">
 		<input type="text" placeholder="This is a regular input field" md-form-input />
@@ -180,9 +188,9 @@
 <input type="week"> -->
 
 <div class="component-group">
-	<md-header underline size="xs" variant="regular">Dialogs</md-header>
+	<md-header size="xs" variant="regular">Dialogs</md-header>
 
 	<div class="horizontal-spacer">
-		<button md-button-primary (click)="openDialog()">Open Test Dialog One</button>
+		<button md-button-brand (click)="openDialog()">Open Test Dialog One</button>
 	</div>
 </div>

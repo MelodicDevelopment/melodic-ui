@@ -3,9 +3,9 @@ md-icon {
 	line-height: 0;
 
 	&[md-border] {
-		border: 1px solid var(--md-border-color-primary);
+		border: 1px solid var(--md-surface-primary-border-color);
 		border-radius: var(--md-radius-md);
-		padding: var(--md-spacing-none) var(--md-spacing-lg);
+		padding: var(--md-spacing-lg);
 	}
 
 	span {

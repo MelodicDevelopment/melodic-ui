@@ -2,10 +2,10 @@
 	position: relative;
 	display: block;
 	overflow: hidden;
-	background-color: var(--md-background-colors-primary);
-	color: var(--md-text-colors-primary);
+	background-color: var(--md-surface-primary-background-color);
+	color: var(--md-surface-primary-font-color);
 	border-radius: var(--md-radius-md);
-	border: 1px solid var(--md-border-color-primary);
+	border: var(--md-border-size-primary) var(--md-border-shape-primary) var(--md-surface-primary-border-color);
 	box-shadow: var(--md-drop-shadow-md);
 	padding: var(--md-spacing-xl);
 }

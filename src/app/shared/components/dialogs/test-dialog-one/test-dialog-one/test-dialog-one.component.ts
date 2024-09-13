@@ -23,7 +23,6 @@ export class TestDialogOneComponent implements OnInit, OnDestroy {
 		});
 
 		this._interval = window.setInterval(() => {
-			console.log(this.seconds());
 			this.seconds.set(this.seconds() - 1);
 
 			if (this.seconds() === 0) {

@@ -2,7 +2,7 @@
 
 :host {
 	display: block;
-	background-color: var(--md-background-colors-primary);
+	background-color: var(--md-surface-primary-background-color);
 
 	&.as-directive {
 		display: none;
@@ -61,17 +61,17 @@
 
 					&:hover,
 					&.current {
-						background-color: var(--md-colors-gray-200);
+						background-color: var(--md-surface-tertiary-background-color);
 					}
 
 					&.selected {
 						border-radius: var(--md-radius-full);
-						background-color: var(--md-background-colors-secondary);
-						color: var(--md-text-colors-primary-on-brand);
+						background-color: var(--md-surface-secondary-background-color);
+						color: var(--md-surface-secondary-font-color);
 					}
 
 					&.outside-month {
-						color: var(--md-text-colors-disabled);
+						color: var(--md-surface-disabled-font-color);
 					}
 				}
 			}

@@ -1,10 +1,10 @@
 :root {
-	/* base colors */
+	// base colors
 	--md-colors-base-white: #ffffffff;
 	--md-colors-base-black: #000000ff;
-	--md-colors-base-transparent: #ffffff00;
+	--md-colors-base-black-transparent: rgba(0, 0, 0, 0.5);
 
-	/* brand colors */
+	// brand colors
 	--md-colors-brand-15: #f4f8ea40;
 	--md-colors-brand-20: #f4f8ea80;
 	--md-colors-brand-25: #f4f8eaff;
@@ -20,7 +20,7 @@
 	--md-colors-brand-900: #3f4f17ff;
 	--md-colors-brand-950: #2c3810ff;
 
-	/* gray scale */
+	// gray scale
 	--md-colors-gray-25: #fcfcfdff;
 	--md-colors-gray-50: #f9fafbff;
 	--md-colors-gray-100: #f2f4f7ff;
@@ -34,7 +34,21 @@
 	--md-colors-gray-900: #101828ff;
 	--md-colors-gray-950: #0c111dff;
 
-	/* success colors */
+	// light blue colors
+	--md-colors-blue-light-25: #f5fbffff;
+	--md-colors-blue-light-50: #f0f9ffff;
+	--md-colors-blue-light-100: #e0f2feff;
+	--md-colors-blue-light-200: #b9e6feff;
+	--md-colors-blue-light-300: #7cd4fdff;
+	--md-colors-blue-light-400: #36bffaff;
+	--md-colors-blue-light-500: #0ba5ecff;
+	--md-colors-blue-light-600: #0086c9ff;
+	--md-colors-blue-light-700: #026aa2ff;
+	--md-colors-blue-light-800: #065986ff;
+	--md-colors-blue-light-900: #0b4a6fff;
+	--md-colors-blue-light-950: #062c41ff;
+
+	// success colors
 	--md-colors-success-25: #f6fef9ff;
 	--md-colors-success-50: #ecfdf3ff;
 	--md-colors-success-100: #dcfae6ff;
@@ -48,7 +62,7 @@
 	--md-colors-success-900: #074d31ff;
 	--md-colors-success-950: #053321ff;
 
-	/* warning colors */
+	// warning colors
 	--md-colors-warning-25: #fffcf5ff;
 	--md-colors-warning-40: #fffaeb4d;
 	--md-colors-warning-50: #fffaebff;
@@ -64,7 +78,7 @@
 	--md-colors-warning-900: #7a2e0eff;
 	--md-colors-warning-950: #4e1d09ff;
 
-	/* error colors */
+	// error colors
 	--md-colors-error-25: #fffbfaff;
 	--md-colors-error-50: #fef3f2ff;
 	--md-colors-error-100: #fee4e2ff;

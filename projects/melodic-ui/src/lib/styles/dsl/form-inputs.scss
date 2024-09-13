@@ -6,13 +6,14 @@ select[md-form-input] {
 	width: auto;
 	padding: var(--md-spacing-2) var(--md-spacing-3);
 	@include text-styles(get-text(sm, regular)...);
-	background-color: var(--md-background-colors-primary);
-	border: 1px solid var(--md-border-color-primary);
+	background-color: var(--md-surface-primary-background-color);
+	border: 1px solid var(--md-surface-primary-border-color);
 	border-radius: var(--md-radius-md);
 
 	&:focus {
-		border-color: var(--md-border-color-secondary);
+		border-color: var(--md-surface-primary-border-color-brand);
 		outline: none;
+		box-shadow: var(--md-drop-shadow-xs-active-input);
 	}
 }
 
@@ -60,7 +61,7 @@ div.md-select-container {
 			cursor: pointer;
 
 			&:hover {
-				background-color: var(--md-background-colors-primary-hover);
+				background-color: var(--md-surface-primary-background-color-hover);
 			}
 
 			&[value]:not([value='']) {
@@ -84,7 +85,7 @@ div.md-select-container {
 			}
 
 			&.selected {
-				background-color: var(--md-background-colors-primary-hover);
+				background-color: var(--md-surface-primary-background-color-hover);
 			}
 		}
 	}
@@ -98,8 +99,8 @@ input[type='radio'][md-form-input] {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: var(--md-background-colors-primary);
-	border: 2px solid var(--md-border-color-primary);
+	background-color: var(--md-surface-primary-background-color);
+	border: 2px solid var(--md-surface-primary-border-color);
 	border-radius: var(--md-radius-full);
 	width: 16px;
 	height: 16px;
@@ -110,14 +111,14 @@ input[type='radio'][md-form-input] {
 		width: 100%;
 		height: 100%;
 		border-radius: var(--md-radius-full);
-		background-color: var(--md-background-colors-secondary);
+		background-color: var(--md-surface-secondary-background-color);
 		transform: scale(0);
 		transition: 120ms transform ease-in-out;
 	}
 
 	&:checked::before {
 		transform: scale(1);
-		background-color: var(--md-background-colors-secondary);
+		background-color: var(--md-surface-secondary-background-color);
 	}
 
 	&::after {
@@ -125,18 +126,18 @@ input[type='radio'][md-form-input] {
 		width: 4px;
 		height: 4px;
 		border-radius: var(--md-radius-full);
-		background-color: var(--md-background-colors-primary);
+		background-color: var(--md-surface-secondary-background-color);
 		transform: scale(0);
 		transition: 120ms transform ease-in-out;
 	}
 
 	&:checked::after {
 		transform: scale(1);
-		background-color: var(--md-background-colors-primary);
+		background-color: var(--md-surface-primary-background-color);
 	}
 
 	&:focus {
-		outline: 2px solid var(--md-background-colors-secondary);
+		box-shadow: var(--md-drop-shadow-xs-active-input);
 		outline-offset: 1px;
 	}
 }
@@ -149,8 +150,8 @@ input[type='checkbox'][md-form-input] {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: var(--md-background-colors-primary);
-	border: 2px solid var(--md-border-color-primary);
+	background-color: var(--md-surface-primary-background-color);
+	border: 2px solid var(--md-surface-primary-border-color);
 	border-radius: var(--md-radius-xxs);
 	overflow: hidden;
 	width: 16px;
@@ -161,14 +162,14 @@ input[type='checkbox'][md-form-input] {
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		background-color: var(--md-background-colors-secondary);
+		background-color: var(--md-surface-secondary-background-color);
 		transform: scale(0);
 		transition: 120ms transform ease-in-out;
 	}
 
 	&:checked::before {
 		transform: scale(1);
-		background-color: var(--md-background-colors-secondary);
+		background-color: var(--md-surface-secondary-background-color);
 	}
 
 	&::after {
@@ -177,8 +178,8 @@ input[type='checkbox'][md-form-input] {
 		position: absolute;
 		width: 7px;
 		height: 3px;
-		border-left: 2px solid var(--md-background-colors-primary);
-		border-bottom: 2px solid var(--md-background-colors-primary);
+		border-left: 2px solid var(--md-surface-primary-background-color);
+		border-bottom: 2px solid var(--md-surface-primary-background-color);
 		transform: rotate(-45deg) translate(-50%, -50%);
 		top: 1px;
 		left: 7px;
@@ -191,7 +192,7 @@ input[type='checkbox'][md-form-input] {
 	}
 
 	&:focus {
-		outline: 2px solid var(--md-background-colors-secondary);
+		box-shadow: var(--md-drop-shadow-xs-active-input);
 		outline-offset: 1px;
 	}
 }

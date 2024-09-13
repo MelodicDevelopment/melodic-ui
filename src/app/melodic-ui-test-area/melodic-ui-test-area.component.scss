@@ -4,8 +4,12 @@
 	gap: var(--md-spacing-2xl);
 
 	div.component-group {
-		border-top: 1px solid var(--md-colors-gray-300);
+		border-top: 1px solid var(--md-surface-primary-border-color);
 		padding: var(--md-spacing-xl);
+
+		> md-header {
+			border-bottom: 1px solid var(--md-surface-primary-border-color);
+		}
 
 		div.spacer {
 			margin-top: var(--md-spacing-4xl);

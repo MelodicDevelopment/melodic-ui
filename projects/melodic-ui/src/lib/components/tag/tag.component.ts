@@ -1,7 +1,7 @@
-import { Component, HostBinding, input, InputSignal, OnInit } from '@angular/core';
+import { Component, effect, ElementRef, inject, input, InputSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export type TagType = 'default' | 'primary' | 'secondary' | 'warning';
+export type TagType = 'default' | 'brand' | 'info' | 'success' | 'warning' | 'error';
 
 @Component({
 	selector: 'md-tag',
@@ -10,18 +10,14 @@ export type TagType = 'default' | 'primary' | 'secondary' | 'warning';
 	templateUrl: './tag.component.html',
 	styleUrl: './tag.component.scss'
 })
-export class MDTagComponent implements OnInit {
-	@HostBinding('class.default') private _isDefault: boolean = false;
-	@HostBinding('class.primary') private _isPrimary: boolean = false;
-	@HostBinding('class.secondary') private _isSecondary: boolean = true;
-	@HostBinding('class.warning') private _isWarning: boolean = false;
+export class MDTagComponent {
+	private _elementRef: ElementRef = inject(ElementRef);
 
 	public type: InputSignal<TagType> = input<TagType>('default');
 
-	ngOnInit(): void {
-		this._isDefault = this.type() === 'default';
-		this._isPrimary = this.type() === 'primary';
-		this._isSecondary = this.type() === 'secondary';
-		this._isWarning = this.type() === 'warning';
+	constructor() {
+		effect(() => {
+			this._elementRef.nativeElement.classList.add(this.type());
+		});
 	}
 }

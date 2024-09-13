@@ -1,12 +1,11 @@
 /** primitives & tokens */
-@import './dsl/background-colors';
 @import './dsl/borders';
 @import './dsl/colors';
 @import './dsl/effects';
 @import './dsl/fonts';
-@import './dsl/font-colors';
 @import './dsl/radius';
 @import './dsl/spacing';
+@import './dsl/surfaces';
 @import './dsl/widths';
 
 /** typography */
@@ -19,6 +18,6 @@
 
 html,
 body {
-	color: var(--md-text-colors-primary);
-	background-color: var(--md-background-colors-primary);
+	color: var(--md-surface-primary-font-color);
+	background-color: var(--md-surface-primary-background-color);
 }
