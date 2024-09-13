@@ -130,6 +130,12 @@
 			<option value="2">Option 2</option>
 			<option value="3">Option 3</option>
 		</select>
+		<select md-form-input md-select-input [value]="1" class="invalid">
+			<option value="">Select Option...</option>
+			<option value="1">Option 1</option>
+			<option value="2">Option 2</option>
+			<option value="3">Option 3</option>
+		</select>
 		<select md-form-input md-select-input [(ngModel)]="selectedOptions" multiple>
 			@for (opt of selectOptions; track opt) {
 				<option [value]="opt">{{ opt }}</option>
