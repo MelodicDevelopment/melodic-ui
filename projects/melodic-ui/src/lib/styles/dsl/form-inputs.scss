@@ -13,7 +13,15 @@ select[md-form-input] {
 	&:focus {
 		border-color: var(--md-surface-primary-border-color-brand);
 		outline: none;
-		box-shadow: var(--md-drop-shadow-xs-active-input);
+		box-shadow: var(--md-drop-shadow-xs-input-active);
+	}
+
+	&.invalid {
+		border-color: var(--md-surface-primary-border-color-error);
+
+		&:focus {
+			box-shadow: var(--md-drop-shadow-xs-input-error);
+		}
 	}
 }
 
@@ -137,7 +145,7 @@ input[type='radio'][md-form-input] {
 	}
 
 	&:focus {
-		box-shadow: var(--md-drop-shadow-xs-active-input);
+		box-shadow: var(--md-drop-shadow-xs-input-active);
 		outline-offset: 1px;
 	}
 }
@@ -192,7 +200,7 @@ input[type='checkbox'][md-form-input] {
 	}
 
 	&:focus {
-		box-shadow: var(--md-drop-shadow-xs-active-input);
+		box-shadow: var(--md-drop-shadow-xs-input-active);
 		outline-offset: 1px;
 	}
 }
