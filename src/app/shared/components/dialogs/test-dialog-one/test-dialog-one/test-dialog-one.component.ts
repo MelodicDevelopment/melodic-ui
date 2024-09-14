@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
-import { DialogRef, MD_DIALOG_REF } from '@melodic-ui';
+import { DialogRef, MD_DIALOG_REF } from '@melodic-ui-dist';
 import { TestDialogOneInnerComponent } from './test-dialog-one-inner.component';
 
 @Component({

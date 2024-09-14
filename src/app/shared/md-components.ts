@@ -7,7 +7,7 @@ import {
 	MDIconComponent,
 	MDProgressBarComponent,
 	MDTagComponent
-} from '@melodic-ui';
+} from '@melodic-ui-dist';
 
 export const MD_COMPONENTS = [
 	MDButtonGroupComponent,
