@@ -1,0 +1,5 @@
+:host {
+	*:not(a[md-button], button[md-button]) {
+		display: none;
+	}
+}

@@ -1,3 +1,4 @@
+export * from './button-group/button-group.component';
 export * from './content-box/content-box.component';
 export * from './date-picker/date-picker.component';
 export * from './dialog/dialog.component';
