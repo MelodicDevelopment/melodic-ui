@@ -36,7 +36,7 @@
 	<md-header size="xs" variant="regular">Buttons</md-header>
 
 	<div class="horizontal-spacer">
-		<md-button-group (change)="buttonToggleChange($event)" value="1">
+		<!-- <md-button-group (change)="buttonToggleChange($event)" value="1">
 			<md-button-toggle value="1">Option 1</md-button-toggle>
 			<md-button-toggle value="2">Option 2</md-button-toggle>
 			<md-button-toggle value="3">Option 3</md-button-toggle>
@@ -46,7 +46,16 @@
 			<md-button-toggle value="1">Option 1</md-button-toggle>
 			<md-button-toggle value="2">Option 2</md-button-toggle>
 			<md-button-toggle value="3">Option 3</md-button-toggle>
-		</md-button-group>
+		</md-button-group> -->
+
+		<form [formGroup]="form">
+			<md-button-group formControlName="buttonGroupInput" (change)="buttonToggleChange($event)" [multiple]="true">
+				<md-button-toggle value="1">Option 1</md-button-toggle>
+				<md-button-toggle value="2">Option 2</md-button-toggle>
+				<md-button-toggle value="3">Option 3</md-button-toggle>
+			</md-button-group>
+		</form>
+		<button md-button (click)="toggleButtonGroupDisabled()">Test Disable</button>
 
 		<a href="#" md-button>Link</a>
 		<a href="#" md-button md-button-link>Link</a>

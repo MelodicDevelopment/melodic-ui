@@ -2,4 +2,25 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
+	border-radius: var(--md-radius-md);
+
+	&:focus-within {
+		outline: none;
+		box-shadow: var(--md-drop-shadow-xs-input-active);
+	}
+
+	&.invalid,
+	&.ng-invalid {
+		&:not(.ng-untouched) {
+			margin-top: -1px;
+			margin-left: -1px;
+			margin-right: -1px;
+
+			border: 1px solid var(--md-surface-primary-border-color-error);
+
+			&:focus-within {
+				box-shadow: var(--md-drop-shadow-xs-input-error);
+			}
+		}
+	}
 }

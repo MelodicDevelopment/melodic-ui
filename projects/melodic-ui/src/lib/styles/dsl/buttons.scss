@@ -25,6 +25,10 @@ a[md-button-error] {
 	white-space: nowrap;
 	cursor: pointer;
 
+	&:focus {
+		outline: none;
+	}
+
 	&:hover {
 		color: var(--md-surface-primary-font-color-hover);
 	}
@@ -33,6 +37,11 @@ a[md-button-error] {
 		padding: var(--md-spacing-md);
 		background-color: transparent;
 		border: none;
+
+		&:focus {
+			outline: none;
+			box-shadow: var(--md-drop-shadow-xs-input-active);
+		}
 	}
 
 	&:not([md-button-link]) {
@@ -43,6 +52,11 @@ a[md-button-error] {
 
 		&:hover {
 			background: var(--md-surface-primary-background-color-hover);
+		}
+
+		&:focus {
+			outline: none;
+			box-shadow: var(--md-drop-shadow-xs-input-active);
 		}
 
 		&[md-button-brand] {
@@ -56,42 +70,42 @@ a[md-button-error] {
 		}
 
 		&[md-button-info] {
-			color: var(--md-surface-light-blue-font-color);
-			border-color: var(--md-surface-light-blue-border-color);
-			background: var(--md-surface-light-blue-background-color);
+			color: var(--md-surface-light-blue-600-font-color);
+			border-color: var(--md-surface-light-blue-600-border-color);
+			background: var(--md-surface-light-blue-600-background-color);
 
 			&:hover {
-				background: var(--md-surface-light-blue-background-color-hover);
+				background: var(--md-surface-light-blue-600-background-color-hover);
 			}
 		}
 
 		&[md-button-success] {
-			color: var(--md-surface-success-font-color);
-			border-color: var(--md-surface-success-border-color);
-			background: var(--md-surface-success-background-color);
+			color: var(--md-surface-success-600-font-color);
+			border-color: var(--md-surface-success-600-border-color);
+			background: var(--md-surface-success-600-background-color);
 
 			&:hover {
-				background: var(--md-surface-success-background-color-hover);
+				background: var(--md-surface-success-600-background-color-hover);
 			}
 		}
 
 		&[md-button-warning] {
-			color: var(--md-surface-warning-font-color);
-			border-color: var(--md-surface-warning-border-color);
-			background: var(--md-surface-warning-background-color);
+			color: var(--md-surface-warning-600-font-color);
+			border-color: var(--md-surface-warning-600-border-color);
+			background: var(--md-surface-warning-600-background-color);
 
 			&:hover {
-				background: var(--md-surface-warning-background-color-hover);
+				background: var(--md-surface-warning-600-background-color-hover);
 			}
 		}
 
 		&[md-button-error] {
-			color: var(--md-surface-error-font-color);
-			border-color: var(--md-surface-error-border-color);
-			background: var(--md-surface-error-background-color);
+			color: var(--md-surface-error-600-font-color);
+			border-color: var(--md-surface-error-600-border-color);
+			background: var(--md-surface-error-600-background-color);
 
 			&:hover {
-				background: var(--md-surface-error-background-color-hover);
+				background: var(--md-surface-error-600-background-color-hover);
 			}
 		}
 	}

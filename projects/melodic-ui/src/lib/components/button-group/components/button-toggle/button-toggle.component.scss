@@ -8,6 +8,10 @@
 	button[md-button]:not([md-button-link]) {
 		border-radius: var(--md-radius-none);
 		border-right: none;
+
+		&:focus {
+			box-shadow: none;
+		}
 	}
 
 	&:first-child {

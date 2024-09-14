@@ -1,17 +1,4 @@
-import {
-	AfterViewInit,
-	Component,
-	ComponentRef,
-	ContentChildren,
-	effect,
-	forwardRef,
-	input,
-	InputSignal,
-	output,
-	OutputEmitterRef,
-	QueryList,
-	ViewChildren
-} from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, forwardRef, Input, output, OutputEmitterRef, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { MDButtonToggleComponent } from './components/button-toggle/button-toggle.component';
@@ -36,91 +23,88 @@ import { MDButtonToggleComponent } from './components/button-toggle/button-toggl
 	]
 })
 export class MDButtonGroupComponent implements ControlValueAccessor, Validator, AfterViewInit {
-	private _value: unknown | unknown[] = null;
-	private _showError: boolean = false;
+	private _values: unknown[] = [];
 
 	private onChange: (value: unknown) => void = () => {};
 	private onTouched: () => void = () => {};
 
 	@ContentChildren(MDButtonToggleComponent) private _buttonToggles!: QueryList<MDButtonToggleComponent>;
 
-	public value: InputSignal<unknown> = input();
-	public multiple: InputSignal<boolean> = input(false);
-	public disabled: InputSignal<boolean> = input(false);
+	@Input() public value: unknown;
+	@Input() public multiple: boolean = false;
+	@Input() public disabled: boolean = false;
 
 	public change: OutputEmitterRef<unknown> = output<unknown>();
 
-	constructor() {
-		effect(() => {
-			this._buttonToggles.forEach((toggle) => {
-				toggle.disabled = this.disabled();
-			});
-		});
+	ngOnInit(): void {
+		if (this.value) {
+			this._values = Array.isArray(this.value) ? this.value : [this.value];
+		}
 	}
 
 	ngAfterViewInit(): void {
-		this._buttonToggles.forEach((toggle) => {
-			if (this.value() === toggle.value) {
-				toggle.checked = true;
-				this.writeValue(toggle.value);
-			}
-
-			toggle.disabled = this.disabled();
-
-			toggle.change.subscribe((value) => {
-				this.writeValue(value);
-
-				this._buttonToggles.forEach((t) => {
-					t.checked = false;
-				});
-
-				toggle.checked = value !== null;
-			});
-		});
-	}
-
-	// Called by Angular when the form control value changes (e.g. programmatically)
-	writeValue(value: unknown): void {
-		if (Array.isArray(this.value)) {
-			this.value.push(value);
-			return;
+		if (this._buttonToggles.length === 0) {
+			throw new Error('No button toggles found in the button group.');
 		}
 
-		this._value = value;
-		this.onChange(this._value);
-		this.onTouched();
-		this.change.emit(this._value);
+		this._buttonToggles.forEach((toggle) => {
+			toggle.checked = this._values.includes(toggle.value);
+			toggle.disabled = this.disabled;
 
-		console.log('writeValue', this._value);
+			toggle.change.subscribe((value) => {
+				console.log(this._values);
+				this._values = this._values.filter((v) => v === value);
+				console.log(this._values);
+				this._values.push(value);
+
+				this.writeValue(this.multiple ? this._values : this._values[0]);
+
+				this._buttonToggles.forEach((t) => {
+					if (!this._values.includes(t.value)) {
+						t.checked = false;
+					}
+				});
+			});
+		});
+
+		this.setDisabledState(this.disabled);
 	}
 
-	// Registers the callback to be called when the value changes
+	writeValue(value: unknown): void {
+		this.value = value;
+
+		this.onChange(this.value);
+		this.onTouched();
+
+		this.change.emit(this.value);
+	}
+
+	// used internally by angular forms
 	registerOnChange(fn: (value: unknown) => void): void {
-		console.log('registerOnChange', fn);
 		this.onChange = fn;
 	}
 
-	// Registers the callback to be called when the input is touched
+	// used internally by angular forms
 	registerOnTouched(fn: () => void): void {
-		console.log('registerOnTouched', fn);
 		this.onTouched = fn;
 	}
 
 	setDisabledState(isDisabled: boolean): void {
+		this.disabled = isDisabled;
+		if (!this._buttonToggles) {
+			return;
+		}
 		this._buttonToggles.forEach((toggle) => {
 			toggle.disabled = isDisabled;
 		});
 	}
 
 	// Validator interface method
-	validate(control: AbstractControl): ValidationErrors | null {
-		// if (!this.value) {
-		// 	this._showError = true;
-		// 	return { required: true };
-		// }
+	validate(_: AbstractControl): ValidationErrors | null {
+		if (!this.value) {
+			return { required: true };
+		}
 
-		// this._showError = false;
-		// return null;
 		return null;
 	}
 }

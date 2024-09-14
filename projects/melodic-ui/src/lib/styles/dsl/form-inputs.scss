@@ -16,7 +16,8 @@ select[md-form-input] {
 		box-shadow: var(--md-drop-shadow-xs-input-active);
 	}
 
-	&.invalid {
+	&.invalid,
+	&.ng-invalid {
 		border-color: var(--md-surface-primary-border-color-error);
 
 		&:focus {
