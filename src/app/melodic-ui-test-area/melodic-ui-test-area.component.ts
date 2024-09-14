@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal, Type, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal, Type, WritableSignal } from '@angular/core';
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -14,7 +14,7 @@ import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog
 	styleUrl: './melodic-ui-test-area.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MelodicUiTestAreaComponent {
+export class MelodicUiTestAreaComponent implements OnInit {
 	private _dialogService: DialogService = inject(DialogService);
 
 	public progressBarValue: number = 75;
@@ -26,6 +26,12 @@ export class MelodicUiTestAreaComponent {
 	public form: FormGroup = new FormGroup({
 		buttonGroupInput: new FormControl('')
 	});
+
+	ngOnInit(): void {
+		this.form.get('buttonGroupInput')?.valueChanges.subscribe((value) => {
+			console.log('Button group input changed:', value);
+		});
+	}
 
 	toggleButtonGroupDisabled(): void {
 		if (this.form.get('buttonGroupInput')?.disabled) {

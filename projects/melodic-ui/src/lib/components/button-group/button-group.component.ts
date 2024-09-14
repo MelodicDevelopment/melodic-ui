@@ -52,10 +52,20 @@ export class MDButtonGroupComponent implements ControlValueAccessor, Validator, 
 			toggle.disabled = this.disabled;
 
 			toggle.change.subscribe((value) => {
-				console.log(this._values);
-				this._values = this._values.filter((v) => v === value);
-				console.log(this._values);
-				this._values.push(value);
+				if (this.multiple) {
+					if (this._values.includes(toggle.value)) {
+						this._values = this._values.filter((v) => v !== toggle.value);
+					}
+
+					if (value !== null) {
+						this._values.push(value);
+					}
+				} else {
+					this._values = [];
+					if (value !== null) {
+						this._values = [value];
+					}
+				}
 
 				this.writeValue(this.multiple ? this._values : this._values[0]);
 
