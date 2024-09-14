@@ -36,7 +36,13 @@
 	<md-header size="xs" variant="regular">Buttons</md-header>
 
 	<div class="horizontal-spacer">
-		<md-button-group (change)="buttonToggleChange($event)">
+		<md-button-group (change)="buttonToggleChange($event)" value="1">
+			<md-button-toggle value="1">Option 1</md-button-toggle>
+			<md-button-toggle value="2">Option 2</md-button-toggle>
+			<md-button-toggle value="3">Option 3</md-button-toggle>
+		</md-button-group>
+
+		<md-button-group (change)="buttonToggleChange($event)" [disabled]="true">
 			<md-button-toggle value="1">Option 1</md-button-toggle>
 			<md-button-toggle value="2">Option 2</md-button-toggle>
 			<md-button-toggle value="3">Option 3</md-button-toggle>

@@ -3,6 +3,7 @@ import {
 	Component,
 	ComponentRef,
 	ContentChildren,
+	effect,
 	forwardRef,
 	input,
 	InputSignal,
@@ -35,26 +36,41 @@ import { MDButtonToggleComponent } from './components/button-toggle/button-toggl
 	]
 })
 export class MDButtonGroupComponent implements ControlValueAccessor, Validator, AfterViewInit {
-	@ContentChildren(MDButtonToggleComponent) buttonToggles!: QueryList<MDButtonToggleComponent>;
-
-	// public value: InputSignal<unknown> = input();
-	// public multiple: InputSignal<boolean> = input(false);
-	// public disabled: InputSignal<boolean> = input(false);
-
-	public change: OutputEmitterRef<unknown> = output<unknown>();
-
-	value: unknown | unknown[] = null;
-	showError: boolean = false;
+	private _value: unknown | unknown[] = null;
+	private _showError: boolean = false;
 
 	private onChange: (value: unknown) => void = () => {};
 	private onTouched: () => void = () => {};
 
+	@ContentChildren(MDButtonToggleComponent) private _buttonToggles!: QueryList<MDButtonToggleComponent>;
+
+	public value: InputSignal<unknown> = input();
+	public multiple: InputSignal<boolean> = input(false);
+	public disabled: InputSignal<boolean> = input(false);
+
+	public change: OutputEmitterRef<unknown> = output<unknown>();
+
+	constructor() {
+		effect(() => {
+			this._buttonToggles.forEach((toggle) => {
+				toggle.disabled = this.disabled();
+			});
+		});
+	}
+
 	ngAfterViewInit(): void {
-		this.buttonToggles.forEach((toggle) => {
+		this._buttonToggles.forEach((toggle) => {
+			if (this.value() === toggle.value) {
+				toggle.checked = true;
+				this.writeValue(toggle.value);
+			}
+
+			toggle.disabled = this.disabled();
+
 			toggle.change.subscribe((value) => {
 				this.writeValue(value);
 
-				this.buttonToggles.forEach((t) => {
+				this._buttonToggles.forEach((t) => {
 					t.checked = false;
 				});
 
@@ -70,10 +86,12 @@ export class MDButtonGroupComponent implements ControlValueAccessor, Validator, 
 			return;
 		}
 
-		this.value = value;
-		this.onChange(this.value);
+		this._value = value;
+		this.onChange(this._value);
 		this.onTouched();
-		this.change.emit(this.value);
+		this.change.emit(this._value);
+
+		console.log('writeValue', this._value);
 	}
 
 	// Registers the callback to be called when the value changes
@@ -88,24 +106,21 @@ export class MDButtonGroupComponent implements ControlValueAccessor, Validator, 
 		this.onTouched = fn;
 	}
 
-	// Optional: If you want to disable the input
 	setDisabledState(isDisabled: boolean): void {
-		console.log('setDisabledState', isDisabled);
-		this.buttonToggles.forEach((toggle) => {
+		this._buttonToggles.forEach((toggle) => {
 			toggle.disabled = isDisabled;
 		});
-
-		// Handle the disabled state
 	}
 
 	// Validator interface method
 	validate(control: AbstractControl): ValidationErrors | null {
-		console.log('validate', control);
-		if (!this.value) {
-			this.showError = true;
-			return { required: true };
-		}
-		this.showError = false;
+		// if (!this.value) {
+		// 	this._showError = true;
+		// 	return { required: true };
+		// }
+
+		// this._showError = false;
+		// return null;
 		return null;
 	}
 }
