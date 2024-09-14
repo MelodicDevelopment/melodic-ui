@@ -1,0 +1,40 @@
+:host {
+	display: flex;
+	align-items: center;
+
+	a[md-button],
+	a[md-button]:not([md-button-link]),
+	button[md-button],
+	button[md-button]:not([md-button-link]) {
+		border-radius: var(--md-radius-none);
+		border-right: none;
+	}
+
+	&:first-child {
+		a[md-button],
+		a[md-button]:not([md-button-link]),
+		button[md-button],
+		button[md-button]:not([md-button-link]) {
+			border-top-left-radius: var(--md-radius-md);
+			border-bottom-left-radius: var(--md-radius-md);
+		}
+	}
+
+	&:last-child {
+		a[md-button],
+		a[md-button]:not([md-button-link]),
+		button[md-button],
+		button[md-button]:not([md-button-link]) {
+			border-top-right-radius: var(--md-radius-md);
+			border-bottom-right-radius: var(--md-radius-md);
+			border-right: 1px solid var(--md-surface-primary-border-color);
+		}
+	}
+
+	a,
+	button {
+		&.checked {
+			background: var(--md-surface-primary-background-color-hover);
+		}
+	}
+}

@@ -1,5 +1,5 @@
 :host {
-	*:not(a[md-button], button[md-button]) {
-		display: none;
-	}
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 }

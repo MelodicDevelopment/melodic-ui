@@ -30,4 +30,8 @@ export class MelodicUiTestAreaComponent {
 	openDialog(): void {
 		const dialogRef = this._dialogService.open(TestDialogOneComponent as Type<Component>);
 	}
+
+	buttonToggleChange(value: unknown): void {
+		console.log('Button toggle changed:', value);
+	}
 }

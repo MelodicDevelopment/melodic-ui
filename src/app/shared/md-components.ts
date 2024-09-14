@@ -1,5 +1,6 @@
 import {
 	MDButtonGroupComponent,
+	MDButtonToggleComponent,
 	MDContentBoxComponent,
 	MDDatePickerComponent,
 	MDHeaderComponent,
@@ -10,6 +11,7 @@ import {
 
 export const MD_COMPONENTS = [
 	MDButtonGroupComponent,
+	MDButtonToggleComponent,
 	MDContentBoxComponent,
 	MDDatePickerComponent,
 	MDHeaderComponent,

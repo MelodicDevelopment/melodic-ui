@@ -22,6 +22,7 @@ a[md-button-error] {
 	gap: var(--md-spacing-xs);
 	@include text-styles(get-text(sm, semibold)...);
 	color: var(--md-surface-primary-font-color);
+	white-space: nowrap;
 	cursor: pointer;
 
 	&:hover {
