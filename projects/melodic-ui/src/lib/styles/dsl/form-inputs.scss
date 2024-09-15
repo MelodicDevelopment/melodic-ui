@@ -53,11 +53,17 @@ select[md-form-input] {
 
 div.md-select-container {
 	position: relative;
+	display: flex;
+	flex: 1;
+
+	select {
+		width: 100%;
+	}
 
 	md-content-box {
 		display: none;
 		position: absolute;
-		margin-top: 2px;
+		margin-top: 42px;
 		padding: var(--md-spacing-none);
 		z-index: 1000;
 
@@ -222,4 +228,10 @@ input[type='date'][md-date-picker-input] {
 
 div.md-date-picker-container {
 	position: relative;
+	display: flex;
+	flex: 1;
+
+	input[md-form-input] {
+		width: 100%;
+	}
 }
