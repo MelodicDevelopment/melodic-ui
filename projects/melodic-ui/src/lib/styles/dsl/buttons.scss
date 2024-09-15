@@ -42,6 +42,11 @@ a[md-button-error] {
 			outline: none;
 			box-shadow: var(--md-drop-shadow-xs-input-active);
 		}
+
+		&[disabled] {
+			color: var(--md-surface-disabled-font-color);
+			cursor: not-allowed;
+		}
 	}
 
 	&:not([md-button-link]) {
@@ -108,6 +113,17 @@ a[md-button-error] {
 				background: var(--md-surface-error-600-background-color-hover);
 			}
 		}
+
+		&[disabled] {
+			color: var(--md-surface-disabled-font-color);
+			border-color: var(--md-surface-disabled-border-color);
+			background: var(--md-surface-disabled-background-color);
+			cursor: not-allowed;
+
+			&:hover {
+				background: var(--md-surface-disabled-background-color);
+			}
+		}
 	}
 
 	&[md-button-circle] {
@@ -122,17 +138,6 @@ a[md-button-error] {
 		svg {
 			width: var(--md-spacing-5);
 			height: var(--md-spacing-5);
-		}
-	}
-
-	&[disabled] {
-		color: var(--md-surface-disabled-font-color);
-		border-color: var(--md-surface-disabled-border-color);
-		background: var(--md-surface-disabled-background-color);
-		cursor: not-allowed;
-
-		&:hover {
-			background: var(--md-surface-disabled-background-color);
 		}
 	}
 }
