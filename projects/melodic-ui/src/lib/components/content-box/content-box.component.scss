@@ -8,4 +8,34 @@
 	border: var(--md-border-size-primary) var(--md-border-shape-primary) var(--md-surface-primary-border-color);
 	box-shadow: var(--md-drop-shadow-md);
 	padding: var(--md-spacing-xl);
+
+	&.brand {
+		background-color: var(--md-surface-green-50-background-color);
+		border-color: var(--md-surface-green-50-border-color);
+		color: var(--md-surface-green-50-font-color);
+	}
+
+	&.info {
+		background-color: var(--md-surface-light-blue-background-color);
+		border-color: var(--md-surface-light-blue-border-color);
+		color: var(--md-surface-light-blue-font-color);
+	}
+
+	&.success {
+		background-color: var(--md-surface-success-background-color);
+		border-color: var(--md-surface-success-border-color);
+		color: var(--md-surface-success-font-color);
+	}
+
+	&.warning {
+		background-color: var(--md-surface-warning-background-color-variant);
+		border-color: var(--md-surface-warning-border-color-variant);
+		color: var(--md-surface-warning-font-color-variant);
+	}
+
+	&.error {
+		background-color: var(--md-surface-error-background-color);
+		border-color: var(--md-surface-error-border-color);
+		color: var(--md-surface-error-font-color);
+	}
 }
