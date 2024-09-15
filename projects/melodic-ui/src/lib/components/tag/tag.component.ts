@@ -1,7 +1,7 @@
 import { Component, effect, ElementRef, inject, input, InputSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export type TagType = 'default' | 'brand' | 'info' | 'success' | 'warning' | 'error';
+export type TagType = 'default' | 'brand' | 'tertiary' | 'info' | 'success' | 'warning' | 'error';
 
 @Component({
 	selector: 'md-tag',
