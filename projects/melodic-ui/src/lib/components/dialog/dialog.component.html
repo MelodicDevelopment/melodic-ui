@@ -1,0 +1,13 @@
+@if (hasHeader()) {
+	<div class="md-dialog-header">
+		<ng-content select="[md-dialog-header]"></ng-content>
+	</div>
+}
+
+<ng-content></ng-content>
+
+@if (hasFooter()) {
+	<div class="md-dialog-footer">
+		<ng-content select="[md-dialog-footer]"></ng-content>
+	</div>
+}

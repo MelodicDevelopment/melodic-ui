@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 export class MDProgressBarComponent {
 	public progress: InputSignal<number> = input(0);
 	public height: InputSignal<number> = input(0);
+	public disabled: InputSignal<boolean> = input(false);
 
 	@HostBinding('style.height')
 	private get _height() {
@@ -19,5 +20,10 @@ export class MDProgressBarComponent {
 		}
 
 		return `${this.height()}px`;
+	}
+
+	@HostBinding('class.disabled')
+	private get _disabled() {
+		return this.disabled();
 	}
 }

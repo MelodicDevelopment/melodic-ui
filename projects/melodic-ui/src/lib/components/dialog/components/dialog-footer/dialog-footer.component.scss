@@ -1,0 +1,10 @@
+md-dialog-footer {
+	display: flex;
+
+	[md-dialog-footer] {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: var(--md-spacing-md);
+	}
+}
