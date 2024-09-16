@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
-import { MDDialogRef, MD_DIALOG_REF, MDDialogComponent, MDDialogHeaderComponent, MDDialogHeaderDirective, MDDialogFooterDirective } from '@melodic-ui-dist';
+import { MDDialogRef, MD_DIALOG_REF, MDDialogModule } from '@melodic-ui-dist';
 import { TestDialogOneInnerComponent } from './test-dialog-one-inner.component';
 
 @Component({
 	selector: 'app-test-dialog-one',
 	standalone: true,
-	imports: [CommonModule, TestDialogOneInnerComponent, MDDialogComponent, MDDialogHeaderComponent, MDDialogHeaderDirective, MDDialogFooterDirective],
+	imports: [CommonModule, TestDialogOneInnerComponent, MDDialogModule],
 	templateUrl: './test-dialog-one.component.html',
 	styleUrl: './test-dialog-one.component.scss'
 })

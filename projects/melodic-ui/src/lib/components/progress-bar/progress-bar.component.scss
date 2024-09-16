@@ -12,4 +12,10 @@
 		border-top-right-radius: var(--md-radius-md);
 		border-bottom-right-radius: var(--md-radius-md);
 	}
+
+	&.disabled {
+		div[progress] {
+			background-color: var(--md-colors-gray-300);
+		}
+	}
 }

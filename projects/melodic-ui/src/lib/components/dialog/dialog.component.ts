@@ -2,7 +2,6 @@ import { AfterContentInit, Component, ContentChild, ElementRef, inject, QueryLis
 import { CommonModule } from '@angular/common';
 import { MDDialogHeaderDirective } from './directives/md-dialog-header.directive';
 import { MDDialogFooterDirective } from './directives/md-dialog-footer.directive';
-import { MD_DIALOG_REF, MDDialogRef } from './dialog.service';
 import { MDIconComponent } from '../icon/icon.component';
 
 @Component({
