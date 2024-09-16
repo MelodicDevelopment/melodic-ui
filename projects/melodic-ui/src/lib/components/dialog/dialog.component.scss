@@ -12,7 +12,7 @@
 		align-items: center;
 		justify-content: space-between;
 		gap: var(--md-spacing-md);
-		margin: calc(var(--md-spacing-xl) * -1) calc(var(--md-spacing-xl) * -1) var(--md-spacing-xl);
+		margin: calc(var(--md-spacing-xl) * -1) calc(var(--md-spacing-xl) * -1) var(--md-spacing-none);
 		padding: var(--md-spacing-xl);
 	}
 
@@ -21,7 +21,7 @@
 		align-items: center;
 		justify-content: flex-end;
 		gap: var(--md-spacing-md);
-		margin: var(--md-spacing-xl) calc(var(--md-spacing-xl) * -1) calc(var(--md-spacing-xl) * -1);
+		margin: var(--md-spacing-none) calc(var(--md-spacing-xl) * -1) calc(var(--md-spacing-xl) * -1);
 		padding: var(--md-spacing-xl);
 	}
 }

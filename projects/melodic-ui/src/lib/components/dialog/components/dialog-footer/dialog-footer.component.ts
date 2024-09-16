@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Host, Optional, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MDDialogRef, MD_DIALOG_REF } from '../../dialog.service';
+import { MDDialogComponent } from '../../dialog.component';
 
 @Component({
 	selector: 'md-dialog-footer',
@@ -10,10 +10,10 @@ import { MDDialogRef, MD_DIALOG_REF } from '../../dialog.service';
 	styleUrl: './dialog-footer.component.scss',
 	encapsulation: ViewEncapsulation.None
 })
-export class MDDialogFooterComponent implements OnInit {
-	private _dialogRef: MDDialogRef = inject(MD_DIALOG_REF);
-
-	ngOnInit(): void {
-		console.log('MDDialogFooterComponent initialized', this._dialogRef);
+export class MDDialogFooterComponent {
+	constructor(@Host() @Optional() private _dialogComponent: MDDialogComponent) {
+		if (!this._dialogComponent) {
+			console.error('The md-dialog-footer component must be used within an md-dialog component');
+		}
 	}
 }

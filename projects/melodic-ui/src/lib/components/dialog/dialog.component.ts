@@ -13,8 +13,6 @@ import { MDIconComponent } from '../icon/icon.component';
 	styleUrl: './dialog.component.scss'
 })
 export class MDDialogComponent implements AfterContentInit {
-	private _dialogRef: MDDialogRef = inject(MD_DIALOG_REF);
-
 	@ContentChild(MDDialogHeaderDirective) private _dialogHeader!: QueryList<MDDialogHeaderDirective | undefined>;
 	@ContentChild(MDDialogFooterDirective) private _dialogFooter!: QueryList<MDDialogFooterDirective | undefined>;
 
@@ -29,9 +27,5 @@ export class MDDialogComponent implements AfterContentInit {
 		if (this._dialogFooter) {
 			this.hasFooter.set(true);
 		}
-	}
-
-	close(): void {
-		this._dialogRef.close();
 	}
 }

@@ -22,6 +22,6 @@ export class MDDialogHeaderDirective {
 		const mdHeaderComponentRef = this._viewContainerRef.createComponent<MDDialogHeaderComponent>(MDDialogHeaderComponent);
 
 		const mdHeaderComponent = mdHeaderComponentRef.location.nativeElement as HTMLElement;
-		mdHeaderComponent.appendChild(this._headerContent);
+		mdHeaderComponent.prepend(this._headerContent);
 	}
 }
