@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal, Type, Writa
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DialogService } from '@melodic-ui-dist';
+import { MDDialogService } from '@melodic-ui-dist';
 import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MelodicUiTestAreaComponent implements OnInit {
-	private _dialogService: DialogService = inject(DialogService);
+	private _dialogService: MDDialogService = inject(MDDialogService);
 
 	public progressBarValue: number = 75;
 	public selectedDates: WritableSignal<Date[]> = signal<Date[]>([]);

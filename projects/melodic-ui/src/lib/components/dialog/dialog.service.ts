@@ -13,18 +13,17 @@ import {
 	signal
 } from '@angular/core';
 import { MDOverlayComponent } from '../overlay/overlay.component';
-import { MDDialogComponent } from './dialog.component';
 
-export const MD_DIALOG_REF = new InjectionToken<DialogRef>('MD_DIALOG_REF');
+export const MD_DIALOG_REF = new InjectionToken<MDDialogRef>('MD_DIALOG_REF');
 
-export class DialogRef {
+export class MDDialogRef {
 	public afterOpened: WritableSignal<boolean>;
 	public afterClosed: WritableSignal<boolean>;
 	public afterAllClosed: WritableSignal<boolean> = signal<boolean>(false);
 
 	constructor(
 		private _overlayComponentRef: ComponentRef<MDOverlayComponent>,
-		private _dialogService: DialogService
+		private _dialogService: MDDialogService
 	) {
 		this.afterOpened = _overlayComponentRef.instance.afterOpened;
 		this.afterClosed = _overlayComponentRef.instance.afterClosed;
@@ -43,15 +42,14 @@ export class DialogRef {
 @Injectable({
 	providedIn: 'root'
 })
-export class DialogService {
+export class MDDialogService {
 	private _appRef: ApplicationRef = inject(ApplicationRef);
 
 	private _dialogs: ComponentRef<MDOverlayComponent>[] = [];
 
-	public open<T extends Type<Component>>(component: T, inputs: { [key: string]: Signal<unknown> } = {}): DialogRef {
+	public open<T extends Type<Component>>(component: T, inputs: { [key: string]: Signal<unknown> } = {}): MDDialogRef {
 		const overlayComponentRef = this.createOverlayComponent();
-		const dialogComponentRef = this.createDialogComponent(overlayComponentRef);
-		const providedComponentRefWithDialogRef = this.createProvidedComponent(overlayComponentRef, dialogComponentRef, component, inputs);
+		const providedComponentRefWithDialogRef = this.createProvidedComponent(overlayComponentRef, component, inputs);
 
 		this._dialogs.push(overlayComponentRef);
 
@@ -59,7 +57,6 @@ export class DialogService {
 	}
 
 	public close(dialog: ComponentRef<MDOverlayComponent>) {
-		(dialog.instance.innerComponentRef().instance as MDDialogComponent).providedComponentRef().destroy();
 		dialog.instance.innerComponentRef().destroy();
 		dialog.destroy();
 		this._dialogs = this._dialogs.filter((d) => d !== dialog);
@@ -83,45 +80,31 @@ export class DialogService {
 		return overlayComponentRef;
 	}
 
-	private createDialogComponent(overlayComponentRef: ComponentRef<MDOverlayComponent>): ComponentRef<MDDialogComponent> {
-		const dialogComponentRef: ComponentRef<MDDialogComponent> = createComponent(MDDialogComponent, {
-			environmentInjector: this._appRef.injector
-		});
-
-		this._appRef.attachView(dialogComponentRef.hostView);
-		overlayComponentRef.location.nativeElement.appendChild(dialogComponentRef.location.nativeElement);
-
-		overlayComponentRef.setInput('innerComponentRef', dialogComponentRef);
-
-		return dialogComponentRef;
-	}
-
 	private createProvidedComponent<T extends Type<Component>>(
 		overlayComponentRef: ComponentRef<MDOverlayComponent>,
-		dialogComponentRef: ComponentRef<MDDialogComponent>,
 		component: T,
 		inputs: { [key: string]: Signal<unknown> } = {}
-	): { dialogRef: DialogRef; providedComponentRef: ComponentRef<Component> } {
-		const dialogRef = new DialogRef(overlayComponentRef, this);
+	): { dialogRef: MDDialogRef; providedComponentRef: ComponentRef<Component> } {
+		const dialogRef = new MDDialogRef(overlayComponentRef, this);
 
 		const dialogInjector = Injector.create({
 			providers: [{ provide: MD_DIALOG_REF, useValue: dialogRef }]
 		});
 
-		const providedComponentRef: ComponentRef<Component> = createComponent(component, {
+		const innerComponentRef: ComponentRef<Component> = createComponent(component, {
 			environmentInjector: this._appRef.injector,
 			elementInjector: dialogInjector
 		});
 
 		Object.keys(inputs).forEach(([key, signal]) => {
-			providedComponentRef.setInput(key, signal);
+			innerComponentRef.setInput(key, signal);
 		});
 
-		this._appRef.attachView(providedComponentRef.hostView);
-		dialogComponentRef.location.nativeElement.appendChild(providedComponentRef.location.nativeElement);
+		this._appRef.attachView(innerComponentRef.hostView);
+		overlayComponentRef.location.nativeElement.appendChild(innerComponentRef.location.nativeElement);
 
-		dialogComponentRef.setInput('providedComponentRef', providedComponentRef);
+		overlayComponentRef.setInput('innerComponentRef', innerComponentRef);
 
-		return { dialogRef, providedComponentRef };
+		return { dialogRef, providedComponentRef: innerComponentRef };
 	}
 }
