@@ -6,15 +6,28 @@
 @import './dsl/radius';
 @import './dsl/spacing';
 @import './dsl/surfaces';
-@import './dsl/widths';
-
-/** typography */
-@import './dsl/partials/typography.mixins';
 @import './dsl/typography';
+@import './dsl/widths';
 
 /** component styling */
 @import './dsl/buttons';
 @import './dsl/form-inputs';
+
+// Example of creating a surface
+//@import './dsl/partials/surface.mixins';
+
+// $testSurface: (
+// 	'background-color': '#333333',
+// 	'border-color': '#444444',
+// 	'font-color': '#555555'
+// );
+
+// $additionalProps: (
+// 	'border-radius': '4px',
+// 	'padding': '16px'
+// );
+
+// @include surface('test-surface', $testSurface, $additionalProps);
 
 html,
 body {

@@ -1,0 +1,38 @@
+@function add-surface($surfaceName, $defaultProps, $variantProps: null) {
+	$backgroundColor: map-get($defaultProps, 'background-color');
+	$borderColor: map-get($defaultProps, 'border-color');
+	$fontColor: map-get($defaultProps, 'font-color');
+
+	@if $backgroundColor == null or $borderColor == null or $fontColor == null {
+		@error 'Missing required properties for surface: background-color, border-color, font-color';
+	}
+
+	$cssVars: (
+		'--md-surface-#{$surfaceName}-background-color': $backgroundColor,
+		'--md-surface-#{$surfaceName}-border-color': $borderColor,
+		'--md-surface-#{$surfaceName}-font-color': $fontColor
+	);
+
+	@if $variantProps {
+		@each $key, $value in $variantProps {
+			$cssVars: map-merge(
+				$cssVars,
+				(
+					'--md-surface-#{$surfaceName}-#{$key}': $value
+				)
+			);
+		}
+	}
+
+	@return $cssVars;
+}
+
+@mixin surface($surfaceName, $defaultProps, $variantProps: null) {
+	$properties: add-surface($surfaceName, $defaultProps, $variantProps);
+
+	:root {
+		@each $key, $value in $properties {
+			#{$key}: #{$value};
+		}
+	}
+}
