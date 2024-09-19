@@ -47,6 +47,12 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 	--md-surface-primary-border-color-brand: var(--md-colors-brand-300);
 	--md-surface-primary-border-color-brand-variant: var(--md-colors-brand-600);
 	--md-surface-primary-border-color-error: var(--md-colors-error-300);
+	--md-surface-primary-font-color-brand: var(--md-colors-brand-600); // links
+	--md-surface-primary-font-color-brand-hover: var(--md-colors-brand-400);
+	--md-surface-primary-font-color-brand-variant-1: var(--md-colors-brand-900);
+	--md-surface-primary-font-color-brand-variant-2: var(--md-colors-brand-700);
+	--md-surface-primary-font-color-light: var(--md-colors-gray-200);
+	--md-surface-primary-font-color-light-hover: var(--md-colors-gray-300);
 
 	// secondary surface (brand 600 green)
 	--md-surface-secondary-background-color: var(--md-colors-brand-600);
