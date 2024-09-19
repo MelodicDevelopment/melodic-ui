@@ -51,6 +51,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 	--md-surface-primary-font-color-brand-hover: var(--md-colors-brand-400);
 	--md-surface-primary-font-color-brand-variant-1: var(--md-colors-brand-900);
 	--md-surface-primary-font-color-brand-variant-2: var(--md-colors-brand-700);
+	--md-surface-primary-font-color-gray-variant-1: var(--md-colors-gray-700);
+	--md-surface-primary-font-color-gray-variant-1-hover: var(--md-colors-gray-800);
+	--md-surface-primary-font-color-gray-variant-2: var(--md-colors-gray-600);
+	--md-surface-primary-font-color-gray-variant-2-hover: var(--md-colors-gray-700);
 	--md-surface-primary-font-color-light: var(--md-colors-gray-200);
 	--md-surface-primary-font-color-light-hover: var(--md-colors-gray-300);
 
