@@ -216,6 +216,45 @@ input[type='checkbox'][md-form-input] {
 	}
 }
 
+input[type='checkbox'][md-form-toggle] {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 44px;
+	height: 24px;
+	background-color: var(--md-surface-disabled-background-color);
+	position: relative;
+	border-radius: var(--md-radius-full);
+	outline: none;
+	cursor: pointer;
+	transition: background-color 0.4s;
+
+	&::before {
+		content: '';
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		left: 2px;
+		bottom: 2px;
+		background-color: var(--md-surface-primary-background-color);
+		border-radius: var(--md-radius-full);
+		transition: transform 0.4s;
+		box-shadow: var(--md-drop-shadow-sm);
+	}
+
+	&:checked {
+		background-color: var(--md-surface-secondary-background-color);
+	}
+
+	&:checked::before {
+		transform: translateX(20px);
+	}
+
+	&:focus {
+		box-shadow: var(--md-drop-shadow-xs-input-active);
+		outline-offset: 1px;
+	}
+}
+
 input[type='date'][md-date-picker-input] {
 	appearance: none;
 	-webkit-appearance: none;
