@@ -1,0 +1,17 @@
+<md-content-box class="options-list">
+	@for (option of options(); track option.value) {
+		<div class="option">
+			@if (option.component) {
+				<ng-container *ngComponentOutlet="option.component; context: { option }"></ng-container>
+			} @else {
+				<ng-container *ngTemplateOutlet="optionTemplate; context: { option }"></ng-container>
+			}
+		</div>
+	}
+</md-content-box>
+
+<ng-template #optionTemplate let-option="option">
+	<span>{{ option.label }}</span>
+	<!-- <md-icon [icon]="navItem.linkIcon"></md-icon>
+	<span>{{ navItem.linkText }}</span> -->
+</ng-template>

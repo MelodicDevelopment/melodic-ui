@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal, Type, Writa
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MDDialogService } from '@melodic-ui-dist';
+import { IMDDropDownOption, MDDialogService } from '@melodic-ui';
 import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
 
 @Component({
@@ -22,6 +22,29 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	public initDates: Date[] = [new Date('2024-09-07 00:00:00')]; // NOTE: Zero out times to avoid timezone issues
 	public selectOptions: string[] = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 	public selectedOptions: string[] = ['Option 3', 'Option 4', 'Option 5'];
+
+	public dropDownOptions: IMDDropDownOption[] = [
+		{
+			value: 'Option 1',
+			label: 'Option 1'
+		},
+		{
+			value: 'Option 2',
+			label: 'Option 2'
+		},
+		{
+			value: 'Option 3',
+			label: 'Option 3'
+		},
+		{
+			value: 'Option 4',
+			label: 'Option 4'
+		},
+		{
+			value: 'Option 5',
+			label: 'Option 5'
+		}
+	];
 
 	public form: FormGroup = new FormGroup({
 		buttonGroupInput: new FormControl('')

@@ -30,7 +30,7 @@
 							},
 							{
 								"glob": "**/*",
-								"input": "dist/melodic-ui/lib/assets",
+								"input": "projects/melodic-ui/src/lib/assets",
 								"output": "public"
 							}
 						],
@@ -92,7 +92,7 @@
 							},
 							{
 								"glob": "**/*",
-								"input": "dist/melodic-ui/lib/assets",
+								"input": "projects/melodic-ui/src/lib/assets",
 								"output": "public"
 							}
 						],

@@ -22,6 +22,13 @@ export class MDSelectInputDirective implements AfterViewInit {
 		this._selectContainer.classList.add('md-select-container');
 		this._selectEl.after(this._selectContainer);
 		this._selectContainer.appendChild(this._selectEl);
+
+		this._selectEl.addEventListener('click', (event) => {
+			console.log('clicked');
+
+			event.stopPropagation();
+			event.preventDefault();
+		});
 	}
 
 	ngAfterViewInit() {
