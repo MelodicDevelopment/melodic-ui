@@ -1,4 +1,6 @@
-<md-content-box class="options-list">
+<input type="text" md-form-input readonly [placeholder]="placeholder()" (input)="input.emit($event)" (focus)="focus.emit()" (blur)="blur.emit()" />
+
+<md-content-box class="options-list" [ngClass]="{ active: isActive() }">
 	@for (option of options(); track option.value) {
 		<div class="option">
 			@if (option.component) {
@@ -11,7 +13,7 @@
 </md-content-box>
 
 <ng-template #optionTemplate let-option="option">
-	<span>{{ option.label }}</span>
-	<!-- <md-icon [icon]="navItem.linkIcon"></md-icon>
-	<span>{{ navItem.linkText }}</span> -->
+	<div class="option-template">
+		<span>{{ option.label }}</span>
+	</div>
 </ng-template>
