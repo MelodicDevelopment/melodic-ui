@@ -1,3 +1,3 @@
-import { MDDatePickerInputDirective, MDSelectInputDirective } from '@melodic-ui';
+import { MDDatePickerInputDirective } from '@melodic-ui';
 
-export const MD_DIRECTIVES = [MDDatePickerInputDirective, MDSelectInputDirective];
+export const MD_DIRECTIVES = [MDDatePickerInputDirective];
