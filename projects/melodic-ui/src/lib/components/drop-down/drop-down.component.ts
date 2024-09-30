@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import {
 	Component,
 	computed,
-	effect,
 	ElementRef,
-	HostListener,
+	forwardRef,
 	inject,
+	Input,
 	input,
 	InputSignal,
+	OnInit,
 	output,
 	OutputEmitterRef,
 	Signal,
@@ -17,9 +18,10 @@ import {
 } from '@angular/core';
 import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export interface IMDDropDownOption {
-	value: string;
+	value: string | number;
 	label: string;
 	selected?: boolean;
 	component?: Type<Component>;
@@ -30,14 +32,26 @@ export interface IMDDropDownOption {
 	standalone: true,
 	imports: [CommonModule, MDContentBoxComponent, MDIconComponent],
 	templateUrl: './drop-down.component.html',
-	styleUrl: './drop-down.component.scss'
+	styleUrl: './drop-down.component.scss',
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => MDDropDownComponent),
+			multi: true
+		}
+	]
 })
-export class MDDropDownComponent {
+export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 	private _elementRef: ElementRef = inject(ElementRef);
 
+	private onChange: (value: unknown) => void = () => {};
+	private onTouched: () => void = () => {};
+
+	@Input() public value: unknown;
 	public options: InputSignal<IMDDropDownOption[]> = input.required();
 	public multiple: InputSignal<boolean> = input(false);
 	public placeholder: InputSignal<string> = input('');
+	public disabled: InputSignal<boolean> = input(false);
 
 	public input: OutputEmitterRef<unknown> = output<unknown>();
 	public change: OutputEmitterRef<unknown> = output<unknown>();
@@ -59,14 +73,22 @@ export class MDDropDownComponent {
 		document.addEventListener('click', (event: MouseEvent) => {
 			if (!this._elementRef.nativeElement.contains(event.target as Node)) {
 				this.isActive.set(false);
+				this.onTouched();
 			}
 		});
 
 		this.internalOptions.set(this.options());
-	}
 
-	public onChange(value: unknown): void {
-		this.change.emit(value);
+		if (this.value) {
+			if (Array.isArray(this.value)) {
+				this.internalOptions.set([
+					...this.internalOptions().map((o) => ({ ...o, selected: (this.value as Array<string | number>).includes(o.value) }))
+				]);
+				return;
+			}
+
+			this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: this.value === o.value }))]);
+		}
 	}
 
 	public optionSelected(option: IMDDropDownOption): void {
@@ -79,10 +101,27 @@ export class MDDropDownComponent {
 
 		this.internalOptions.set([...this.internalOptions()]);
 
-		this.change.emit(
+		this.writeValue(
 			this.internalOptions()
 				.filter((o) => o.selected)
 				.map((o) => o.value)
 		);
+	}
+
+	writeValue(value: unknown): void {
+		this.value = value;
+
+		this.onChange(this.value);
+		this.onTouched();
+
+		this.change.emit(this.value);
+	}
+
+	registerOnChange(fn: any): void {
+		this.onChange = fn;
+	}
+
+	registerOnTouched(fn: any): void {
+		this.onTouched = fn;
 	}
 }

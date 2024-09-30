@@ -5,6 +5,24 @@
 	display: flex;
 	flex: 1;
 
+	&.invalid,
+	&.ng-invalid {
+		&:not(.ng-untouched) {
+			input {
+				margin-top: -1px;
+				margin-left: -1px;
+				margin-right: -1px;
+
+				border: 1px solid var(--md-surface-primary-border-color-error);
+				border-radius: var(--md-radius-md);
+
+				&:focus-within {
+					box-shadow: var(--md-drop-shadow-xs-input-error);
+				}
+			}
+		}
+	}
+
 	div.dropdown-input-wrapper {
 		display: flex;
 		align-items: center;
@@ -36,6 +54,32 @@
 			height: 40px;
 			padding: 0px 16px;
 			gap: var(--md-spacing-md);
+
+			span {
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+				gap: var(--md-spacing-xs);
+
+				md-icon {
+					display: none;
+					font-size: 16px;
+					cursor: pointer;
+				}
+			}
+
+			&.multiple {
+				span.selected-option {
+					background-color: var(--md-surface-primary-background-color);
+					border: 1px solid var(--md-surface-primary-border-color);
+					border-radius: var(--md-radius-xs);
+					padding: var(--md-spacing-xs) var(--md-spacing-md);
+
+					md-icon {
+						display: inline;
+					}
+				}
+			}
 		}
 	}
 
@@ -61,10 +105,14 @@
 			align-items: center;
 			justify-content: space-between;
 			padding: var(--md-spacing-md) var(--md-spacing-xl);
-			margin: var(--md-spacing-xxs);
+			margin: var(--md-spacing-xxs) var(--md-spacing-xxs) calc(var(--md-spacing-xxs) - 1px);
 			border-radius: var(--md-radius-xs);
 			white-space: nowrap;
 			cursor: pointer;
+
+			&.last-child {
+				margin-bottom: var(--md-spacing-xxs);
+			}
 
 			&:hover {
 				background-color: var(--md-surface-primary-background-color-hover);

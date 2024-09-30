@@ -23,7 +23,30 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	public selectOptions: string[] = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 	public selectedOptions: string[] = ['Option 3', 'Option 4', 'Option 5'];
 
-	public dropDownOptions: IMDDropDownOption[] = [
+	public dropDownOptions1: IMDDropDownOption[] = [
+		{
+			value: 1,
+			label: 'Option 1'
+		},
+		{
+			value: 2,
+			label: 'Option 2'
+		},
+		{
+			value: 3,
+			label: 'Option 3'
+		},
+		{
+			value: 4,
+			label: 'Option 4'
+		},
+		{
+			value: 5,
+			label: 'Option 5'
+		}
+	];
+
+	public dropDownOptions2: IMDDropDownOption[] = [
 		{
 			value: 'Option 1',
 			label: 'Option 1'
@@ -46,23 +69,54 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		}
 	];
 
-	public form: FormGroup = new FormGroup({
-		buttonGroupInput: new FormControl('')
-	});
+	public dropDownOptions3: IMDDropDownOption[] = [
+		{
+			value: 'Option 1',
+			label: 'Option 1'
+		},
+		{
+			value: 'Option 2',
+			label: 'Option 2'
+		}
+	];
+
+	public dropDownOptions4: IMDDropDownOption[] = [
+		{
+			value: 'Option 3',
+			label: 'Option 3'
+		},
+		{
+			value: 'Option 4',
+			label: 'Option 4'
+		}
+	];
 
 	ngOnInit(): void {
-		this.form.get('buttonGroupInput')?.valueChanges.subscribe((value) => {
+		this.buttonGroupForm.get('buttonGroupInput')?.valueChanges.subscribe((value) => {
 			console.log('Button group input changed:', value);
+		});
+
+		this.dropdownFormGroup.get('dropdownInput')?.valueChanges.subscribe((value) => {
+			console.log('Drop down input changed:', value);
 		});
 	}
 
+	public buttonGroupForm: FormGroup = new FormGroup({
+		buttonGroupInput: new FormControl('')
+	});
+
 	toggleButtonGroupDisabled(): void {
-		if (this.form.get('buttonGroupInput')?.disabled) {
-			this.form.get('buttonGroupInput')?.enable();
+		if (this.buttonGroupForm.get('buttonGroupInput')?.disabled) {
+			this.buttonGroupForm.get('buttonGroupInput')?.enable();
 		} else {
-			this.form.get('buttonGroupInput')?.disable();
+			this.buttonGroupForm.get('buttonGroupInput')?.disable();
 		}
 	}
+
+	public dropdownFormGroup: FormGroup = new FormGroup({
+		dropdownInput1: new FormControl('', Validators.required),
+		dropdownInput2: new FormControl('')
+	});
 
 	captureDate(dates: Date[]): void {
 		this.selectedDates.set(dates);

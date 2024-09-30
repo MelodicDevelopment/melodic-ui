@@ -7,11 +7,15 @@
 		(input)="input.emit($event)"
 		(focus)="focus.emit()"
 		(blur)="blur.emit()"
+		[disabled]="disabled()"
 	/>
 
-	<div class="selected-options-list">
+	<div class="selected-options-list" [ngClass]="{ multiple: multiple() }">
 		@for (option of selectedOptions(); track option.value) {
-			<span class="selected-option">{{ option.label }}</span>
+			<span class="selected-option">
+				{{ option.label }}
+				<md-icon (click)="optionSelected(option)">close</md-icon>
+			</span>
 		}
 	</div>
 </div>
