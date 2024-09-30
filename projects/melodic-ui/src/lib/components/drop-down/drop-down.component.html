@@ -23,8 +23,8 @@
 <md-content-box class="options-list" [ngClass]="{ active: isActive() }">
 	@for (option of internalOptions(); track option.value) {
 		<div class="option" [ngClass]="{ selected: option.selected }" (click)="optionSelected(option)">
-			@if (option.component) {
-				<ng-container *ngComponentOutlet="option.component; context: { option }"></ng-container>
+			@if (optionComponent() !== undefined) {
+				<ng-container *ngComponentOutlet="optionComponent()!; inputs: { option }"></ng-container>
 			} @else {
 				<ng-container *ngTemplateOutlet="optionTemplate; context: { option }"></ng-container>
 			}

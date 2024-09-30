@@ -24,7 +24,6 @@ export interface IMDDropDownOption {
 	value: string | number;
 	label: string;
 	selected?: boolean;
-	component?: Type<Component>;
 }
 
 @Component({
@@ -52,6 +51,7 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 	public multiple: InputSignal<boolean> = input(false);
 	public placeholder: InputSignal<string> = input('');
 	public disabled: InputSignal<boolean> = input(false);
+	public optionComponent: InputSignal<Type<Component> | undefined> = input();
 
 	public input: OutputEmitterRef<unknown> = output<unknown>();
 	public change: OutputEmitterRef<unknown> = output<unknown>();
@@ -71,9 +71,11 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 		});
 
 		document.addEventListener('click', (event: MouseEvent) => {
-			if (!this._elementRef.nativeElement.contains(event.target as Node)) {
-				this.isActive.set(false);
-				this.onTouched();
+			if (this.isActive()) {
+				if (!this._elementRef.nativeElement.contains(event.target as Node)) {
+					this.isActive.set(false);
+					this.onTouched();
+				}
 			}
 		});
 

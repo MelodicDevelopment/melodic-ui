@@ -154,7 +154,12 @@
 	<div class="horizontal-spacer">
 		<form [formGroup]="dropdownFormGroup">
 			<md-drop-down formControlName="dropdownInput1" [options]="dropDownOptions3" placeholder="Make a selection..."></md-drop-down><br /><br />
-			<md-drop-down formControlName="dropdownInput2" [options]="dropDownOptions4" placeholder="Make a selection..."></md-drop-down>
+			<md-drop-down
+				formControlName="dropdownInput2"
+				[options]="dropDownOptions4"
+				placeholder="Make a selection..."
+				[optionComponent]="customDropDownOptionComponent"
+			></md-drop-down>
 		</form>
 	</div>
 </div>
