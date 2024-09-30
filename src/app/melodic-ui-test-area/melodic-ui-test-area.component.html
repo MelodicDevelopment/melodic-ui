@@ -144,7 +144,11 @@
 	<md-header size="xs" variant="regular">Drop Downs</md-header>
 
 	<div class="horizontal-spacer">
-		<md-drop-down [options]="dropDownOptions"></md-drop-down>
+		<md-drop-down [options]="dropDownOptions" (change)="dropDownChange($event)" placeholder="Make a selection..."></md-drop-down>
+	</div>
+
+	<div class="horizontal-spacer">
+		<md-drop-down [options]="dropDownOptions" (change)="dropDownChange($event)" placeholder="Make a selection..." [multiple]="true"></md-drop-down>
 	</div>
 </div>
 

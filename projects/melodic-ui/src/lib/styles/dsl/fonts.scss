@@ -1,3 +1,4 @@
+@import './partials/typography.mixins';
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 /* fallback */
@@ -9,33 +10,11 @@
 }
 
 .material-icons {
-	font-family: 'Material Symbols Outlined';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;
-	line-height: 1;
-	letter-spacing: normal;
-	text-transform: none;
-	display: inline-block;
-	white-space: nowrap;
-	word-wrap: normal;
-	direction: ltr;
-	font-feature-settings: 'liga';
-	-webkit-font-feature-settings: 'liga';
-	-webkit-font-smoothing: antialiased;
-	font-variation-settings:
-		'FILL' 0,
-		'wght' 400,
-		'GRAD' 0,
-		'opsz' 24;
+	@include material-icons();
 }
 
 .material-icons-filled {
-	font-variation-settings:
-		'FILL' 1,
-		'wght' 400,
-		'GRAD' 0,
-		'opsz' 24;
+	@include material-icons(1);
 }
 
 :root {

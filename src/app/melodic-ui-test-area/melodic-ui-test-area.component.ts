@@ -75,4 +75,8 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	buttonToggleChange(value: unknown): void {
 		console.log('Button toggle changed:', value);
 	}
+
+	dropDownChange(value: unknown): void {
+		console.log('Drop down changed:', value);
+	}
 }
