@@ -3,8 +3,9 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal, Type, Writa
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MDDialogService } from '@melodic-ui-dist';
+import { IMDDropDownOption, MDDialogService } from '@melodic-ui';
 import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
+import { CustomDropDownOptionComponent } from '../shared/components/custom-dropdown-option/custom-dropdown-option.component';
 
 @Component({
 	selector: 'app-melodic-ui-test-area',
@@ -23,23 +24,102 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	public selectOptions: string[] = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 	public selectedOptions: string[] = ['Option 3', 'Option 4', 'Option 5'];
 
-	public form: FormGroup = new FormGroup({
-		buttonGroupInput: new FormControl('')
-	});
+	public customDropDownOptionComponent: Type<Component> = CustomDropDownOptionComponent as Type<Component>;
+
+	public dropDownOptions1: IMDDropDownOption[] = [
+		{
+			value: 1,
+			label: 'Option 1'
+		},
+		{
+			value: 2,
+			label: 'Option 2'
+		},
+		{
+			value: 3,
+			label: 'Option 3'
+		},
+		{
+			value: 4,
+			label: 'Option 4'
+		},
+		{
+			value: 5,
+			label: 'Option 5'
+		}
+	];
+
+	public dropDownOptions2: IMDDropDownOption[] = [
+		{
+			value: 'Option 1',
+			label: 'Option 1'
+		},
+		{
+			value: 'Option 2',
+			label: 'Option 2'
+		},
+		{
+			value: 'Option 3',
+			label: 'Option 3'
+		},
+		{
+			value: 'Option 4',
+			label: 'Option 4'
+		},
+		{
+			value: 'Option 5',
+			label: 'Option 5'
+		}
+	];
+
+	public dropDownOptions3: IMDDropDownOption[] = [
+		{
+			value: 'Option 1',
+			label: 'Option 1'
+		},
+		{
+			value: 'Option 2',
+			label: 'Option 2'
+		}
+	];
+
+	public dropDownOptions4: IMDDropDownOption[] = [
+		{
+			value: 'Option 3',
+			label: 'Option 3'
+		},
+		{
+			value: 'Option 4',
+			label: 'Option 4'
+		}
+	];
 
 	ngOnInit(): void {
-		this.form.get('buttonGroupInput')?.valueChanges.subscribe((value) => {
+		this.buttonGroupForm.get('buttonGroupInput')?.valueChanges.subscribe((value) => {
 			console.log('Button group input changed:', value);
+		});
+
+		this.dropdownFormGroup.get('dropdownInput')?.valueChanges.subscribe((value) => {
+			console.log('Drop down input changed:', value);
 		});
 	}
 
+	public buttonGroupForm: FormGroup = new FormGroup({
+		buttonGroupInput: new FormControl('')
+	});
+
 	toggleButtonGroupDisabled(): void {
-		if (this.form.get('buttonGroupInput')?.disabled) {
-			this.form.get('buttonGroupInput')?.enable();
+		if (this.buttonGroupForm.get('buttonGroupInput')?.disabled) {
+			this.buttonGroupForm.get('buttonGroupInput')?.enable();
 		} else {
-			this.form.get('buttonGroupInput')?.disable();
+			this.buttonGroupForm.get('buttonGroupInput')?.disable();
 		}
 	}
+
+	public dropdownFormGroup: FormGroup = new FormGroup({
+		dropdownInput1: new FormControl('', Validators.required),
+		dropdownInput2: new FormControl('')
+	});
 
 	captureDate(dates: Date[]): void {
 		this.selectedDates.set(dates);
@@ -51,5 +131,9 @@ export class MelodicUiTestAreaComponent implements OnInit {
 
 	buttonToggleChange(value: unknown): void {
 		console.log('Button toggle changed:', value);
+	}
+
+	dropDownChange(value: unknown): void {
+		console.log('Drop down changed:', value);
 	}
 }

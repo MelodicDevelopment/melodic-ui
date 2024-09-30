@@ -49,7 +49,7 @@
 			<md-button-toggle value="3">Option 3</md-button-toggle>
 		</md-button-group>
 
-		<form [formGroup]="form">
+		<form [formGroup]="buttonGroupForm">
 			<md-button-group formControlName="buttonGroupInput" (change)="buttonToggleChange($event)" [multiple]="true">
 				<md-button-toggle value="1">Option 1</md-button-toggle>
 				<md-button-toggle value="2">Option 2</md-button-toggle>
@@ -137,6 +137,30 @@
 			Selected Date:<br />
 			{{ selectedDates().join(', ') }}
 		</div>
+	</div>
+</div>
+
+<div class="component-group">
+	<md-header size="xs" variant="regular">Drop Downs</md-header>
+
+	<div class="horizontal-spacer">
+		<md-drop-down [options]="dropDownOptions1" (change)="dropDownChange($event)" placeholder="Make a selection..." value="5"></md-drop-down>
+	</div>
+
+	<div class="horizontal-spacer">
+		<md-drop-down [options]="dropDownOptions2" (change)="dropDownChange($event)" placeholder="Make a selection..." [multiple]="true"></md-drop-down>
+	</div>
+
+	<div class="horizontal-spacer">
+		<form [formGroup]="dropdownFormGroup">
+			<md-drop-down formControlName="dropdownInput1" [options]="dropDownOptions3" placeholder="Make a selection..."></md-drop-down><br /><br />
+			<md-drop-down
+				formControlName="dropdownInput2"
+				[options]="dropDownOptions4"
+				placeholder="Make a selection..."
+				[optionComponent]="customDropDownOptionComponent"
+			></md-drop-down>
+		</form>
 	</div>
 </div>
 

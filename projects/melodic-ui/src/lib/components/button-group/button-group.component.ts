@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, ContentChildren, forwardRef, Input, output, OutputEmitterRef, QueryList } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, forwardRef, Input, OnInit, output, OutputEmitterRef, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MDButtonToggleComponent } from './components/button-toggle/button-toggle.component';
 
 @Component({
@@ -14,15 +14,10 @@ import { MDButtonToggleComponent } from './components/button-toggle/button-toggl
 			provide: NG_VALUE_ACCESSOR,
 			useExisting: forwardRef(() => MDButtonGroupComponent),
 			multi: true
-		},
-		{
-			provide: NG_VALIDATORS,
-			useExisting: forwardRef(() => MDButtonGroupComponent),
-			multi: true
 		}
 	]
 })
-export class MDButtonGroupComponent implements ControlValueAccessor, Validator, AfterViewInit {
+export class MDButtonGroupComponent implements ControlValueAccessor, OnInit, AfterViewInit {
 	private _values: unknown[] = [];
 
 	private onChange: (value: unknown) => void = () => {};
@@ -107,14 +102,5 @@ export class MDButtonGroupComponent implements ControlValueAccessor, Validator, 
 		this._buttonToggles.forEach((toggle) => {
 			toggle.disabled = isDisabled;
 		});
-	}
-
-	// Validator interface method
-	validate(_: AbstractControl): ValidationErrors | null {
-		if (!this.value) {
-			return { required: true };
-		}
-
-		return null;
 	}
 }

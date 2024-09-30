@@ -3,6 +3,10 @@
 	flex-direction: column;
 	gap: var(--md-spacing-2xl);
 
+	form {
+		flex: 1;
+	}
+
 	div.component-group {
 		border-top: 1px solid var(--md-surface-primary-border-color);
 		padding: var(--md-spacing-xl);
