@@ -49,6 +49,13 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		}
 	];
 
+	public dropDownOptions1Value: WritableSignal<number> = signal<number>(5);
+
+	public testUpdateDropDownOptions1Value(): void {
+		const randomNum = Math.floor(Math.random() * 5) + 1;
+		this.dropDownOptions1Value.set(randomNum);
+	}
+
 	public dropDownOptions2: IMDDropDownOption[] = [
 		{
 			value: 'Option 1',
@@ -99,7 +106,7 @@ export class MelodicUiTestAreaComponent implements OnInit {
 			console.log('Button group input changed:', value);
 		});
 
-		this.dropdownFormGroup.get('dropdownInput')?.valueChanges.subscribe((value) => {
+		this.dropdownFormGroup.get('dropdownInput1')?.valueChanges.subscribe((value) => {
 			console.log('Drop down input changed:', value);
 		});
 	}

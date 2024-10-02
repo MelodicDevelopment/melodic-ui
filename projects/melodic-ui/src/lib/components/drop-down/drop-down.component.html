@@ -14,7 +14,7 @@
 		@for (option of selectedOptions(); track option.value) {
 			<span class="selected-option">
 				{{ option.label }}
-				<md-icon (click)="optionSelected(option)">close</md-icon>
+				<md-icon (click)="optionSelected(option, $event)">close</md-icon>
 			</span>
 		}
 	</div>
