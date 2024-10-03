@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, inject, ViewContainerRef, WritableSignal } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, inject, output, OutputEmitterRef, ViewContainerRef, WritableSignal } from '@angular/core';
 import { MDDatePickerComponent } from '../components/date-picker/date-picker.component';
 
 @Directive({
@@ -11,6 +11,25 @@ export class MDDatePickerInputDirective implements AfterViewInit {
 	private _dateInputContainer: HTMLDivElement = document.createElement('div');
 	private _datePickerComponent: HTMLElement = document.createElement('div');
 	private _dateInputEl: HTMLInputElement = this._elementRef.nativeElement as HTMLInputElement;
+
+	public update: OutputEmitterRef<string> = output<string>();
+
+	@HostListener('input')
+	onInput(): void {
+		this.update.emit(this._dateInputEl.value);
+	}
+
+	@HostListener('change')
+	onChange(): void {
+		const selectedDate: Date = new Date(`${this._dateInputEl.value} 00:00:00`);
+		const dateValue = this.setDateValue(this._dateInputEl.value ? [selectedDate] : []);
+		this.update.emit(dateValue);
+	}
+
+	@HostListener('focus')
+	onFocus(): void {
+		this._datePickerComponent.classList.add('open');
+	}
 
 	constructor() {
 		if (this._dateInputEl.tagName !== 'INPUT' || this._dateInputEl.type !== 'date') {
@@ -32,16 +51,15 @@ export class MDDatePickerInputDirective implements AfterViewInit {
 			componentRef.instance.initDates = [new Date(`${this._dateInputEl.value} 00:00:00`)];
 		}
 
-		componentRef.instance.change.subscribe((dates: Date[]) => this.setDateValue(dates));
+		componentRef.instance.change.subscribe((dates: Date[]) => {
+			const dateValue = this.setDateValue(dates);
+			this.update.emit(dateValue);
+		});
 
 		this._datePickerComponent = componentRef.location.nativeElement as HTMLElement;
 		this._datePickerComponent.classList.add('as-directive');
 
 		this._dateInputContainer.appendChild(this._datePickerComponent);
-
-		this._dateInputEl.addEventListener('focus', () => {
-			this._datePickerComponent.classList.add('open');
-		});
 
 		document.addEventListener('click', (event: MouseEvent) => {
 			if (!this._dateInputContainer.contains(event.target as Node)) {
@@ -50,7 +68,7 @@ export class MDDatePickerInputDirective implements AfterViewInit {
 		});
 	}
 
-	private setDateValue(dates: Date[]): void {
+	private setDateValue(dates: Date[]): string {
 		let dateValue: string = '';
 
 		if (dates.length === 1) {
@@ -59,5 +77,7 @@ export class MDDatePickerInputDirective implements AfterViewInit {
 
 		this._dateInputEl.value = dateValue;
 		this._datePickerComponent.classList.remove('open');
+
+		return dateValue;
 	}
 }

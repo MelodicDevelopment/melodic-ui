@@ -132,6 +132,10 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		this.selectedDates.set(dates);
 	}
 
+	captureDateFromDirective(value: unknown, type: string): void {
+		console.log(`${type}: Date from directive: ${value}`);
+	}
+
 	openDialog(): void {
 		const dialogRef = this._dialogService.open(TestDialogOneComponent as Type<Component>);
 	}
