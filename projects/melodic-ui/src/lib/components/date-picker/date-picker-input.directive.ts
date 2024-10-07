@@ -1,5 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, HostListener, inject, output, OutputEmitterRef, ViewContainerRef, WritableSignal } from '@angular/core';
-import { MDDatePickerComponent } from '../components/date-picker/date-picker.component';
+import { MDDatePickerComponent } from './date-picker.component';
 
 @Directive({
 	standalone: true,
