@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ContentChild, ElementRef, inject, QueryList, signal, WritableSignal } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, QueryList, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MDDialogHeaderDirective } from './directives/md-dialog-header.directive';
 import { MDDialogFooterDirective } from './directives/md-dialog-footer.directive';
@@ -9,7 +9,8 @@ import { MDIconComponent } from '../icon/icon.component';
 	standalone: true,
 	imports: [CommonModule, MDIconComponent],
 	templateUrl: './dialog.component.html',
-	styleUrl: './dialog.component.scss'
+	styleUrl: './dialog.component.scss',
+	encapsulation: ViewEncapsulation.None
 })
 export class MDDialogComponent implements AfterContentInit {
 	@ContentChild(MDDialogHeaderDirective) private _dialogHeader!: QueryList<MDDialogHeaderDirective | undefined>;
