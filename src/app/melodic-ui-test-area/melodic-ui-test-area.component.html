@@ -150,7 +150,7 @@
 			placeholder="Make a selection..."
 			[value]="dropDownOptions1Value()"
 		></md-drop-down>
-		<button md-button-primary (click)="testUpdateDropDownOptions1Value()">Test</button>
+		<button md-button (click)="testUpdateDropDownOptions1Value()">Test</button>
 	</div>
 
 	<div class="horizontal-spacer">
@@ -304,6 +304,25 @@
 	</div>
 </div>
 
+<div class="component-group">
+	<md-header size="xs" variant="regular">Dialogs</md-header>
+
+	<div class="horizontal-spacer">
+		<button md-button-brand (click)="openDialog()">Open Test Dialog One</button>
+	</div>
+</div>
+
+<div class="component-group">
+	<md-header size="xs" variant="regular">Popups</md-header>
+
+	<div class="horizontal-spacer">
+		<md-popup>
+			<div popup-target><button md-button>Click Me!</button></div>
+			<div popup-content>Popup Content</div>
+		</md-popup>
+	</div>
+</div>
+
 <!-- <input type="button">
 <input type="checkbox">
 <input type="color">
@@ -326,11 +345,3 @@
 <input type="time">
 <input type="url">
 <input type="week"> -->
-
-<div class="component-group">
-	<md-header size="xs" variant="regular">Dialogs</md-header>
-
-	<div class="horizontal-spacer">
-		<button md-button-brand (click)="openDialog()">Open Test Dialog One</button>
-	</div>
-</div>

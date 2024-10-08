@@ -7,5 +7,6 @@ export * from './dialog';
 export * from './header/header.component';
 export * from './icon/icon.component';
 export * from './overlay/overlay.component';
+export * from './popup/popup.component';
 export * from './progress-bar/progress-bar.component';
 export * from './tag/tag.component';
