@@ -42,9 +42,9 @@ md-popup {
 			transform: translate(-100%, -50%);
 
 			&::after {
-				top: 0;
-				left: 50%;
-				transform: translateY(-50%) translateX(-50%) rotate(45deg);
+				top: 50%;
+				right: 0px;
+				transform: translateY(-50%) translateX(50%) rotate(135deg);
 			}
 		}
 
