@@ -8,6 +8,10 @@ type OffsetType = { top?: number; right?: number; bottom?: number; left?: number
 // possible future improvement: check if the popup is outside the viewport and adjust the position accordingly
 // https://chatgpt.com/share/6707bedf-6b60-8012-baef-e03dbcc62411
 
+// TODO: the arrow pointing at target element needs to have it's position adjusted based on position type
+// EXAMPLE: if position is right, the arrow should be on the left toward the top of the popup, but not
+// all the way to the top. Slightly below (18px). Not 50% down the popup.
+
 @Component({
 	selector: 'md-popup',
 	standalone: true,
