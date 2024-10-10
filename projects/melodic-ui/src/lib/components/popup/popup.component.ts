@@ -1,10 +1,12 @@
 import { Component, effect, ElementRef, HostListener, inject, input, InputSignal, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { of } from 'rxjs';
 
 type TriggerType = 'click' | 'hover';
 type PositionType = 'left' | 'top-left' | 'top' | 'top-right' | 'right' | 'bottom-right' | 'bottom' | 'bottom-left';
 type OffsetType = { top?: number; right?: number; bottom?: number; left?: number };
+
+// possible future improvement: check if the popup is outside the viewport and adjust the position accordingly
+// https://chatgpt.com/share/6707bedf-6b60-8012-baef-e03dbcc62411
 
 @Component({
 	selector: 'md-popup',

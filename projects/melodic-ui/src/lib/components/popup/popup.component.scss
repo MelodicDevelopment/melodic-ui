@@ -38,7 +38,6 @@ md-popup {
 		&.left {
 			top: 50%;
 			left: var(--md-popup-offset-left);
-			transform: translateX(-100%);
 			transform: translate(-100%, -50%);
 
 			&::after {
@@ -50,14 +49,13 @@ md-popup {
 
 		&.top-left {
 			top: var(--md-popup-offset-top);
-			left: var(--md-popup-offset-left);
-			transform: translateX(-100%);
+			left: calc(30px - var(--md-popup-offset-left));
 			transform: translate(-100%, -100%);
 
 			&::after {
-				top: 0;
-				left: 50%;
-				transform: translateY(-50%) translateX(-50%) rotate(45deg);
+				top: 100%;
+				left: calc(100% - 30px);
+				transform: translateY(-50%) translateX(-50%) rotate(225deg);
 			}
 		}
 
@@ -67,21 +65,21 @@ md-popup {
 			transform: translate(-50%, -100%);
 
 			&::after {
-				top: 0;
+				top: 100%;
 				left: 50%;
-				transform: translateY(-50%) translateX(-50%) rotate(45deg);
+				transform: translateY(-50%) translateX(-50%) rotate(225deg);
 			}
 		}
 
 		&.top-right {
 			top: var(--md-popup-offset-top);
-			right: var(--md-popup-offset-right);
+			left: calc(100% - 30px - var(--md-popup-offset-right));
 			transform: translateY(-100%);
 
 			&::after {
-				top: 0;
-				left: 50%;
-				transform: translateY(-50%) translateX(-50%) rotate(45deg);
+				top: 100%;
+				left: 30px;
+				transform: translateY(-50%) translateX(-50%) rotate(225deg);
 			}
 		}
 
@@ -91,20 +89,20 @@ md-popup {
 			transform: translateY(-50%);
 
 			&::after {
-				top: 0;
-				left: 50%;
-				transform: translateY(-50%) translateX(-50%) rotate(45deg);
+				top: 50%;
+				left: 0%;
+				transform: translateY(-50%) translateX(-50%) rotate(315deg);
 			}
 		}
 
 		&.bottom-right {
 			bottom: var(--md-popup-offset-bottom);
-			right: var(--md-popup-offset-right);
+			left: calc(100% - 30px - var(--md-popup-offset-right));
 			transform: translateY(100%);
 
 			&::after {
-				top: 0;
-				left: 50%;
+				top: 0px;
+				left: 30px;
 				transform: translateY(-50%) translateX(-50%) rotate(45deg);
 			}
 		}
@@ -122,14 +120,13 @@ md-popup {
 		}
 
 		&.bottom-left {
-			bottom: var(--md-popup-offset-bottom);
-			left: var(--md-popup-offset-right);
-			transform: translateY(100%);
+			top: calc(100% + var(--md-popup-offset-bottom));
+			right: calc(100% - 30px - var(--md-popup-offset-right));
 
 			&::after {
-				top: 0;
-				left: 50%;
-				transform: translateY(-50%) translateX(-50%) rotate(45deg);
+				top: 0px;
+				right: 18px;
+				transform: translateY(-50%) rotate(45deg);
 			}
 		}
 	}
