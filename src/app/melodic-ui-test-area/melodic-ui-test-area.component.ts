@@ -6,11 +6,12 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { IMDDropDownOption, MDDialogService } from '@melodic-ui';
 import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
 import { CustomDropDownOptionComponent } from '../shared/components/custom-dropdown-option/custom-dropdown-option.component';
+import { CustomPopupComponent } from '../shared/components/custom-popup/custom-popup.component';
 
 @Component({
 	selector: 'app-melodic-ui-test-area',
 	standalone: true,
-	imports: [CommonModule, FormsModule, ReactiveFormsModule, MD_COMPONENTS, MD_DIRECTIVES],
+	imports: [CommonModule, FormsModule, ReactiveFormsModule, MD_COMPONENTS, MD_DIRECTIVES, CustomPopupComponent],
 	templateUrl: './melodic-ui-test-area.component.html',
 	styleUrl: './melodic-ui-test-area.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush

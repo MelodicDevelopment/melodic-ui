@@ -1,0 +1,20 @@
+@import '../../../../../projects/melodic-ui/src/lib/styles/dsl/partials/typography.mixins';
+
+:host {
+	display: flex;
+	flex-direction: column;
+
+	div.title {
+		@include display-styles(get-display-text(xs, medium)...);
+	}
+
+	div.content {
+		padding: 25px;
+	}
+
+	div.actions {
+		display: flex;
+		justify-content: flex-start;
+		gap: 10px;
+	}
+}

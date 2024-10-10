@@ -6,6 +6,7 @@ import {
 	MDDropDownComponent,
 	MDHeaderComponent,
 	MDIconComponent,
+	MDPopupComponent,
 	MDProgressBarComponent,
 	MDTagComponent
 } from '@melodic-ui';
@@ -18,6 +19,7 @@ export const MD_COMPONENTS = [
 	MDDropDownComponent,
 	MDHeaderComponent,
 	MDIconComponent,
+	MDPopupComponent,
 	MDProgressBarComponent,
 	MDTagComponent
 ];
