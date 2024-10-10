@@ -5,6 +5,7 @@ md-popup {
 	--md-popup-offset-left: 0px;
 
 	position: relative;
+	display: inline-flex;
 
 	div.popup-trigger {
 		cursor: pointer;
