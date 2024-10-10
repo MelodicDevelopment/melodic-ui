@@ -303,6 +303,29 @@ Then you can use these icons like this:
 
 You could also utilize any other icons that are under the `./assets/icons` directory. The icon property value is just the url path of the icon. It is loaded with an fetch request.
 
+## Popups
+
+Popups need a target which is the element that is clicked or hovered over to trigger the popup. Provide a target element and some content for the content area. Popups have 3 Inputs:
+
+```typescript
+public trigger: InputSignal<TriggerType> = input<TriggerType>('click');
+public position: InputSignal<PositionType> = input<PositionType>('bottom');
+public offsets: InputSignal<OffsetType> = input<OffsetType>({ top: 0, left: 0, right: 0, bottom: 0 });
+```
+
+```typescript
+type TriggerType = 'click' | 'hover';
+type PositionType = 'left' | 'top-left' | 'top' | 'top-right' | 'right' | 'bottom-right' | 'bottom' | 'bottom-left';
+type OffsetType = { top?: number; right?: number; bottom?: number; left?: number };
+```
+
+```html
+<md-popup position="bottom-right">
+	<div popup-target><button md-button>Bottom Right</button></div>
+	<div popup-content>Popup Content</div>
+</md-popup>
+```
+
 ## Dialogs
 
 Melodic UI offers a way to open dialogs (modals). To use this, inject the MDDialogService into your host component. For example:
