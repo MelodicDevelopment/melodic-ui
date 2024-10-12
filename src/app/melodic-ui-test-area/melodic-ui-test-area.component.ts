@@ -30,11 +30,13 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	public dropDownOptions1: IMDDropDownOption[] = [
 		{
 			value: 1,
-			label: 'Option 1'
+			label: 'Option 1',
+			icon: 'home'
 		},
 		{
 			value: 2,
-			label: 'Option 2'
+			label: 'Option 2',
+			icon: 'favorite'
 		},
 		{
 			value: 3,
@@ -60,11 +62,13 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	public dropDownOptions2: IMDDropDownOption[] = [
 		{
 			value: 'Option 1',
-			label: 'Option 1'
+			label: 'Option 1',
+			icon: 'home'
 		},
 		{
 			value: 'Option 2',
-			label: 'Option 2'
+			label: 'Option 2',
+			icon: 'favorite'
 		},
 		{
 			value: 'Option 3',

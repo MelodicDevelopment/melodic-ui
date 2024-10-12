@@ -62,9 +62,11 @@
 				gap: var(--md-spacing-xs);
 
 				md-icon {
-					display: none;
-					font-size: 16px;
-					cursor: pointer;
+					&.remove {
+						font-size: 16px;
+						display: none;
+						cursor: pointer;
+					}
 				}
 			}
 
@@ -133,6 +135,12 @@
 				align-items: center;
 				justify-content: space-between;
 				flex: 1;
+
+				div.option-left {
+					display: flex;
+					align-items: center;
+					gap: var(--md-spacing-md);
+				}
 			}
 		}
 	}

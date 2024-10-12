@@ -25,6 +25,7 @@ import { Subject, takeUntil } from 'rxjs';
 export interface IMDDropDownOption {
 	value: string | number;
 	label: string;
+	icon?: string;
 	selected?: boolean;
 }
 

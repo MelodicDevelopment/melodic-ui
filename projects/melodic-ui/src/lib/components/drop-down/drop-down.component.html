@@ -13,8 +13,11 @@
 	<div class="selected-options-list" [ngClass]="{ multiple: multiple() }">
 		@for (option of selectedOptions(); track option.value) {
 			<span class="selected-option">
+				@if (option.icon !== undefined) {
+					<md-icon>{{ option.icon }}</md-icon>
+				}
 				{{ option.label }}
-				<md-icon (click)="optionSelected(option, $event)">close</md-icon>
+				<md-icon class="remove" (click)="optionSelected(option, $event)">close</md-icon>
 			</span>
 		}
 	</div>
@@ -34,6 +37,11 @@
 
 <ng-template #optionTemplate let-option="option">
 	<div class="option-template">
-		<span>{{ option.label }}</span>
+		<div class="option-left">
+			@if (option.icon !== undefined) {
+				<md-icon>{{ option.icon }}</md-icon>
+			}
+			<span>{{ option.label }}</span>
+		</div>
 	</div>
 </ng-template>
