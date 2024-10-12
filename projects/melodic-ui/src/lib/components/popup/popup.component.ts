@@ -40,6 +40,7 @@ export class MDPopupComponent {
 	public trigger: InputSignal<PopupTriggerType> = input<PopupTriggerType>('click');
 	public position: InputSignal<PopupPositionType> = input<PopupPositionType>('bottom');
 	public offsets: InputSignal<PopupOffsetType> = input<PopupOffsetType>({ top: 0, left: 0, right: 0, bottom: 0 });
+	public arrow: InputSignal<boolean> = input<boolean>(true);
 	public visible: WritableSignal<boolean> = signal<boolean>(false);
 
 	constructor() {

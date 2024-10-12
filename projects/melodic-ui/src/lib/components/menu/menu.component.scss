@@ -1,0 +1,10 @@
+@import '../../styles/dsl/partials/typography.mixins';
+
+md-menu {
+	md-popup {
+		div.popup-content.bottom {
+			left: 0px;
+			transform: translate(0%, 100%);
+		}
+	}
+}

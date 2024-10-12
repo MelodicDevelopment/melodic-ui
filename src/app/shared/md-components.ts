@@ -6,6 +6,7 @@ import {
 	MDDropDownComponent,
 	MDHeaderComponent,
 	MDIconComponent,
+	MDMenuComponent,
 	MDPopupComponent,
 	MDProgressBarComponent,
 	MDTagComponent
@@ -19,6 +20,7 @@ export const MD_COMPONENTS = [
 	MDDropDownComponent,
 	MDHeaderComponent,
 	MDIconComponent,
+	MDMenuComponent,
 	MDPopupComponent,
 	MDProgressBarComponent,
 	MDTagComponent
