@@ -19,6 +19,8 @@ export type PopupOffsetType = { top?: number; right?: number; bottom?: number; l
 
 // possible future improvement: check if the popup is outside the viewport and adjust the position accordingly
 // https://chatgpt.com/share/6707bedf-6b60-8012-baef-e03dbcc62411
+// https://chatgpt.com/share/670a7cdf-0b34-8012-a944-4bb88e757c41
+// May require usage of something like Angular CDK's overlay
 
 // TODO: the arrow pointing at target element needs to have it's position adjusted based on position type
 // EXAMPLE: if position is right, the arrow should be on the left toward the top of the popup, but not
