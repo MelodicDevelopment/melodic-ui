@@ -110,21 +110,21 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		{
 			label: 'Menu Item 1',
 			icon: 'home',
-			click: () => {
-				console.log('Menu item 1 clicked');
+			click: (item: unknown) => {
+				console.log('Menu item 1 clicked', item);
 			}
 		},
 		{
 			label: 'Menu Item 2',
 			icon: 'favorite',
-			click: () => {
-				console.log('Menu item 2 clicked');
+			click: (item: unknown) => {
+				console.log('Menu item 2 clicked', item);
 			}
 		},
 		{
 			label: 'Menu Item 3',
-			click: () => {
-				console.log('Menu item 3 clicked');
+			click: (item: unknown) => {
+				console.log('Menu item 3 clicked', item);
 			}
 		},
 		{
@@ -134,8 +134,7 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		},
 		{
 			label: 'Menu Item 5',
-			link: 'https://www.tiktok.com',
-			linkTarget: '_blank'
+			link: 'https://www.tiktok.com'
 		}
 	];
 

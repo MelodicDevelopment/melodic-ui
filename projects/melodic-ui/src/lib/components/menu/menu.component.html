@@ -1,4 +1,4 @@
-<md-popup position="bottom" [arrow]="false">
+<md-popup #menuPopup position="bottom" [arrow]="false">
 	<div popup-target>
 		<button md-button-brand>
 			Menu Text
@@ -6,11 +6,57 @@
 		</button>
 	</div>
 	<div popup-content>
-		<div class="title">I'm a custom Popup</div>
-		<div class="content">I can have some content here.</div>
-		<div class="actions">
-			<button md-button>Action 1</button>
-			<button md-button-brand>Action 2</button>
-		</div>
+		<ul>
+			@for (item of menuItems(); track item.label) {
+				<li>
+					@if (menuItemComponent() !== undefined) {
+						<ng-container *ngComponentOutlet="menuItemComponent()!; inputs: { item }"></ng-container>
+					} @else {
+						<ng-container *ngTemplateOutlet="menuItemTemplate; context: { item }"></ng-container>
+					}
+				</li>
+			}
+		</ul>
 	</div>
 </md-popup>
+
+<ng-template #menuItemTemplate let-item="item">
+	<div class="menu-item-template">
+		@if (item.link !== undefined) {
+			@if (item.isRouteLink === true) {
+				<a
+					md-button
+					md-button-link
+					[routerLink]="item.link"
+					[attr.target]="item.linkTarget ? item.linkTarget : null"
+					(click)="menuPopup.visible.set(false)"
+				>
+					@if (item.icon !== undefined) {
+						<md-icon>{{ item.icon }}</md-icon>
+					}
+					<span>{{ item.label }}</span>
+				</a>
+			} @else {
+				<a
+					md-button
+					md-button-link
+					href="{{ item.link }}"
+					[attr.target]="item.linkTarget ? item.linkTarget : null"
+					(click)="menuPopup.visible.set(false)"
+				>
+					@if (item.icon !== undefined) {
+						<md-icon>{{ item.icon }}</md-icon>
+					}
+					<span>{{ item.label }}</span>
+				</a>
+			}
+		} @else {
+			<button md-button md-button-link (click)="menuPopup.visible.set(false); item.click(item)">
+				@if (item.icon !== undefined) {
+					<md-icon>{{ item.icon }}</md-icon>
+				}
+				<span>{{ item.label }}</span>
+			</button>
+		}
+	</div>
+</ng-template>
