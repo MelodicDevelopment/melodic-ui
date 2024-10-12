@@ -1,9 +1,21 @@
 import { Component, effect, ElementRef, HostListener, inject, input, InputSignal, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-type TriggerType = 'click' | 'hover';
-type PositionType = 'left' | 'top-left' | 'top' | 'top-right' | 'right' | 'bottom-right' | 'bottom' | 'bottom-left';
-type OffsetType = { top?: number; right?: number; bottom?: number; left?: number };
+export type PopupTriggerType = 'click' | 'hover';
+export type PopupPositionType =
+	| 'left'
+	| 'left-top'
+	| 'left-bottom'
+	| 'right'
+	| 'right-top'
+	| 'right-bottom'
+	| 'top'
+	| 'top-start'
+	| 'top-end'
+	| 'bottom'
+	| 'bottom-start'
+	| 'bottom-end';
+export type PopupOffsetType = { top?: number; right?: number; bottom?: number; left?: number };
 
 // possible future improvement: check if the popup is outside the viewport and adjust the position accordingly
 // https://chatgpt.com/share/6707bedf-6b60-8012-baef-e03dbcc62411
@@ -23,9 +35,9 @@ type OffsetType = { top?: number; right?: number; bottom?: number; left?: number
 export class MDPopupComponent {
 	private _elementRef: ElementRef = inject(ElementRef);
 
-	public trigger: InputSignal<TriggerType> = input<TriggerType>('click');
-	public position: InputSignal<PositionType> = input<PositionType>('bottom');
-	public offsets: InputSignal<OffsetType> = input<OffsetType>({ top: 0, left: 0, right: 0, bottom: 0 });
+	public trigger: InputSignal<PopupTriggerType> = input<PopupTriggerType>('click');
+	public position: InputSignal<PopupPositionType> = input<PopupPositionType>('bottom');
+	public offsets: InputSignal<PopupOffsetType> = input<PopupOffsetType>({ top: 0, left: 0, right: 0, bottom: 0 });
 	public visible: WritableSignal<boolean> = signal<boolean>(false);
 
 	constructor() {

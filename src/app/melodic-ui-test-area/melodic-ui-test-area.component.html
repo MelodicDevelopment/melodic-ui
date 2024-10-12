@@ -315,7 +315,7 @@
 <div class="component-group">
 	<md-header size="xs" variant="regular">Popups</md-header>
 
-	<div class="horizontal-spacer">
+	<!-- <div class="horizontal-spacer">
 		<md-popup position="bottom-left">
 			<div popup-target><button md-button>Bottom Left</button></div>
 			<div popup-content>Popup Content</div>
@@ -355,17 +355,24 @@
 			<div popup-target><button md-button>Left</button></div>
 			<div popup-content>Popup Content</div>
 		</md-popup>
-	</div>
+	</div> -->
 
-	<div class="horizontal-spacer">
-		<app-custom-popup position="top-left"></app-custom-popup>
-		<app-custom-popup position="top"></app-custom-popup>
-		<app-custom-popup position="top-right"></app-custom-popup>
-		<app-custom-popup position="right"></app-custom-popup>
-		<app-custom-popup position="bottom-right"></app-custom-popup>
-		<app-custom-popup position="bottom"></app-custom-popup>
-		<app-custom-popup position="bottom-left"></app-custom-popup>
+	<div class="horizontal-spacer" style="padding: 200px">
 		<app-custom-popup position="left"></app-custom-popup>
+		<app-custom-popup position="left-top"></app-custom-popup>
+		<app-custom-popup position="left-bottom"></app-custom-popup>
+
+		<app-custom-popup position="right"></app-custom-popup>
+		<app-custom-popup position="right-top"></app-custom-popup>
+		<app-custom-popup position="right-bottom"></app-custom-popup>
+
+		<app-custom-popup position="top"></app-custom-popup>
+		<app-custom-popup position="top-start"></app-custom-popup>
+		<app-custom-popup position="top-end"></app-custom-popup>
+
+		<app-custom-popup position="bottom"></app-custom-popup>
+		<app-custom-popup position="bottom-start"></app-custom-popup>
+		<app-custom-popup position="bottom-end"></app-custom-popup>
 	</div>
 </div>
 

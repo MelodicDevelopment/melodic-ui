@@ -1,5 +1,7 @@
 <md-popup [position]="position()">
-	<div popup-target><button md-button>Custom Popup</button></div>
+	<div popup-target>
+		<button md-button>{{ position() }}</button>
+	</div>
 	<div popup-content>
 		<div class="title">I'm a custom Popup</div>
 		<div class="content">I can have some content here.</div>

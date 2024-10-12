@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, InputSignal } from '@angular/core';
-import { MDPopupComponent } from '@melodic-ui';
-
-type PositionType = 'left' | 'top-left' | 'top' | 'top-right' | 'right' | 'bottom-right' | 'bottom' | 'bottom-left';
+import { MDPopupComponent, PopupPositionType } from '@melodic-ui';
 
 @Component({
 	selector: 'app-custom-popup',
@@ -12,5 +10,5 @@ type PositionType = 'left' | 'top-left' | 'top' | 'top-right' | 'right' | 'botto
 	styleUrls: ['./custom-popup.component.scss']
 })
 export class CustomPopupComponent {
-	public position: InputSignal<PositionType> = input<PositionType>('bottom-right');
+	public position: InputSignal<PopupPositionType> = input<PopupPositionType>('left-top');
 }
