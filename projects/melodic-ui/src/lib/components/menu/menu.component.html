@@ -9,11 +9,47 @@
 		<ul>
 			@for (item of menuItems(); track item.label) {
 				<li>
-					@if (menuItemComponent() !== undefined) {
-						<ng-container *ngComponentOutlet="menuItemComponent()!; inputs: { item }"></ng-container>
-					} @else {
-						<ng-container *ngTemplateOutlet="menuItemTemplate; context: { item }"></ng-container>
-					}
+					<div class="menu-item-template">
+						@if (item.link !== undefined) {
+							@if (item.isRouteLink === true) {
+								<a
+									md-button
+									md-button-link
+									[routerLink]="item.link"
+									[attr.target]="item.linkTarget ? item.linkTarget : null"
+									(click)="menuPopup.visible.set(false)"
+								>
+									@if (menuItemComponent() !== undefined) {
+										<ng-container *ngComponentOutlet="menuItemComponent()!; inputs: { item }"></ng-container>
+									} @else {
+										<ng-container *ngTemplateOutlet="menuItemTemplate; context: { item }"></ng-container>
+									}
+								</a>
+							} @else {
+								<a
+									md-button
+									md-button-link
+									href="{{ item.link }}"
+									[attr.target]="item.linkTarget ? item.linkTarget : null"
+									(click)="menuPopup.visible.set(false)"
+								>
+									@if (menuItemComponent() !== undefined) {
+										<ng-container *ngComponentOutlet="menuItemComponent()!; inputs: { item }"></ng-container>
+									} @else {
+										<ng-container *ngTemplateOutlet="menuItemTemplate; context: { item }"></ng-container>
+									}
+								</a>
+							}
+						} @else {
+							<button md-button md-button-link (click)="menuPopup.visible.set(false); item?.click(item)">
+								@if (menuItemComponent() !== undefined) {
+									<ng-container *ngComponentOutlet="menuItemComponent()!; inputs: { item }"></ng-container>
+								} @else {
+									<ng-container *ngTemplateOutlet="menuItemTemplate; context: { item }"></ng-container>
+								}
+							</button>
+						}
+					</div>
 				</li>
 			}
 		</ul>
@@ -21,42 +57,8 @@
 </md-popup>
 
 <ng-template #menuItemTemplate let-item="item">
-	<div class="menu-item-template">
-		@if (item.link !== undefined) {
-			@if (item.isRouteLink === true) {
-				<a
-					md-button
-					md-button-link
-					[routerLink]="item.link"
-					[attr.target]="item.linkTarget ? item.linkTarget : null"
-					(click)="menuPopup.visible.set(false)"
-				>
-					@if (item.icon !== undefined) {
-						<md-icon>{{ item.icon }}</md-icon>
-					}
-					<span>{{ item.label }}</span>
-				</a>
-			} @else {
-				<a
-					md-button
-					md-button-link
-					href="{{ item.link }}"
-					[attr.target]="item.linkTarget ? item.linkTarget : null"
-					(click)="menuPopup.visible.set(false)"
-				>
-					@if (item.icon !== undefined) {
-						<md-icon>{{ item.icon }}</md-icon>
-					}
-					<span>{{ item.label }}</span>
-				</a>
-			}
-		} @else {
-			<button md-button md-button-link (click)="menuPopup.visible.set(false); item.click(item)">
-				@if (item.icon !== undefined) {
-					<md-icon>{{ item.icon }}</md-icon>
-				}
-				<span>{{ item.label }}</span>
-			</button>
-		}
-	</div>
+	@if (item.icon !== undefined) {
+		<md-icon>{{ item.icon }}</md-icon>
+	}
+	<span>{{ item.label }}</span>
 </ng-template>
