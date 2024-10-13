@@ -175,7 +175,7 @@ A surface designates background-color, border-color, and font-color. It is not r
 	--md-surface-green-300-800-gradient-background-color: linear-gradient(180deg, var(--md-colors-brand-300) 56%, var(--md-colors-brand-800) 100%);
 
 	// overlay surface
-	--md-surface-overlay-background-color: var(--md-colors-base-black-transparent);
+	--md-surface-overlay-background-color: var(--md-colors-base-black-transparent-50);
 }
 ```
 
