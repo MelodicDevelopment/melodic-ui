@@ -90,6 +90,12 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 					this.writeValue(value);
 				}
 			});
+
+		toObservable(this.options)
+			.pipe(takeUntil(this._destroy))
+			.subscribe((value) => {
+				this.internalOptions.set(value);
+			});
 	}
 
 	ngOnInit(): void {
@@ -114,8 +120,6 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 				}
 			}
 		});
-
-		this.internalOptions.set(this.options());
 	}
 
 	ngOnDestroy(): void {
