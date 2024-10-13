@@ -314,16 +314,84 @@ public offsets: InputSignal<OffsetType> = input<OffsetType>({ top: 0, left: 0, r
 ```
 
 ```typescript
-type TriggerType = 'click' | 'hover';
-type PositionType = 'left' | 'top-left' | 'top' | 'top-right' | 'right' | 'bottom-right' | 'bottom' | 'bottom-left';
-type OffsetType = { top?: number; right?: number; bottom?: number; left?: number };
+export type PopupTriggerType = 'click' | 'hover';
+export type PopupPositionType =
+	| 'left'
+	| 'left-top'
+	| 'left-bottom'
+	| 'right'
+	| 'right-top'
+	| 'right-bottom'
+	| 'top'
+	| 'top-start'
+	| 'top-end'
+	| 'bottom'
+	| 'bottom-start'
+	| 'bottom-end';
+export type PopupOffsetType = { top?: number; right?: number; bottom?: number; left?: number };
 ```
 
 ```html
-<md-popup position="bottom-right">
-	<div popup-target><button md-button>Bottom Right</button></div>
+<md-popup position="bottom">
+	<div popup-target><button md-button>Bottom</button></div>
 	<div popup-content>Popup Content</div>
 </md-popup>
+```
+
+## Menu
+
+The menu component is a form of a popup. It is a brand colored button with a drop down arrow. You can provide it menu options that can be either links or click events. You can also provide it a custom component to be able to further customize how the menu options appear. You can also add the same attributes that are used on Melodic buttons to change the look of the Menu trigger button.
+
+```typescript
+export interface IMDMenuOption {
+	label: string;
+	icon?: string;
+	link?: string;
+	linkTarget?: string;
+	isRouteLink?: boolean;
+	click?: actionGetter;
+}
+```
+
+```typescript
+public menuOptions: IMDMenuOption[] = [
+		{
+			label: 'Menu Item 1',
+			icon: 'home',
+			click: (item: unknown) => {
+				console.log('Menu item 1 clicked', item);
+			}
+		},
+		{
+			label: 'Menu Item 2',
+			icon: 'favorite',
+			click: (item: unknown) => {
+				console.log('Menu item 2 clicked', item);
+			}
+		},
+		{
+			label: 'Menu Item 3',
+			click: (item: unknown) => {
+				console.log('Menu item 3 clicked', item);
+			}
+		},
+		{
+			label: 'Menu Item 4',
+			link: 'https://www.google.com',
+			linkTarget: '_blank'
+		},
+		{
+			label: 'Menu Item 5',
+			link: 'https://www.tiktok.com'
+		}
+	];
+```
+
+```html
+<md-menu [menuItems]="menuOptions"></md-menu>
+<md-menu [menuItems]="menuOptions" md-button-warning></md-menu>
+<md-menu [menuItems]="menuOptions" md-button-error></md-menu>
+<md-menu [menuItems]="menuOptions" md-button-link></md-menu>
 ```
 
 ## Dialogs

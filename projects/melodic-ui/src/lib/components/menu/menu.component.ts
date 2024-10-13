@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, Input, InputSignal, Type, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, input, Input, InputSignal, OnInit, Type, ViewEncapsulation } from '@angular/core';
 import { MDIconComponent } from '../icon/icon.component';
 import { MDPopupComponent } from '../popup/popup.component';
 import { RouterModule } from '@angular/router';
@@ -23,7 +23,23 @@ export interface IMDMenuOption {
 	styleUrl: './menu.component.scss',
 	encapsulation: ViewEncapsulation.None
 })
-export class MDMenuComponent {
+export class MDMenuComponent implements AfterViewInit {
+	private _elementRef: ElementRef = inject(ElementRef);
+
 	public menuItems: InputSignal<IMDMenuOption[]> = input.required();
 	public menuItemComponent: InputSignal<Type<Component> | undefined> = input();
+
+	ngAfterViewInit(): void {
+		const element: HTMLElement = this._elementRef.nativeElement as HTMLElement;
+		const attributes = element.getAttributeNames().filter((attr) => attr.startsWith('md-button'));
+
+		if (attributes.length === 0) {
+			attributes.push('md-button-brand');
+		}
+
+		const popupTriggerButton = element.querySelector('.popup-trigger button') as HTMLElement;
+		attributes.forEach((attr) => {
+			popupTriggerButton.setAttribute(attr, '');
+		});
+	}
 }
