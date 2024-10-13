@@ -26,6 +26,12 @@ md-popup {
 			display: block;
 		}
 
+		&.no-arrow {
+			&::after {
+				display: none;
+			}
+		}
+
 		&::after {
 			content: '';
 			position: absolute;

@@ -1,6 +1,6 @@
 <div class="popup-trigger" (click)="click()" (mouseover)="mouseOver()" (mouseout)="mouseOut()">
 	<ng-content select="[popup-target]"></ng-content>
 </div>
-<div class="popup-content" [ngClass]="[visible() ? 'active' : '', position()]">
+<div class="popup-content" [ngClass]="[visible() ? 'active' : '', position(), arrow() ? '' : 'no-arrow']">
 	<ng-content select="[popup-content]"></ng-content>
 </div>

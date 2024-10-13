@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal, Type, Writa
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IMDDropDownOption, MDDialogService } from '@melodic-ui';
+import { IMDDropDownOption, IMDMenuOption, MDDialogService } from '@melodic-ui';
 import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
 import { CustomDropDownOptionComponent } from '../shared/components/custom-dropdown-option/custom-dropdown-option.component';
 import { CustomPopupComponent } from '../shared/components/custom-popup/custom-popup.component';
@@ -105,6 +105,46 @@ export class MelodicUiTestAreaComponent implements OnInit {
 			label: 'Option 4'
 		}
 	];
+
+	public menuOptions: IMDMenuOption[] = [
+		{
+			label: 'Menu Item 1',
+			icon: 'home',
+			click: (item: unknown) => {
+				console.log('Menu item 1 clicked', item);
+			}
+		},
+		{
+			label: 'Menu Item 2',
+			icon: 'favorite',
+			click: (item: unknown) => {
+				console.log('Menu item 2 clicked', item);
+			}
+		},
+		{
+			label: 'Menu Item 3',
+			click: (item: unknown) => {
+				console.log('Menu item 3 clicked', item);
+			}
+		},
+		{
+			label: 'Menu Item 4',
+			link: 'https://www.google.com',
+			linkTarget: '_blank'
+		},
+		{
+			label: 'Menu Item 5',
+			link: 'https://www.tiktok.com'
+		}
+	];
+
+	// export interface IMDMenuOption {
+	// 	label: string;
+	// 	icon?: string;
+	// 	link?: string;
+	// 	linkTarget?: string;
+	// 	click?: () => actionGetter;
+	// }
 
 	ngOnInit(): void {
 		this.buttonGroupForm.get('buttonGroupInput')?.valueChanges.subscribe((value) => {
