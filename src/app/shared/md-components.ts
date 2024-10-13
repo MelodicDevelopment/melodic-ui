@@ -9,7 +9,8 @@ import {
 	MDMenuComponent,
 	MDPopupComponent,
 	MDProgressBarComponent,
-	MDTagComponent
+	MDTagComponent,
+	MDToolTipComponent
 } from '@melodic-ui';
 
 export const MD_COMPONENTS = [
@@ -23,5 +24,6 @@ export const MD_COMPONENTS = [
 	MDMenuComponent,
 	MDPopupComponent,
 	MDProgressBarComponent,
-	MDTagComponent
+	MDTagComponent,
+	MDToolTipComponent
 ];

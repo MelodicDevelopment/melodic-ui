@@ -1,27 +1,22 @@
 @import '../../styles/dsl/partials/typography.mixins';
 
 :host {
-	position: absolute;
+	z-index: 9999;
 	display: inline-flex;
 	flex-direction: column;
-	gap: var(--md-spacing-sm);
+	gap: var(--md-spacing-xm);
 	background: var(--md-colors-base-black-transparent-80);
 	box-shadow: var(--md-drop-shadow-xs);
 	border-radius: var(--md-radius-xs);
 	color: var(--md-colors-base-white);
 	padding: var(--md-spacing-xs) var(--md-spacing-md);
-	transition: opacity 0.2s ease-in-out;
-	opacity: 0;
-
-	&.active {
-		opacity: 1;
-	}
 
 	div.tooltip-title {
 		@include text-styles(get-text(xs, semibold)...);
 	}
 
 	div.tooltip-text {
+		width: fit-content;
 		@include text-styles(get-text(xs, regular)...);
 	}
 }
