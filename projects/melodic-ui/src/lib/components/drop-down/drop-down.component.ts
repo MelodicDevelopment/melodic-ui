@@ -121,11 +121,7 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 			}
 		});
 
-		toObservable(this.options)
-			.pipe(takeUntil(this._destroy))
-			.subscribe((value) => {
-				this.internalOptions.set(value);
-			});
+		this.internalOptions.set(this.options());
 	}
 
 	ngOnDestroy(): void {

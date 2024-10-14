@@ -1,4 +1,4 @@
-import { ComponentRef, Directive, ElementRef, HostListener, inject, input, InputSignal, OnInit, signal, ViewContainerRef, WritableSignal } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject, input, InputSignal, ViewContainerRef } from '@angular/core';
 import { MDToolTipComponent } from './tooltip.component';
 import { Overlay, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
@@ -8,18 +8,18 @@ import { ComponentPortal } from '@angular/cdk/portal';
 	selector: '[md-tooltip]'
 })
 export class MDToolTipDirective {
-	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 	private _elementRef: ElementRef = inject(ElementRef);
-	private _overlayRef: OverlayRef | null = null;
 	private _overlay: Overlay = inject(Overlay);
+
+	private _overlayRef: OverlayRef | null = null;
 
 	public toolTip: InputSignal<string> = input.required<string>({ alias: 'md-tooltip' });
 	public toolTipTitle: InputSignal<string | undefined> = input<string | undefined>(undefined, { alias: 'md-tooltip-title' });
 	public delay: InputSignal<number> = input<number>(300, { alias: 'md-tooltip-delay' }); // Default delay of 300ms
 	public disabled: InputSignal<boolean> = input<boolean>(false, { alias: 'md-tooltip-disabled' });
 
-	@HostListener('mouseover', ['$event'])
-	onMouseOver(event: MouseEvent): void {
+	@HostListener('mouseover')
+	onMouseOver(): void {
 		if (this.disabled()) {
 			return;
 		}
@@ -41,11 +41,7 @@ export class MDToolTipDirective {
 	}
 
 	show(): void {
-		this.hide(); // Hide existing tooltip if any
-
-		const parentPosition: DOMRect = this._viewContainerRef.element.nativeElement.getBoundingClientRect();
-		const y: number = parentPosition.top + parentPosition.height + 5;
-		const x: number = parentPosition.left;
+		this.hide();
 
 		const positionStrategy: PositionStrategy = this._overlay
 			.position()
