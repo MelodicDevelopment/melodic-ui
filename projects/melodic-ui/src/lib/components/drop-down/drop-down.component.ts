@@ -20,7 +20,7 @@ import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { Subject, takeUntil } from 'rxjs';
+import { combineLatest, Subject, takeUntil } from 'rxjs';
 
 export interface IMDDropDownOption {
 	value: string | number;
@@ -71,47 +71,12 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 		return this.internalOptions().filter((o) => o.selected);
 	});
 
-	private setSelectedValue = (value: unknown): void => {
-		if (value) {
-			if (Array.isArray(value)) {
-				this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number>).includes(o.value) }))]);
-				return;
-			}
-
-			this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: value === o.value }))]);
-		}
-
-		if (value !== this._value) {
-			this.writeValue(value);
-		}
-	};
-
 	constructor() {
-		toObservable(this.value)
+		combineLatest([toObservable(this.value), toObservable(this.options)])
 			.pipe(takeUntil(this._destroy))
-			.subscribe((value) => {
-				// if (value) {
-				// 	if (Array.isArray(value)) {
-				// 		this.internalOptions.set([
-				// 			...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number>).includes(o.value) }))
-				// 		]);
-				// 		return;
-				// 	}
-
-				// 	this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: value === o.value }))]);
-				// }
-
-				// if (value !== this._value) {
-				// 	this.writeValue(value);
-				// }
-
+			.subscribe(([value, options]) => {
+				this.internalOptions.set(options);
 				this.setSelectedValue(value);
-			});
-
-		toObservable(this.options)
-			.pipe(takeUntil(this._destroy))
-			.subscribe((value) => {
-				this.internalOptions.set(value);
 			});
 	}
 
@@ -138,8 +103,8 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 			}
 		});
 
-		this.internalOptions.set(this.options());
-		this.setSelectedValue(this.value());
+		// this.internalOptions.set(this.options());
+		// this.setSelectedValue(this.value());
 	}
 
 	ngOnDestroy(): void {
@@ -173,18 +138,33 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 		);
 	}
 
-	writeValue(value: unknown): void {
+	public writeValue(value: unknown): void {
 		this.onChange(value);
 		this.onTouched();
 
 		this.change.emit(value);
 	}
 
-	registerOnChange(fn: any): void {
+	public registerOnChange(fn: any): void {
 		this.onChange = fn;
 	}
 
-	registerOnTouched(fn: any): void {
+	public registerOnTouched(fn: any): void {
 		this.onTouched = fn;
+	}
+
+	private setSelectedValue(value: unknown): void {
+		if (value) {
+			if (Array.isArray(value)) {
+				this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number>).includes(o.value) }))]);
+				return;
+			}
+
+			this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: value === o.value }))]);
+		}
+
+		if (value !== this._value) {
+			this.writeValue(value);
+		}
 	}
 }
