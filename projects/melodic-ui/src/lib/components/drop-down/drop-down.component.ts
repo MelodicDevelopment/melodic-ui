@@ -71,24 +71,41 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 		return this.internalOptions().filter((o) => o.selected);
 	});
 
+	private setSelectedValue = (value: unknown): void => {
+		if (value) {
+			if (Array.isArray(value)) {
+				this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number>).includes(o.value) }))]);
+				return;
+			}
+
+			this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: value === o.value }))]);
+		}
+
+		if (value !== this._value) {
+			this.writeValue(value);
+		}
+	};
+
 	constructor() {
 		toObservable(this.value)
 			.pipe(takeUntil(this._destroy))
 			.subscribe((value) => {
-				if (value) {
-					if (Array.isArray(value)) {
-						this.internalOptions.set([
-							...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number>).includes(o.value) }))
-						]);
-						return;
-					}
+				// if (value) {
+				// 	if (Array.isArray(value)) {
+				// 		this.internalOptions.set([
+				// 			...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number>).includes(o.value) }))
+				// 		]);
+				// 		return;
+				// 	}
 
-					this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: value === o.value }))]);
-				}
+				// 	this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: value === o.value }))]);
+				// }
 
-				if (value !== this._value) {
-					this.writeValue(value);
-				}
+				// if (value !== this._value) {
+				// 	this.writeValue(value);
+				// }
+
+				this.setSelectedValue(value);
 			});
 
 		toObservable(this.options)
@@ -122,6 +139,7 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 		});
 
 		this.internalOptions.set(this.options());
+		this.setSelectedValue(this.value());
 	}
 
 	ngOnDestroy(): void {
