@@ -72,6 +72,7 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 	});
 
 	constructor() {
+		// TODO: Use takeUntilDestroyed instead of takeUntil
 		combineLatest([toObservable(this.value), toObservable(this.options)])
 			.pipe(takeUntil(this._destroy))
 			.subscribe(([value, options]) => {
