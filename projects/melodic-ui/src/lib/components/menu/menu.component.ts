@@ -37,7 +37,7 @@ export class MDMenuComponent implements AfterViewInit {
 			attributes.push('md-button-brand');
 		}
 
-		const popupTriggerButton = element.querySelector('.popup-trigger button') as HTMLElement;
+		const popupTriggerButton = element.querySelector('.md-popup-trigger button') as HTMLElement;
 		attributes.forEach((attr) => {
 			popupTriggerButton.setAttribute(attr, '');
 		});

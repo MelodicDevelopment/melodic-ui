@@ -333,8 +333,8 @@ export type PopupOffsetType = { top?: number; right?: number; bottom?: number; l
 
 ```html
 <md-popup position="bottom">
-	<div popup-target><button md-button>Bottom</button></div>
-	<div popup-content>Popup Content</div>
+	<div md-popup-target><button md-button>Bottom</button></div>
+	<div md-popup-content>Popup Content</div>
 </md-popup>
 ```
 

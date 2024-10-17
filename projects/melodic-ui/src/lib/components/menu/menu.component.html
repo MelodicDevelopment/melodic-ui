@@ -1,11 +1,11 @@
 <md-popup #menuPopup position="bottom-start" [arrow]="false">
-	<div popup-target>
+	<div md-popup-target>
 		<button>
 			Menu Text
 			<md-icon>keyboard_arrow_down</md-icon>
 		</button>
 	</div>
-	<div popup-content>
+	<div md-popup-content>
 		<ul>
 			@for (item of menuItems(); track item.label) {
 				<li>

@@ -1,9 +1,9 @@
-<div class="popup-trigger" (click)="click()" (mouseover)="mouseOver()" (mouseout)="mouseOut()">
-	<ng-content select="[popup-target]"></ng-content>
+<div class="md-popup-trigger" (click)="click()" (mouseover)="mouseOver()" (mouseout)="mouseOut()">
+	<ng-content select="[md-popup-target]"></ng-content>
 </div>
 
 <ng-template #popupContent>
-	<div class="popup-content" [ngClass]="[position(), arrow() ? '' : 'no-arrow']">
-		<ng-content select="[popup-content]"></ng-content>
+	<div class="md-popup-content" [ngClass]="[position(), arrow() ? '' : 'no-arrow']">
+		<ng-content select="[md-popup-content]"></ng-content>
 	</div>
 </ng-template>

@@ -2,12 +2,12 @@ md-popup {
 	position: relative;
 	display: inline-flex;
 
-	div.popup-trigger {
+	div.md-popup-trigger {
 		cursor: pointer;
 	}
 }
 
-div.popup-content {
+div.md-popup-content {
 	position: relative;
 	background-color: var(--md-surface-primary-background-color);
 	border: 1px solid var(--md-surface-primary-border-color);
