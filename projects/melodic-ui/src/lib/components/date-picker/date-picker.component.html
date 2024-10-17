@@ -26,8 +26,13 @@
 				@for (day of week.days; track day.date) {
 					<div
 						class="day"
-						[ngClass]="{ 'selected': day.selected, 'current': day.currentDay, 'outside-month': !day.currentMonth }"
-						(click)="selectDate(day)"
+						[ngClass]="{
+							'selected': day.selected,
+							'current': day.currentDay,
+							'disabled-day': isDisabledDay(day),
+							'outside-month': !day.currentMonth
+						}"
+						(click)="!isDisabledDay(day) && selectDate(day)"
 					>
 						{{ day.dayOfMonth }}
 					</div>

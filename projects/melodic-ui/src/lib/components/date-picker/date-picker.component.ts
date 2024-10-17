@@ -31,6 +31,7 @@ export class MDDatePickerComponent {
 	private _calendarMonth: WritableSignal<Date> = signal<Date>(new Date());
 
 	public isMultiSelect: InputSignal<boolean> = input<boolean>(false);
+	public isPastDaysDisabled: InputSignal<boolean> = input<boolean>(false);
 
 	@Input()
 	public initDates: Date[] = [];
@@ -141,6 +142,19 @@ export class MDDatePickerComponent {
 
 		this.change.emit(this._selectedDates);
 	}
+
+	isDisabledDay = (day: Day): boolean => {
+		const isInPast = this.isDayInPast(day);
+
+		return isInPast && this.isPastDaysDisabled();
+	};
+
+	isDayInPast = (day: Day): boolean => {
+		const now = new Date();
+		now.setHours(0, 0, 0, 0);
+
+		return day.date < now;
+	};
 
 	private createDay(date: Date, currentMonth: boolean, currentDay: () => boolean): Day {
 		return {

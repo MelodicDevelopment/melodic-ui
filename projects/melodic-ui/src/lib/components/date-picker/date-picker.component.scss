@@ -73,6 +73,11 @@
 					&.outside-month {
 						color: var(--md-surface-disabled-font-color);
 					}
+
+					&.disabled-day {
+						color: var(--md-surface-disabled-font-color);
+						cursor: default;
+					}
 				}
 			}
 
