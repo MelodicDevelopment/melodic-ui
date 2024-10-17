@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, inject, output, OutputEmitterRef, ViewContainerRef, WritableSignal } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, inject, input, InputSignal, output, OutputEmitterRef, ViewContainerRef } from '@angular/core';
 import { MDDatePickerComponent } from './date-picker.component';
 
 @Directive({
@@ -13,6 +13,7 @@ export class MDDatePickerInputDirective implements AfterViewInit {
 	private _dateInputEl: HTMLInputElement = this._elementRef.nativeElement as HTMLInputElement;
 
 	public update: OutputEmitterRef<string> = output<string>();
+	public isPastDaysDisabled: InputSignal<boolean> = input<boolean>(false);
 
 	@HostListener('input')
 	onInput(): void {
@@ -46,6 +47,8 @@ export class MDDatePickerInputDirective implements AfterViewInit {
 	ngAfterViewInit() {
 		this._viewContainerRef.clear();
 		const componentRef = this._viewContainerRef.createComponent<MDDatePickerComponent>(MDDatePickerComponent);
+
+		componentRef.setInput('isPastDaysDisabled', this.isPastDaysDisabled());
 
 		if (this._dateInputEl.value) {
 			componentRef.instance.initDates = [new Date(`${this._dateInputEl.value} 00:00:00`)];

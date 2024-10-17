@@ -183,6 +183,7 @@
 			value="2024-09-27"
 			md-form-input
 			md-date-picker-input
+			[isPastDaysDisabled]="true"
 			(update)="captureDateFromDirective($event, 'update')"
 		/>
 		<input type="text" placeholder="This is placeholder text" md-form-input />
