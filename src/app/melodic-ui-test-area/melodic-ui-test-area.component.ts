@@ -19,7 +19,9 @@ import { CustomPopupComponent } from '../shared/components/custom-popup/custom-p
 export class MelodicUiTestAreaComponent implements OnInit {
 	private _dialogService: MDDialogService = inject(MDDialogService);
 
-	public progressBarValue: number = 75;
+	public progressBarValueSuccess: number = 90;
+	public progressBarValueWarning: number = 75;
+	public progressBarValueError: number = 55;
 	public selectedDates: WritableSignal<Date[]> = signal<Date[]>([]);
 	public initDates: Date[] = [new Date('2024-09-07 00:00:00')]; // NOTE: Zero out times to avoid timezone issues
 	public selectOptions: string[] = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];

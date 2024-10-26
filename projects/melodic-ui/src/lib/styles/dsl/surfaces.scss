@@ -65,6 +65,12 @@
 	--md-surface-warning-border-color: var(--md-colors-warning-200);
 	--md-surface-warning-font-color: var(--md-colors-warning-700);
 
+	// warning surface (warning 400)
+	--md-surface-warning-400-background-color: var(--md-colors-warning-400);
+	--md-surface-warning-400-background-color-hover: var(--md-colors-warning-500);
+	--md-surface-warning-400-border-color: var(--md-colors-warning-400);
+	--md-surface-warning-400-font-color: var(--md-colors-base-white);
+
 	// warning surface (warning 600)
 	--md-surface-warning-600-background-color: var(--md-colors-warning-600);
 	--md-surface-warning-600-background-color-hover: var(--md-colors-warning-700);
@@ -81,6 +87,12 @@
 	--md-surface-error-background-color-hover: var(--md-colors-error-100);
 	--md-surface-error-border-color: var(--md-colors-error-200);
 	--md-surface-error-font-color: var(--md-colors-error-800);
+
+	// error surface (error 400)
+	--md-surface-error-400-background-color: var(--md-colors-error-400);
+	--md-surface-error-400-background-color-hover: var(--md-colors-error-500);
+	--md-surface-error-400-border-color: var(--md-colors-error-400);
+	--md-surface-error-400-font-color: var(--md-colors-base-white);
 
 	// error surface (error 600)
 	--md-surface-error-600-background-color: var(--md-colors-error-600);
@@ -105,6 +117,10 @@
 	--md-surface-green-200-background-color: var(--md-colors-brand-200);
 	--md-surface-green-200-border-color: var(--md-colors-brand-200);
 	--md-surface-green-200-font-color: var(--md-colors-brand-800);
+
+	--md-surface-green-500-background-color: var(--md-colors-brand-500);
+	--md-surface-green-500-border-color: var(--md-colors-brand-500);
+	--md-surface-green-500-font-color: var(--md-colors-base-white);
 
 	--md-surface-green-300-800-gradient-background-color: linear-gradient(180deg, var(--md-colors-brand-300) 56%, var(--md-colors-brand-800) 100%);
 

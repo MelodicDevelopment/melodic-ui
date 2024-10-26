@@ -7,10 +7,22 @@
 
 	div[progress] {
 		height: 100%;
-		background-color: var(--md-colors-brand-500);
+		background-color: var(--md-surface-green-500-background-color);
 		transition: width 0.3s ease;
 		border-top-right-radius: var(--md-radius-md);
 		border-bottom-right-radius: var(--md-radius-md);
+	}
+
+	&.warning {
+		div[progress] {
+			background-color: var(--md-surface-warning-400-background-color);
+		}
+	}
+
+	&.error {
+		div[progress] {
+			background-color: var(--md-surface-error-400-background-color);
+		}
 	}
 
 	&.disabled {

@@ -15,8 +15,20 @@
 	<md-header size="xs" variant="regular" md-tooltip="Progress Bar Components">Progress</md-header>
 
 	<div class="vertical-spacer">
-		<md-progress-bar [progress]="progressBarValue"></md-progress-bar>
-		<md-progress-bar [progress]="progressBarValue" [disabled]="true"></md-progress-bar>
+		<md-progress-bar [progress]="progressBarValueSuccess"></md-progress-bar>
+		<md-progress-bar [progress]="progressBarValueSuccess" [disabled]="true"></md-progress-bar>
+		<md-progress-bar
+			[progress]="progressBarValueSuccess"
+			[ranges]="{ success: { start: 80, end: 100 }, warning: { start: 60, end: 79 }, error: { start: 0, end: 59 } }"
+		></md-progress-bar>
+		<md-progress-bar
+			[progress]="progressBarValueWarning"
+			[ranges]="{ success: { start: 80, end: 100 }, warning: { start: 60, end: 79 }, error: { start: 0, end: 59 } }"
+		></md-progress-bar>
+		<md-progress-bar
+			[progress]="progressBarValueError"
+			[ranges]="{ success: { start: 80, end: 100 }, warning: { start: 60, end: 79 }, error: { start: 0, end: 59 } }"
+		></md-progress-bar>
 	</div>
 </div>
 
