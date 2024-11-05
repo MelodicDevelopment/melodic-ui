@@ -17,7 +17,10 @@ export class MDTagComponent {
 
 	constructor() {
 		effect(() => {
-			this._elementRef.nativeElement.classList.add(this.type());
+			const tagTypes = ['default', 'brand', 'tertiary', 'info', 'success', 'warning', 'error'];
+			(this._elementRef.nativeElement as HTMLElement).classList.remove(...tagTypes);
+
+			(this._elementRef.nativeElement as HTMLElement).classList.add(this.type());
 		});
 	}
 }

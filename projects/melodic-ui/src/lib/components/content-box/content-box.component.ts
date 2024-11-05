@@ -17,6 +17,9 @@ export class MDContentBoxComponent {
 
 	constructor() {
 		effect(() => {
+			const contentBoxTypes = ['default', 'brand', 'info', 'success', 'warning', 'error'];
+			this._elementRef.nativeElement.classList.remove(...contentBoxTypes);
+
 			this._elementRef.nativeElement.classList.add(this.type());
 		});
 	}
