@@ -148,13 +148,18 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	// 	click?: () => actionGetter;
 	// }
 
+	public dropdownFormGroup: FormGroup = new FormGroup({
+		dropdownInput1: new FormControl('', Validators.required),
+		dropdownInput2: new FormControl('Option 3')
+	});
+
 	ngOnInit(): void {
 		this.buttonGroupForm.get('buttonGroupInput')?.valueChanges.subscribe((value) => {
 			console.log('Button group input changed:', value);
 		});
 
-		this.dropdownFormGroup.get('dropdownInput1')?.valueChanges.subscribe((value) => {
-			console.log('Drop down input changed:', value);
+		this.dropdownFormGroup.get('dropdownInput2')?.valueChanges.subscribe((value) => {
+			console.log('Drop down input 2 changed:', value);
 		});
 	}
 
@@ -169,11 +174,6 @@ export class MelodicUiTestAreaComponent implements OnInit {
 			this.buttonGroupForm.get('buttonGroupInput')?.disable();
 		}
 	}
-
-	public dropdownFormGroup: FormGroup = new FormGroup({
-		dropdownInput1: new FormControl('', Validators.required),
-		dropdownInput2: new FormControl('')
-	});
 
 	captureDate(dates: Date[]): void {
 		this.selectedDates.set(dates);

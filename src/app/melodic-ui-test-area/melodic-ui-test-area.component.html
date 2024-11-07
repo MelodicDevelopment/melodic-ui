@@ -166,7 +166,13 @@
 	</div>
 
 	<div class="horizontal-spacer">
-		<md-drop-down [options]="dropDownOptions2" (change)="dropDownChange($event)" placeholder="Make a selection..." [multiple]="true"></md-drop-down>
+		<md-drop-down
+			[options]="dropDownOptions2"
+			(change)="dropDownChange($event)"
+			placeholder="Make a selection..."
+			[multiple]="true"
+			[value]="['Option 2', 'Option 3']"
+		></md-drop-down>
 	</div>
 
 	<div class="horizontal-spacer">

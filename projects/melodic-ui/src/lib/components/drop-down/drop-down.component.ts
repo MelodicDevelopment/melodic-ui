@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import {
 	Component,
 	computed,
+	effect,
 	ElementRef,
 	forwardRef,
 	inject,
 	input,
 	InputSignal,
-	OnDestroy,
 	OnInit,
 	output,
 	OutputEmitterRef,
@@ -19,8 +19,8 @@ import {
 import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { combineLatest, Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { skip } from 'rxjs';
 
 export interface IMDDropDownOption {
 	value: string | number;
@@ -43,14 +43,13 @@ export interface IMDDropDownOption {
 		}
 	]
 })
-export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 	private _elementRef: ElementRef = inject(ElementRef);
-	private _destroy: Subject<void> = new Subject<void>();
-
-	private _value: unknown;
 
 	private onChange: (value: unknown) => void = () => {};
 	private onTouched: () => void = () => {};
+
+	private _value: unknown;
 
 	public value: InputSignal<unknown> = input();
 	public options: InputSignal<IMDDropDownOption[]> = input.required();
@@ -72,12 +71,16 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 	});
 
 	constructor() {
-		// TODO: Use takeUntilDestroyed instead of takeUntil
-		combineLatest([toObservable(this.value), toObservable(this.options)])
-			.pipe(takeUntil(this._destroy))
-			.subscribe(([value, options]) => {
+		toObservable(this.options)
+			.pipe(skip(1), takeUntilDestroyed())
+			.subscribe((options) => {
 				this.internalOptions.set(options);
-				this.setSelectedValue(value);
+			});
+
+		toObservable(this.value)
+			.pipe(skip(1), takeUntilDestroyed())
+			.subscribe((value) => {
+				this.writeValue(value);
 			});
 	}
 
@@ -104,13 +107,8 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 			}
 		});
 
-		// this.internalOptions.set(this.options());
-		// this.setSelectedValue(this.value());
-	}
-
-	ngOnDestroy(): void {
-		this._destroy.next();
-		this._destroy.complete();
+		this.internalOptions.set(this.options());
+		this.writeValue(this.value());
 	}
 
 	public optionSelected(option: IMDDropDownOption, event?: MouseEvent): void {
@@ -144,17 +142,13 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 		this.onTouched();
 
 		this.change.emit(value);
+
+		this._value = value;
+
+		this.setSelectedOptions(value);
 	}
 
-	public registerOnChange(fn: any): void {
-		this.onChange = fn;
-	}
-
-	public registerOnTouched(fn: any): void {
-		this.onTouched = fn;
-	}
-
-	private setSelectedValue(value: unknown): void {
+	public setSelectedOptions(value: unknown): void {
 		if (value) {
 			if (Array.isArray(value)) {
 				this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number>).includes(o.value) }))]);
@@ -163,9 +157,13 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, OnDest
 
 			this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: value === o.value }))]);
 		}
+	}
 
-		if (value !== this._value) {
-			this.writeValue(value);
-		}
+	public registerOnChange(fn: any): void {
+		this.onChange = fn;
+	}
+
+	public registerOnTouched(fn: any): void {
+		this.onTouched = fn;
 	}
 }
