@@ -140,18 +140,12 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		}
 	];
 
-	// export interface IMDMenuOption {
-	// 	label: string;
-	// 	icon?: string;
-	// 	link?: string;
-	// 	linkTarget?: string;
-	// 	click?: () => actionGetter;
-	// }
-
 	public dropdownFormGroup: FormGroup = new FormGroup({
 		dropdownInput1: new FormControl('', Validators.required),
 		dropdownInput2: new FormControl('Option 3')
 	});
+
+	public dateInputFormControl: FormControl = new FormControl('1979-03-27', [Validators.required]);
 
 	ngOnInit(): void {
 		this.buttonGroupForm.get('buttonGroupInput')?.valueChanges.subscribe((value) => {

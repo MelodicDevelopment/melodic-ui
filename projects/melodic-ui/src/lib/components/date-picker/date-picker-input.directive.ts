@@ -1,11 +1,34 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, inject, input, InputSignal, output, OutputEmitterRef, ViewContainerRef } from '@angular/core';
+import {
+	AfterViewInit,
+	Directive,
+	ElementRef,
+	forwardRef,
+	HostListener,
+	inject,
+	input,
+	InputSignal,
+	output,
+	OutputEmitterRef,
+	ViewContainerRef
+} from '@angular/core';
 import { MDDatePickerComponent } from './date-picker.component';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
 	standalone: true,
-	selector: '[md-date-picker-input]'
+	selector: '[md-date-picker-input]',
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => MDDatePickerInputDirective),
+			multi: true
+		}
+	]
 })
-export class MDDatePickerInputDirective implements AfterViewInit {
+export class MDDatePickerInputDirective implements AfterViewInit, ControlValueAccessor {
+	private _onChange = (value: any) => {};
+	private _onTouched = () => {};
+
 	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 	private _elementRef: ElementRef = inject(ElementRef);
 	private _dateInputContainer: HTMLDivElement = document.createElement('div');
@@ -71,6 +94,18 @@ export class MDDatePickerInputDirective implements AfterViewInit {
 		});
 	}
 
+	writeValue(value: Date[]): void {
+		this.setDateValue(value ? value : []);
+	}
+
+	registerOnChange(fn: (value: any) => void): void {
+		this._onChange = fn;
+	}
+
+	registerOnTouched(fn: () => void): void {
+		this._onTouched = fn;
+	}
+
 	private setDateValue(dates: Date[]): string {
 		let dateValue: string = '';
 
@@ -80,6 +115,9 @@ export class MDDatePickerInputDirective implements AfterViewInit {
 
 		this._dateInputEl.value = dateValue;
 		this._datePickerComponent.classList.remove('open');
+
+		this._onChange(dateValue);
+		this._onTouched();
 
 		return dateValue;
 	}
