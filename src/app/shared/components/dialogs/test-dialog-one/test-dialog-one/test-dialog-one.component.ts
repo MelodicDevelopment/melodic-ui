@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, effect, inject, Input, input, InputSignal, OnDestroy, OnInit } from '@angular/core';
 import { MDDialogRef, MD_DIALOG_REF, MDDialogModule } from '@melodic-ui';
 import { TestDialogOneInnerComponent } from './test-dialog-one-inner.component';
 
@@ -14,10 +14,13 @@ export class TestDialogOneComponent implements OnInit, OnDestroy {
 	private _dialogRef: MDDialogRef = inject(MD_DIALOG_REF);
 	//private _interval: number;
 
-	public seconds: WritableSignal<number> = signal<number>(3);
+	public seconds: InputSignal<number> = input<number>(3);
+
+	@Input() testString: string = 'Test String';
 
 	constructor() {
 		effect(() => {
+			console.log(this.seconds());
 			console.log(this._dialogRef.afterOpened());
 			console.log(this._dialogRef.afterClosed());
 		});

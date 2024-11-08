@@ -178,7 +178,7 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	}
 
 	openDialog(): void {
-		const dialogRef = this._dialogService.open(TestDialogOneComponent as Type<Component>);
+		const dialogRef = this._dialogService.open(TestDialogOneComponent as Type<Component>, { seconds: 10, testString: 'Rick Hopkins' });
 	}
 
 	buttonToggleChange(value: unknown): void {

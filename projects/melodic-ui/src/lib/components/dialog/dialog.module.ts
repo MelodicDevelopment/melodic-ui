@@ -6,7 +6,6 @@ import { MDDialogFooterComponent } from './components/dialog-footer/dialog-foote
 import { MDDialogHeaderComponent } from './components/dialog-header/dialog-header.component';
 import { MDDialogHeaderDirective } from './directives/md-dialog-header.directive';
 import { MDDialogFooterDirective } from './directives/md-dialog-footer.directive';
-import { MDDialogService, MDDialogRef, MD_DIALOG_REF } from './dialog.service';
 
 @NgModule({
 	imports: [CommonModule, MDDialogComponent, MDDialogFooterComponent, MDDialogHeaderComponent, MDDialogFooterDirective, MDDialogHeaderDirective],

@@ -2,12 +2,11 @@ import { AfterContentInit, Component, ContentChild, QueryList, signal, ViewEncap
 import { CommonModule } from '@angular/common';
 import { MDDialogHeaderDirective } from './directives/md-dialog-header.directive';
 import { MDDialogFooterDirective } from './directives/md-dialog-footer.directive';
-import { MDIconComponent } from '../icon/icon.component';
 
 @Component({
 	selector: 'md-dialog',
 	standalone: true,
-	imports: [CommonModule, MDIconComponent],
+	imports: [CommonModule],
 	templateUrl: './dialog.component.html',
 	styleUrl: './dialog.component.scss',
 	encapsulation: ViewEncapsulation.None

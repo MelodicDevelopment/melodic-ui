@@ -47,7 +47,7 @@ export class MDDialogService {
 
 	private _dialogs: ComponentRef<MDOverlayComponent>[] = [];
 
-	public open<T extends Type<Component>>(component: T, inputs: { [key: string]: Signal<unknown> } = {}): MDDialogRef {
+	public open<T extends Type<Component>>(component: T, inputs: { [key: string]: unknown } = {}): MDDialogRef {
 		const overlayComponentRef = this.createOverlayComponent();
 		const providedComponentRefWithDialogRef = this.createProvidedComponent(overlayComponentRef, component, inputs);
 
@@ -83,7 +83,7 @@ export class MDDialogService {
 	private createProvidedComponent<T extends Type<Component>>(
 		overlayComponentRef: ComponentRef<MDOverlayComponent>,
 		component: T,
-		inputs: { [key: string]: Signal<unknown> } = {}
+		inputs: { [key: string]: unknown } = {}
 	): { dialogRef: MDDialogRef; providedComponentRef: ComponentRef<Component> } {
 		const dialogRef = new MDDialogRef(overlayComponentRef, this);
 
@@ -96,8 +96,8 @@ export class MDDialogService {
 			elementInjector: dialogInjector
 		});
 
-		Object.keys(inputs).forEach(([key, signal]) => {
-			innerComponentRef.setInput(key, signal);
+		Object.keys(inputs).forEach((key) => {
+			innerComponentRef.setInput(key, inputs[key]);
 		});
 
 		this._appRef.attachView(innerComponentRef.hostView);
