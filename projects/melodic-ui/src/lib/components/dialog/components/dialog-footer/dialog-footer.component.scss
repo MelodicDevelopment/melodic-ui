@@ -1,10 +1,23 @@
 md-dialog-footer {
 	display: flex;
+	width: 100%;
 
 	[md-dialog-footer] {
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
 		gap: var(--md-spacing-md);
+
+		div {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			gap: var(--md-spacing-md);
+		}
+
+		&:has(div[left] + div[right]) {
+			justify-content: space-between;
+			width: 100%;
+		}
 	}
 }

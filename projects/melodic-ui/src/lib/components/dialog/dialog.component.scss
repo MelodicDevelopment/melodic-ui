@@ -5,14 +5,19 @@ md-dialog {
 	border: 1px solid var(--md-surface-primary-border-color);
 	color: var(--md-surface-primary-font-color);
 	border-radius: var(--md-radius-md);
-	padding: var(--md-spacing-xl);
 
 	div.md-dialog-header {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		gap: var(--md-spacing-md);
-		margin: calc(var(--md-spacing-xl) * -1) calc(var(--md-spacing-xl) * -1) var(--md-spacing-none);
+		padding: var(--md-spacing-xl);
+		border-bottom: 1px solid var(--md-surface-primary-border-color);
+	}
+
+	div.dialog-content {
+		max-height: 75vh;
+		overflow: auto;
 		padding: var(--md-spacing-xl);
 	}
 
@@ -21,7 +26,7 @@ md-dialog {
 		align-items: center;
 		justify-content: flex-end;
 		gap: var(--md-spacing-md);
-		margin: var(--md-spacing-none) calc(var(--md-spacing-xl) * -1) calc(var(--md-spacing-xl) * -1);
 		padding: var(--md-spacing-xl);
+		border-top: 1px solid var(--md-surface-primary-border-color);
 	}
 }
