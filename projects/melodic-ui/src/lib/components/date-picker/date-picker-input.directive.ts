@@ -101,7 +101,6 @@ export class MDDatePickerInputDirective implements AfterViewInit, ControlValueAc
 		}
 
 		this.setDateValue(value ? value : []);
-		console.log('writeValue:', value);
 	}
 
 	registerOnChange(fn: (value: any) => void): void {
