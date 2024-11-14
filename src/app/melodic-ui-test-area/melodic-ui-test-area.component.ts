@@ -179,6 +179,14 @@ export class MelodicUiTestAreaComponent implements OnInit {
 
 	openDialog(): void {
 		const dialogRef = this._dialogService.open(TestDialogOneComponent as Type<Component>, { seconds: 10, testString: 'Rick Hopkins' });
+
+		dialogRef.afterOpened.subscribe(() => {
+			console.log('Dialog opened');
+		});
+
+		dialogRef.afterClosed.subscribe(() => {
+			console.log('Dialog closed');
+		});
 	}
 
 	buttonToggleChange(value: unknown): void {

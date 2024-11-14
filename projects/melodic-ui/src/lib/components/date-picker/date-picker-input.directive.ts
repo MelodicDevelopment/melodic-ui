@@ -1,18 +1,9 @@
-import {
-	AfterViewInit,
-	Directive,
-	ElementRef,
-	forwardRef,
-	HostListener,
-	inject,
-	input,
-	InputSignal,
-	output,
-	OutputEmitterRef,
-	ViewContainerRef
-} from '@angular/core';
+import { Directive, ElementRef, forwardRef, HostListener, inject, input, InputSignal, output, OutputEmitterRef, ViewContainerRef } from '@angular/core';
 import { MDDatePickerComponent } from './date-picker.component';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { take } from 'rxjs';
 
 @Directive({
 	standalone: true,
@@ -25,14 +16,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 		}
 	]
 })
-export class MDDatePickerInputDirective implements AfterViewInit, ControlValueAccessor {
+export class MDDatePickerInputDirective implements ControlValueAccessor {
+	private _overlay: Overlay = inject(Overlay);
+
 	private _onChange = (value: any) => {};
 	private _onTouched = () => {};
 
+	private _overlayRef: OverlayRef | null = null;
 	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 	private _elementRef: ElementRef = inject(ElementRef);
-	private _dateInputContainer: HTMLDivElement = document.createElement('div');
-	private _datePickerComponent: HTMLElement = document.createElement('div');
 	private _dateInputEl: HTMLInputElement = this._elementRef.nativeElement as HTMLInputElement;
 
 	public update: OutputEmitterRef<string> = output<string>();
@@ -52,7 +44,54 @@ export class MDDatePickerInputDirective implements AfterViewInit, ControlValueAc
 
 	@HostListener('focus')
 	onFocus(): void {
-		this._datePickerComponent.classList.add('open');
+		if (this._overlayRef) {
+			return;
+		}
+
+		const positionStrategy = this._overlay
+			.position()
+			.flexibleConnectedTo(this._elementRef)
+			.withPositions([
+				{
+					originX: 'start',
+					originY: 'bottom',
+					overlayX: 'start',
+					overlayY: 'top'
+				},
+				{
+					originX: 'start',
+					originY: 'top',
+					overlayX: 'start',
+					overlayY: 'bottom'
+				}
+			]);
+
+		this._overlayRef = this._overlay.create({
+			positionStrategy,
+			hasBackdrop: true,
+			backdropClass: 'cdk-overlay-transparent-backdrop'
+		});
+
+		const calendarPortal = new ComponentPortal(MDDatePickerComponent, this._viewContainerRef);
+		const calendarRef = this._overlayRef.attach(calendarPortal);
+
+		calendarRef.setInput('isPastDaysDisabled', this.isPastDaysDisabled());
+
+		if (this._dateInputEl.value) {
+			calendarRef.instance.initDates = [new Date(`${this._dateInputEl.value} 00:00:00`)];
+		}
+
+		calendarRef.instance.change.subscribe((dates: Date[]) => {
+			const dateValue = this.setDateValue(dates);
+			this.update.emit(dateValue);
+
+			this.closeCalendar();
+		});
+
+		this._overlayRef
+			.backdropClick()
+			.pipe(take(1))
+			.subscribe(() => this.closeCalendar());
 	}
 
 	constructor() {
@@ -60,38 +99,6 @@ export class MDDatePickerInputDirective implements AfterViewInit, ControlValueAc
 			console.error('The md-date-picker-input directive must be applied to an input element with type="date"');
 			return;
 		}
-
-		this._dateInputContainer.classList.add('md-date-picker-container');
-		this._dateInputEl.after(this._dateInputContainer);
-
-		this._dateInputContainer.appendChild(this._dateInputEl);
-	}
-
-	ngAfterViewInit() {
-		this._viewContainerRef.clear();
-		const componentRef = this._viewContainerRef.createComponent<MDDatePickerComponent>(MDDatePickerComponent);
-
-		componentRef.setInput('isPastDaysDisabled', this.isPastDaysDisabled());
-
-		if (this._dateInputEl.value) {
-			componentRef.instance.initDates = [new Date(`${this._dateInputEl.value} 00:00:00`)];
-		}
-
-		componentRef.instance.change.subscribe((dates: Date[]) => {
-			const dateValue = this.setDateValue(dates);
-			this.update.emit(dateValue);
-		});
-
-		this._datePickerComponent = componentRef.location.nativeElement as HTMLElement;
-		this._datePickerComponent.classList.add('as-directive');
-
-		this._dateInputContainer.appendChild(this._datePickerComponent);
-
-		document.addEventListener('click', (event: MouseEvent) => {
-			if (!this._dateInputContainer.contains(event.target as Node)) {
-				this._datePickerComponent.classList.remove('open');
-			}
-		});
 	}
 
 	writeValue(value: Date[] | string): void {
@@ -119,11 +126,17 @@ export class MDDatePickerInputDirective implements AfterViewInit, ControlValueAc
 		}
 
 		this._dateInputEl.value = dateValue;
-		this._datePickerComponent.classList.remove('open');
 
 		this._onChange(dateValue);
 		this._onTouched();
 
 		return dateValue;
+	}
+
+	private closeCalendar() {
+		if (this._overlayRef) {
+			this._overlayRef.dispose();
+			this._overlayRef = null;
+		}
 	}
 }

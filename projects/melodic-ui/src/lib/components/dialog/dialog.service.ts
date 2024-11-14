@@ -13,13 +13,14 @@ import {
 	signal
 } from '@angular/core';
 import { MDOverlayComponent } from '../overlay/overlay.component';
+import { Subject } from 'rxjs';
 
 export const MD_DIALOG_REF = new InjectionToken<MDDialogRef>('MD_DIALOG_REF');
 
 export class MDDialogRef {
-	public afterOpened: WritableSignal<boolean>;
-	public afterClosed: WritableSignal<boolean>;
-	public afterAllClosed: WritableSignal<boolean> = signal<boolean>(false);
+	public afterOpened: Subject<void> = new Subject<void>();
+	public afterClosed: Subject<void> = new Subject<void>();
+	public afterAllClosed: Subject<void> = new Subject<void>();
 
 	constructor(
 		private _overlayComponentRef: ComponentRef<MDOverlayComponent>,
@@ -31,7 +32,7 @@ export class MDDialogRef {
 
 	public closeAll(): void {
 		this._dialogService.closeAll();
-		this.afterAllClosed.set(true);
+		this.afterAllClosed.next();
 	}
 
 	public close(): void {

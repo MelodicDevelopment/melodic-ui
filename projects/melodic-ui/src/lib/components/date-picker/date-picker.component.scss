@@ -3,6 +3,7 @@
 :host {
 	display: block;
 	background-color: var(--md-surface-primary-background-color);
+	border-radius: var(--md-radius-full);
 
 	&.as-directive {
 		display: none;

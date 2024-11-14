@@ -16,6 +16,11 @@
 /** angular cdk */
 @import '@angular/cdk/overlay-prebuilt.css';
 
+/** angular cdk overrides */
+.cdk-overlay-container {
+	z-index: 1000000;
+}
+
 // Example of creating a surface
 //@import './dsl/partials/surface.mixins';
 
