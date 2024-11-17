@@ -26,6 +26,7 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	public initDates: Date[] = [new Date('2024-09-07 00:00:00')]; // NOTE: Zero out times to avoid timezone issues
 	public selectOptions: string[] = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 	public selectedOptions: string[] = ['Option 3', 'Option 4', 'Option 5'];
+	public isPopupClickawayDisabled: WritableSignal<boolean> = signal<boolean>(false);
 
 	public customDropDownOptionComponent: Type<Component> = CustomDropDownOptionComponent as Type<Component>;
 

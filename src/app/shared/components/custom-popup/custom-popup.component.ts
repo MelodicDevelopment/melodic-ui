@@ -11,4 +11,6 @@ import { MDPopupComponent, PopupPositionType } from '@melodic-ui';
 })
 export class CustomPopupComponent {
 	public position: InputSignal<PopupPositionType> = input<PopupPositionType>('left-top');
+
+	public isPopupClickawayDisabled: InputSignal<boolean> = input<boolean>(false);
 }

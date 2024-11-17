@@ -1,4 +1,4 @@
-<md-popup [position]="position()">
+<md-popup [disableClickaway]="isPopupClickawayDisabled()" [position]="position()">
 	<div md-popup-target>
 		<button md-button>{{ position() }}</button>
 	</div>

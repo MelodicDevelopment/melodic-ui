@@ -335,22 +335,27 @@
 <div class="component-group">
 	<md-header size="xs" variant="regular">Popups</md-header>
 
-	<div class="horizontal-spacer" style="padding: 200px">
-		<app-custom-popup position="left"></app-custom-popup>
-		<app-custom-popup position="left-top"></app-custom-popup>
-		<app-custom-popup position="left-bottom"></app-custom-popup>
+	<div style="margin-top: 50px">
+		<label for="toggle-signal">Toggle popup clickaway</label>
+		<input type="checkbox" id="toggle-signal" [(ngModel)]="isPopupClickawayDisabled" />
+	</div>
 
-		<app-custom-popup position="right"></app-custom-popup>
-		<app-custom-popup position="right-top"></app-custom-popup>
-		<app-custom-popup position="right-bottom"></app-custom-popup>
+	<div class="horizontal-spacer" style="padding: 100px">
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="left"></app-custom-popup>
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="left-top"></app-custom-popup>
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="left-bottom"></app-custom-popup>
 
-		<app-custom-popup position="top"></app-custom-popup>
-		<app-custom-popup position="top-start"></app-custom-popup>
-		<app-custom-popup position="top-end"></app-custom-popup>
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="right"></app-custom-popup>
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="right-top"></app-custom-popup>
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="right-bottom"></app-custom-popup>
 
-		<app-custom-popup position="bottom"></app-custom-popup>
-		<app-custom-popup position="bottom-start"></app-custom-popup>
-		<app-custom-popup position="bottom-end"></app-custom-popup>
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="top"></app-custom-popup>
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="top-start"></app-custom-popup>
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="top-end"></app-custom-popup>
+
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="bottom"></app-custom-popup>
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="bottom-start"></app-custom-popup>
+		<app-custom-popup [isPopupClickawayDisabled]="isPopupClickawayDisabled()" position="bottom-end"></app-custom-popup>
 	</div>
 </div>
 

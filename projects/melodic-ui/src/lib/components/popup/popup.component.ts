@@ -70,10 +70,11 @@ export class MDPopupComponent {
 	public offsets: InputSignal<PopupOffsetType> = input<PopupOffsetType>({});
 	public arrow: InputSignal<boolean> = input<boolean>(true);
 	public visible: WritableSignal<boolean> = signal<boolean>(false);
+	public disableClickaway: InputSignal<boolean> = input<boolean>(false);
 
 	@HostListener('document:click', ['$event'])
 	outsideClick(event: MouseEvent) {
-		if (this.trigger() === 'click' && this.isEventOutside(event)) {
+		if (!this.disableClickaway() && this.trigger() === 'click' && this.isEventOutside(event)) {
 			this.hide();
 		}
 	}
