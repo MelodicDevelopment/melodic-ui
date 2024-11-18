@@ -1,41 +1,28 @@
-import {
-	Injectable,
-	ApplicationRef,
-	Injector,
-	Type,
-	ComponentRef,
-	createComponent,
-	inject,
-	Component,
-	Signal,
-	InjectionToken,
-	WritableSignal,
-	signal
-} from '@angular/core';
+import { Injectable, ApplicationRef, Injector, Type, ComponentRef, createComponent, inject, Component, InjectionToken } from '@angular/core';
 import { MDOverlayComponent } from '../overlay/overlay.component';
-import { Subject } from 'rxjs';
+import { skip, Subject, take } from 'rxjs';
 
 export const MD_DIALOG_REF = new InjectionToken<MDDialogRef>('MD_DIALOG_REF');
 
 export class MDDialogRef {
 	public afterOpened: Subject<void> = new Subject<void>();
-	public afterClosed: Subject<void> = new Subject<void>();
-	public afterAllClosed: Subject<void> = new Subject<void>();
+	public afterClosed: Subject<unknown> = new Subject<unknown>();
+	public afterAllClosed: Subject<unknown> = new Subject<unknown>();
 
 	constructor(
 		private _overlayComponentRef: ComponentRef<MDOverlayComponent>,
 		private _dialogService: MDDialogService
 	) {
-		this.afterOpened = _overlayComponentRef.instance.afterOpened;
-		this.afterClosed = _overlayComponentRef.instance.afterClosed;
+		_overlayComponentRef.instance.afterOpened.pipe(take(1)).subscribe(() => this.afterOpened.next());
 	}
 
-	public closeAll(): void {
+	public closeAll(result: unknown): void {
 		this._dialogService.closeAll();
-		this.afterAllClosed.next();
+		this.afterAllClosed.next(result);
 	}
 
-	public close(): void {
+	public close(result?: unknown): void {
+		this._overlayComponentRef.instance.afterClosed.pipe(take(1)).subscribe(() => this.afterClosed.next(result));
 		this._dialogService.close(this._overlayComponentRef);
 	}
 }

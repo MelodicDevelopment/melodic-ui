@@ -56,8 +56,8 @@ export class TestDialogOneComponent implements OnInit, OnDestroy {
 			console.log('TestDialogOneComponent.afterOpened');
 		});
 
-		this._dialogRef.afterClosed.subscribe(() => {
-			console.log('TestDialogOneComponent.afterClosed');
+		this._dialogRef.afterClosed.subscribe((someData) => {
+			console.log('TestDialogOneComponent.afterClosed', someData);
 		});
 	}
 
@@ -66,6 +66,6 @@ export class TestDialogOneComponent implements OnInit, OnDestroy {
 	}
 
 	close(): void {
-		this._dialogRef.close();
+		this._dialogRef.close({ message: 'Some Data' });
 	}
 }

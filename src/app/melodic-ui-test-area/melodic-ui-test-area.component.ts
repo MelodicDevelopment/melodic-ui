@@ -185,8 +185,8 @@ export class MelodicUiTestAreaComponent implements OnInit {
 			console.log('Dialog opened');
 		});
 
-		dialogRef.afterClosed.subscribe(() => {
-			console.log('Dialog closed');
+		dialogRef.afterClosed.subscribe((someData) => {
+			console.log('Dialog closed', someData);
 		});
 	}
 
