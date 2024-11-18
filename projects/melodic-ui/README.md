@@ -10,11 +10,14 @@ Run `ng generate component component-name --project melodic-ui` to generate a ne
 
 ## Build
 
-Run `ng build melodic-ui` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Go to the `projects/melodic-ui/package.json` file and update the version number for the new release.
+1. Run `npm run build:melodic-ui` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+> Note: If you're on windows you need to use a bash shell to run this
 
 ## Publishing
 
-After building your library with `ng build melodic-ui`, go to the dist folder `cd dist/melodic-ui` and run `npm publish`.
+After building your library with `npm run build:melodic-ui`, go to the dist folder `cd dist/melodic-ui` and run `npm publish`.
 
 ## Running unit tests
 
