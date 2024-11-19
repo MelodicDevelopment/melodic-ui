@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
 	Component,
 	computed,
-	effect,
 	ElementRef,
 	forwardRef,
 	inject,
@@ -14,13 +13,14 @@ import {
 	Signal,
 	signal,
 	Type,
+	ViewEncapsulation,
 	WritableSignal
 } from '@angular/core';
-import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { skip } from 'rxjs';
+import { MDPopupComponent } from '../popup/popup.component';
 
 export interface IMDDropDownOption {
 	value: string | number;
@@ -32,7 +32,7 @@ export interface IMDDropDownOption {
 @Component({
 	selector: 'md-drop-down',
 	standalone: true,
-	imports: [CommonModule, MDContentBoxComponent, MDIconComponent],
+	imports: [CommonModule, MDIconComponent, MDPopupComponent],
 	templateUrl: './drop-down.component.html',
 	styleUrl: './drop-down.component.scss',
 	providers: [
@@ -41,7 +41,8 @@ export interface IMDDropDownOption {
 			useExisting: forwardRef(() => MDDropDownComponent),
 			multi: true
 		}
-	]
+	],
+	encapsulation: ViewEncapsulation.None
 })
 export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 	private _elementRef: ElementRef = inject(ElementRef);

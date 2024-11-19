@@ -3,7 +3,7 @@
 </div>
 
 <ng-template #popupContent>
-	<div class="md-popup-content" [ngClass]="[position(), arrow() ? '' : 'no-arrow']">
+	<div class="md-popup-content" [ngClass]="[popupClass(), position(), arrow() ? '' : 'no-arrow']">
 		<ng-content select="[md-popup-content]"></ng-content>
 	</div>
 </ng-template>

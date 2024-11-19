@@ -1,39 +1,40 @@
-<div class="dropdown-input-wrapper" [ngClass]="{ active: isActive() }">
-	<input
-		type="text"
-		md-form-input
-		readonly
-		[placeholder]="selectedOptions().length === 0 ? placeholder() : ''"
-		(input)="input.emit($event)"
-		(focus)="focus.emit()"
-		(blur)="blur.emit()"
-		[disabled]="disabled()"
-	/>
-
-	<div class="selected-options-list" [ngClass]="{ multiple: multiple() }">
-		@for (option of selectedOptions(); track option.value) {
-			<span class="selected-option">
-				@if (option.icon !== undefined) {
-					<md-icon>{{ option.icon }}</md-icon>
-				}
-				{{ option.label }}
-				<md-icon class="remove" (click)="optionSelected(option, $event)">close</md-icon>
-			</span>
-		}
-	</div>
-</div>
-
-<md-content-box class="options-list" [ngClass]="{ active: isActive() }">
-	@for (option of internalOptions(); track option.value) {
-		<div class="option" [ngClass]="{ selected: option.selected }" (click)="optionSelected(option)">
-			@if (optionComponent() !== undefined) {
-				<ng-container *ngComponentOutlet="optionComponent()!; inputs: { option }"></ng-container>
-			} @else {
-				<ng-container *ngTemplateOutlet="optionTemplate; context: { option }"></ng-container>
+<md-popup [arrow]="false" position="bottom-start" popupClass="md-drop-down-options">
+	<div md-popup-target class="dropdown-input-wrapper" [ngClass]="{ active: isActive() }">
+		<div class="selected-options-list" [ngClass]="{ multiple: multiple() }">
+			@for (option of selectedOptions(); track option.value) {
+				<span class="selected-option">
+					@if (option.icon !== undefined) {
+						<md-icon>{{ option.icon }}</md-icon>
+					}
+					{{ option.label }}
+					<md-icon class="remove" (click)="optionSelected(option, $event)">close</md-icon>
+				</span>
 			}
 		</div>
-	}
-</md-content-box>
+
+		<input
+			type="text"
+			readonly
+			[placeholder]="selectedOptions().length === 0 ? placeholder() : ''"
+			(input)="input.emit($event)"
+			(focus)="focus.emit()"
+			(blur)="blur.emit()"
+			[disabled]="disabled()"
+		/>
+	</div>
+
+	<div md-popup-content class="md-options-list">
+		@for (option of internalOptions(); track option.value) {
+			<div class="option" [ngClass]="{ selected: option.selected }" (click)="optionSelected(option)">
+				@if (optionComponent() !== undefined) {
+					<ng-container *ngComponentOutlet="optionComponent()!; inputs: { option }"></ng-container>
+				} @else {
+					<ng-container *ngTemplateOutlet="optionTemplate; context: { option }"></ng-container>
+				}
+			</div>
+		}
+	</div>
+</md-popup>
 
 <ng-template #optionTemplate let-option="option">
 	<div class="option-template">

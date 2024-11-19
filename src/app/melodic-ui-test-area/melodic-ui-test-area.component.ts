@@ -89,11 +89,11 @@ export class MelodicUiTestAreaComponent implements OnInit {
 
 	public dropDownOptions3: IMDDropDownOption[] = [
 		{
-			value: 'Option 1',
+			value: 1,
 			label: 'Option 1'
 		},
 		{
-			value: 'Option 2',
+			value: 2,
 			label: 'Option 2'
 		}
 	];
@@ -142,7 +142,7 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	];
 
 	public dropdownFormGroup: FormGroup = new FormGroup({
-		dropdownInput1: new FormControl('', Validators.required),
+		dropdownInput1: new FormControl(1, Validators.required),
 		dropdownInput2: new FormControl('Option 3')
 	});
 
