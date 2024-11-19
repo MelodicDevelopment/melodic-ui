@@ -12,37 +12,18 @@ md-drop-down {
 	border: 1px solid var(--md-surface-primary-border-color);
 	border-radius: var(--md-radius-md);
 
-	&:focus {
+	&:focus,
+	&:focus-within {
 		border-color: var(--md-surface-primary-border-color-brand);
-		outline: none;
 		box-shadow: var(--md-drop-shadow-xs-input-active);
 	}
 
 	&.invalid,
 	&.required,
 	&.ng-invalid {
-		border-color: var(--md-surface-primary-border-color-error);
-	}
-
-	&.invalid,
-	&.ng-invalid {
-		&:focus {
-			box-shadow: var(--md-drop-shadow-xs-input-error);
-		}
-
 		&:not(.ng-untouched) {
-			input {
-				margin-top: -1px;
-				margin-left: -1px;
-				margin-right: -1px;
-
-				border: 1px solid var(--md-surface-primary-border-color-error);
-				border-radius: var(--md-radius-md);
-
-				&:focus-within {
-					box-shadow: var(--md-drop-shadow-xs-input-error);
-				}
-			}
+			border-color: var(--md-surface-primary-border-color-error);
+			box-shadow: var(--md-drop-shadow-xs-input-error);
 		}
 	}
 
@@ -75,6 +56,10 @@ md-drop-down {
 				flex: 1;
 				border: none;
 				margin-right: 50px;
+
+				&:focus {
+					outline: none;
+				}
 			}
 
 			div.selected-options-list {

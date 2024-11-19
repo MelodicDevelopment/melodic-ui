@@ -55,7 +55,7 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		}
 	];
 
-	public dropDownOptions1Value: WritableSignal<number> = signal<number>(5);
+	public dropDownOptions1Value: WritableSignal<number | null> = signal<number | null>(null);
 
 	public testUpdateDropDownOptions1Value(): void {
 		const randomNum = Math.floor(Math.random() * 5) + 1;
@@ -142,7 +142,7 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	];
 
 	public dropdownFormGroup: FormGroup = new FormGroup({
-		dropdownInput1: new FormControl(1, Validators.required),
+		dropdownInput1: new FormControl(null, Validators.required),
 		dropdownInput2: new FormControl('Option 3')
 	});
 
