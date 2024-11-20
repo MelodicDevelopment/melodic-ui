@@ -59,9 +59,6 @@ export class MDToolTipDirective {
 	show(): void {
 		this.hide();
 
-		const positionOptions = Object.values(this._positions);
-		console.log(positionOptions);
-
 		const positionStrategy = this._overlay.position().flexibleConnectedTo(this._elementRef).withPositions(Object.values(this._positions));
 
 		this._overlayRef = this._overlay.create({
