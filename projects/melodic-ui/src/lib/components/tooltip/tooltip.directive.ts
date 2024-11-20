@@ -34,8 +34,8 @@ export class MDToolTipDirective {
 	public delay: InputSignal<number> = input<number>(300, { alias: 'md-tooltip-delay' }); // Default delay of 300ms
 	public disabled: InputSignal<boolean> = input<boolean>(false, { alias: 'md-tooltip-disabled' });
 
-	@HostListener('mouseover')
-	onMouseOver(): void {
+	@HostListener('mouseenter')
+	onMouseEnter(): void {
 		if (this.disabled()) {
 			return;
 		}
