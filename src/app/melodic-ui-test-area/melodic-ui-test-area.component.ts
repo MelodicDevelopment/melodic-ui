@@ -7,6 +7,7 @@ import { IMDDropDownOption, IMDMenuOption, MDDialogService } from '@melodic-ui';
 import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
 import { CustomDropDownOptionComponent } from '../shared/components/custom-dropdown-option/custom-dropdown-option.component';
 import { CustomPopupComponent } from '../shared/components/custom-popup/custom-popup.component';
+import { CustomToolTipComponent } from '../shared/components/custom-tool-tip/custom-tool-tip.component';
 
 @Component({
 	selector: 'app-melodic-ui-test-area',
@@ -147,6 +148,8 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	});
 
 	public dateInputFormControl: FormControl = new FormControl('1979-03-27', [Validators.required]);
+
+	public customToolTipComponent: Type<Component> = CustomToolTipComponent as Type<Component>;
 
 	ngOnInit(): void {
 		this.buttonGroupForm.get('buttonGroupInput')?.valueChanges.subscribe((value) => {

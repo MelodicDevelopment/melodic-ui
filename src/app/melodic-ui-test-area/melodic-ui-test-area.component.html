@@ -12,7 +12,7 @@
 </div>
 
 <div class="component-group">
-	<md-header size="xs" variant="regular" md-tooltip="Progress Bar Components">Progress</md-header>
+	<md-header size="xs" variant="regular"><span md-tooltip="Progress Bar Components">Progress</span></md-header>
 
 	<div class="vertical-spacer">
 		<md-progress-bar [progress]="progressBarValueSuccess"></md-progress-bar>
@@ -380,6 +380,10 @@
 			md-tooltip-title="I am a tooltip title"
 		>
 			This box has a tooltip on it. We shouldn't use the tooltip component directly.
+		</div>
+
+		<div style="position: relative; width: 200px; background-color: #f0f0f0; padding: 20px" [md-tooltip]="customToolTipComponent">
+			This box has a tooltip on it. We shouldn't use the tooltip component directly. Instead of text this tooltip is using a component
 		</div>
 	</div>
 </div>

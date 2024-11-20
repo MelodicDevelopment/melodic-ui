@@ -1,8 +1,13 @@
-@if (tooltipTitle()) {
-	<div class="tooltip-title">
-		{{ tooltipTitle() }}
+@let component = tooltipComponent();
+@if (component) {
+	<ng-container *ngComponentOutlet="component"></ng-container>
+} @else {
+	@if (tooltipTitle()) {
+		<div class="tooltip-title">
+			{{ tooltipTitle() }}
+		</div>
+	}
+	<div class="tooltip-text">
+		{{ tooltipText() }}
 	</div>
 }
-<div class="tooltip-text">
-	{{ tooltipText() }}
-</div>

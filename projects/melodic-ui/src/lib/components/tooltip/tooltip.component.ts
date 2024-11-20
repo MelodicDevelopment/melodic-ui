@@ -1,4 +1,4 @@
-import { Component, HostBinding, input, InputSignal } from '@angular/core';
+import { Component, HostBinding, input, InputSignal, OnInit, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 
@@ -15,9 +15,16 @@ import { trigger, transition, style, animate } from '@angular/animations';
 		])
 	]
 })
-export class MDToolTipComponent {
+export class MDToolTipComponent implements OnInit {
 	@HostBinding('@fade') fadeAnimation = true;
 
-	public tooltipText: InputSignal<string> = input.required<string>();
+	public tooltipText: InputSignal<string | undefined> = input<string>();
+	public tooltipComponent: InputSignal<Type<Component> | undefined> = input<Type<Component>>();
 	public tooltipTitle: InputSignal<string | undefined> = input<string | undefined>();
+
+	ngOnInit(): void {
+		if (this.tooltipText()?.length === 0 && this.tooltipComponent() === undefined) {
+			throw new Error('Must provide either a tooltip text or a tooltip component');
+		}
+	}
 }
