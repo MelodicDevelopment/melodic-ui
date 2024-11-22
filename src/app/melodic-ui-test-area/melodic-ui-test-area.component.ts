@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal, Type, Writa
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IMDDropDownOption, IMDMenuOption, MDDialogService } from '@melodic-ui';
+import { IMDDropDownOption, IMDMenuOption, MDDialogService, NotificationService } from '@melodic-ui';
 import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
 import { CustomDropDownOptionComponent } from '../shared/components/custom-dropdown-option/custom-dropdown-option.component';
 import { CustomPopupComponent } from '../shared/components/custom-popup/custom-popup.component';
@@ -19,6 +19,7 @@ import { CustomToolTipComponent } from '../shared/components/custom-tool-tip/cus
 })
 export class MelodicUiTestAreaComponent implements OnInit {
 	private _dialogService: MDDialogService = inject(MDDialogService);
+	private _notificationService: NotificationService = inject(NotificationService);
 
 	public progressBarValueSuccess: number = 90;
 	public progressBarValueWarning: number = 75;
@@ -199,5 +200,31 @@ export class MelodicUiTestAreaComponent implements OnInit {
 
 	dropDownChange(value: unknown): void {
 		console.log('Drop down changed:', value);
+	}
+
+	openNotification(): void {
+		this._notificationService.addNotification({
+			type: 'success',
+			message: 'This is a test notification',
+			duration: 5000
+		});
+
+		this._notificationService.addNotification({
+			type: 'info',
+			message: 'This is a test notification',
+			duration: 5000
+		});
+
+		this._notificationService.addNotification({
+			type: 'warning',
+			message: 'This is a test notification',
+			duration: 5000
+		});
+
+		this._notificationService.addNotification({
+			type: 'error',
+			message: 'This is a test notification',
+			duration: 5000
+		});
 	}
 }
