@@ -78,7 +78,7 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 		calendarRef.setInput('isPastDaysDisabled', this.isPastDaysDisabled());
 
 		if (this._dateInputEl.value) {
-			calendarRef.instance.initDates = [new Date(`${this._dateInputEl.value} 00:00:00`)];
+			calendarRef.setInput('selectedDates', [new Date(`${this._dateInputEl.value} 00:00:00`)]);
 		}
 
 		calendarRef.instance.change.subscribe((dates: Date[]) => {

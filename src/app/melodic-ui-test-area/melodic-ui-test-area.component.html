@@ -144,10 +144,21 @@
 	<md-header size="xs" variant="regular">Calendar Related</md-header>
 
 	<div class="horizontal-spacer">
-		<md-date-picker (change)="captureDate($event)" [isMultiSelect]="false" [isPastDaysDisabled]="true" [initDates]="initDates"></md-date-picker>
+		<md-date-picker (change)="captureDate($event)" [isMultiSelect]="false" [isPastDaysDisabled]="true" [selectedDates]="selectedDates()"></md-date-picker>
 		<div>
 			Selected Date:<br />
 			{{ selectedDates().join(', ') }}
+		</div>
+	</div>
+
+	<div class="horizontal-spacer">
+		<md-date-picker (change)="captureDate2($event)" [isMultiSelect]="false" [isPastDaysDisabled]="true" [selectedDates]="selectedDates2()"></md-date-picker>
+		<div>
+			<button md-button-success (click)="setDate()">
+				<md-icon icon="untitled-ui/arrows/chevron-left"></md-icon>
+			</button>
+			Selected Date:<br />
+			{{ selectedDates2().join(', ') }}
 		</div>
 	</div>
 </div>
@@ -199,7 +210,7 @@
 		<input
 			type="date"
 			placeholder="YYYY-MM-DD"
-			value="2024-09-27"
+			value="2024-12-25"
 			md-form-input
 			md-date-picker-input
 			[isPastDaysDisabled]="true"

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, Input, input, InputSignal, output, OutputEmitterRef, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, input, InputSignal, OnInit, output, OutputEmitterRef, Signal, signal, WritableSignal } from '@angular/core';
 import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
 
@@ -23,29 +23,39 @@ type Week = {
 	templateUrl: './date-picker.component.html',
 	styleUrl: './date-picker.component.scss'
 })
-export class MDDatePickerComponent {
+export class MDDatePickerComponent implements OnInit {
 	private _currentDate: Date = new Date();
 	private _selectedDates: Date[] = [];
-	private _initialized: boolean = false;
+	private _initd: boolean = false;
 
 	private _calendarMonth: WritableSignal<Date> = signal<Date>(new Date());
 
+	public selectedDates: InputSignal<Date[]> = input<Date[]>([]);
 	public isMultiSelect: InputSignal<boolean> = input<boolean>(false);
 	public isPastDaysDisabled: InputSignal<boolean> = input<boolean>(false);
-
-	@Input()
-	public initDates: Date[] = [];
 
 	public change: OutputEmitterRef<Date[]> = output<Date[]>();
 
 	public monthYear: Signal<string> = computed(() => this._calendarMonth().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }));
 
 	public calendarWeeks: Signal<Week[]> = computed(() => {
-		if (this.initDates.length > 0 && !this._initialized) {
-			this._initialized = true;
-			this._selectedDates = this.initDates;
-		}
+		this._selectedDates = this.selectedDates();
+		return this.buildCalendar();
+	});
 
+	ngOnInit(): void {
+		this._selectedDates = this.selectedDates();
+
+		if (!this._initd) {
+			this._initd = true;
+
+			if (this._selectedDates.length > 0) {
+				this._calendarMonth.set(this._selectedDates[0]);
+			}
+		}
+	}
+
+	buildCalendar(): Week[] {
 		const weeks: Week[] = [];
 
 		const firstDay = new Date(this._calendarMonth().getFullYear(), this._calendarMonth().getMonth(), 1);
@@ -94,27 +104,17 @@ export class MDDatePickerComponent {
 		}
 
 		return weeks;
-	});
+	}
 
 	resetMonth(): void {
 		this._calendarMonth.set(this._currentDate);
-
-		// TODO: Should I reset value on month change?
-		// if (!this.isMultiSelect()) {
-		// 	this._selectedDates = [];
-		// 	this.change.emit(this._selectedDates);
-		// }
+		this.buildCalendar();
 	}
 
 	changeMonth(delta: number) {
 		const calendarMonth = this._calendarMonth();
 		this._calendarMonth.set(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + delta, 1));
-
-		// TODO: Should I reset value on month change?
-		// if (!this.isMultiSelect()) {
-		// 	this._selectedDates = [];
-		// 	this.change.emit(this._selectedDates);
-		// }
+		this.buildCalendar();
 	}
 
 	selectDate(day: Day) {
@@ -149,7 +149,7 @@ export class MDDatePickerComponent {
 		return isInPast && this.isPastDaysDisabled();
 	};
 
-	isDayInPast = (day: Day): boolean => {
+	private isDayInPast = (day: Day): boolean => {
 		const now = new Date();
 		now.setHours(0, 0, 0, 0);
 

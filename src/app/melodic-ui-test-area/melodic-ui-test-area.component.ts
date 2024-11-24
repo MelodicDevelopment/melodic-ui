@@ -24,8 +24,10 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	public progressBarValueSuccess: number = 90;
 	public progressBarValueWarning: number = 75;
 	public progressBarValueError: number = 55;
-	public selectedDates: WritableSignal<Date[]> = signal<Date[]>([]);
-	public initDates: Date[] = [new Date('2024-09-07 00:00:00')]; // NOTE: Zero out times to avoid timezone issues
+	public selectedDates: WritableSignal<Date[]> = signal<Date[]>([new Date(`${new Date().toLocaleDateString()} 00:00:00`)]);
+	// public selectedDates2: WritableSignal<Date[]> = signal<Date[]>([new Date(`${new Date().toLocaleDateString()} 00:00:00`)]);
+	public selectedDates2: WritableSignal<Date[]> = signal<Date[]>([]);
+
 	public selectOptions: string[] = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 	public selectedOptions: string[] = ['Option 3', 'Option 4', 'Option 5'];
 	public isPopupClickawayDisabled: WritableSignal<boolean> = signal<boolean>(false);
@@ -148,7 +150,7 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		dropdownInput2: new FormControl('Option 3')
 	});
 
-	public dateInputFormControl: FormControl = new FormControl('1979-03-27', [Validators.required]);
+	public dateInputFormControl: FormControl = new FormControl(new Date().toLocaleDateString(), [Validators.required]);
 
 	public customToolTipComponent: Type<Component> = CustomToolTipComponent as Type<Component>;
 
@@ -176,6 +178,24 @@ export class MelodicUiTestAreaComponent implements OnInit {
 
 	captureDate(dates: Date[]): void {
 		this.selectedDates.set(dates);
+	}
+
+	captureDate2(dates: Date[]): void {
+		this.selectedDates2.set(dates);
+	}
+
+	randomFutureDate(): Date {
+		const now = Date.now();
+		const yearEnd = new Date(new Date().getFullYear() + 1, 0, 1).getTime();
+		const randomFutureDate = new Date(now + Math.random() * (yearEnd - now));
+		randomFutureDate.setHours(0, 0, 0, 0);
+
+		return randomFutureDate;
+	}
+
+	setDate(): void {
+		const randomFutureDate = this.randomFutureDate();
+		this.selectedDates2.set([randomFutureDate]);
 	}
 
 	captureDateFromDirective(value: unknown, type: string): void {
