@@ -394,7 +394,11 @@
 			This box has a tooltip on it. We shouldn't use the tooltip component directly.
 		</div>
 
-		<div style="position: relative; width: 200px; background-color: #f0f0f0; padding: 20px" [md-tooltip]="customToolTipComponent">
+		<div
+			style="position: relative; width: 200px; background-color: #f0f0f0; padding: 20px"
+			[md-tooltip]="customToolTipComponent"
+			[md-tooltip-component-inputs]="customToolTipComponentInputs"
+		>
 			This box has a tooltip on it. We shouldn't use the tooltip component directly. Instead of text this tooltip is using a component
 			<div style="background-color: #ccc">This is a child element just to test something quick</div>
 		</div>

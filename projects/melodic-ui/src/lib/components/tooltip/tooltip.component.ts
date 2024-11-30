@@ -20,6 +20,7 @@ export class MDToolTipComponent implements OnInit {
 
 	public tooltipText: InputSignal<string | undefined> = input<string>();
 	public tooltipComponent: InputSignal<Type<Component> | undefined> = input<Type<Component>>();
+	public tooltipComponentInputs: InputSignal<Record<string, unknown>> = input<Record<string, unknown>>({});
 	public tooltipTitle: InputSignal<string | undefined> = input<string | undefined>();
 
 	ngOnInit(): void {

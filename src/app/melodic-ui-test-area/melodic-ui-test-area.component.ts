@@ -156,6 +156,7 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	public dateInputFormControl: FormControl = new FormControl(new Date().toLocaleDateString(), [Validators.required]);
 
 	public customToolTipComponent: Type<Component> = CustomToolTipComponent as Type<Component>;
+	public customToolTipComponentInputs: Record<string, unknown> = { testString: 'Rick Hopkins' };
 
 	ngOnInit(): void {
 		this.buttonGroupForm.get('buttonGroupInput')?.valueChanges.subscribe((value) => {

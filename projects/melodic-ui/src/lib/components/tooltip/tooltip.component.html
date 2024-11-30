@@ -1,6 +1,6 @@
 @let component = tooltipComponent();
 @if (component) {
-	<ng-container *ngComponentOutlet="component"></ng-container>
+	<ng-container *ngComponentOutlet="component; inputs: tooltipComponentInputs()"></ng-container>
 } @else {
 	@if (tooltipTitle()) {
 		<div class="tooltip-title">

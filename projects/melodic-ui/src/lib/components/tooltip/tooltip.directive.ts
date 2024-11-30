@@ -30,6 +30,7 @@ export class MDToolTipDirective {
 	};
 
 	public toolTip: InputSignal<string | Type<Component>> = input.required<string | Type<Component>>({ alias: 'md-tooltip' });
+	public toolTipComponentInputs: InputSignal<Record<string, unknown>> = input<Record<string, unknown>>({}, { alias: 'md-tooltip-component-inputs' });
 	public toolTipTitle: InputSignal<string | undefined> = input<string | undefined>(undefined, { alias: 'md-tooltip-title' });
 	public delay: InputSignal<number> = input<number>(300, { alias: 'md-tooltip-delay' }); // Default delay of 300ms
 	public disabled: InputSignal<boolean> = input<boolean>(false, { alias: 'md-tooltip-disabled' });
@@ -74,6 +75,7 @@ export class MDToolTipDirective {
 			tooltipComponentRef.setInput('tooltipText', this.toolTip());
 		} else {
 			tooltipComponentRef.setInput('tooltipComponent', this.toolTip());
+			tooltipComponentRef.setInput('tooltipComponentInputs', this.toolTipComponentInputs());
 		}
 
 		tooltipComponentRef.setInput('tooltipTitle', this.toolTipTitle());
