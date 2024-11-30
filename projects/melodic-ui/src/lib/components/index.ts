@@ -11,6 +11,7 @@ export * from './alert';
 export * from './overlay/overlay.component';
 export * from './popup/popup.component';
 export * from './progress-bar/progress-bar.component';
+export * from './status-icon/status-icon.component';
 export * from './tag/tag.component';
 export * from './tooltip/tooltip.component';
 export * from './tooltip/tooltip.directive';
