@@ -43,13 +43,13 @@ export class MDButtonGroupComponent implements ControlValueAccessor, OnInit, Aft
 		}
 
 		this._buttonToggles.forEach((toggle) => {
-			toggle.checked = this._values.includes(toggle.value);
+			toggle.checked.set(this._values.includes(toggle.value()));
 			toggle.disabled = this.disabled;
 
 			toggle.change.subscribe((value) => {
 				if (this.multiple) {
-					if (this._values.includes(toggle.value)) {
-						this._values = this._values.filter((v) => v !== toggle.value);
+					if (this._values.includes(toggle.value())) {
+						this._values = this._values.filter((v) => v !== toggle.value());
 					}
 
 					if (value !== null) {
@@ -65,8 +65,8 @@ export class MDButtonGroupComponent implements ControlValueAccessor, OnInit, Aft
 				this.writeValue(this.multiple ? this._values : this._values[0]);
 
 				this._buttonToggles.forEach((t) => {
-					if (!this._values.includes(t.value)) {
-						t.checked = false;
+					if (!this._values.includes(t.value())) {
+						t.checked.set(false);
 					}
 				});
 			});

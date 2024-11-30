@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnInit, output, OutputEmitterRef } from '@angular/core';
+import { Component, ElementRef, inject, input, Input, InputSignal, OnInit, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,10 +11,10 @@ import { CommonModule } from '@angular/common';
 export class MDButtonToggleComponent implements OnInit {
 	private _elementRef: ElementRef = inject(ElementRef);
 
-	@Input({ required: true }) public value: unknown = null;
+	public value: InputSignal<unknown> = input.required();
 	@Input() public disabled: boolean = false;
 
-	public checked: boolean = false;
+	public checked: WritableSignal<boolean> = signal<boolean>(false);
 
 	public change: OutputEmitterRef<unknown> = output<unknown>();
 
@@ -25,7 +25,7 @@ export class MDButtonToggleComponent implements OnInit {
 	}
 
 	public onClick() {
-		this.checked = !this.checked;
-		this.change.emit(this.checked ? this.value : null);
+		this.checked.set(!this.checked());
+		this.change.emit(this.checked() ? this.value() : null);
 	}
 }

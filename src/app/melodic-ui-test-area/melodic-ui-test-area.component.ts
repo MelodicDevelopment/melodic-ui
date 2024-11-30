@@ -24,6 +24,9 @@ export class MelodicUiTestAreaComponent implements OnInit {
 	public progressBarValueSuccess: number = 90;
 	public progressBarValueWarning: number = 75;
 	public progressBarValueError: number = 55;
+
+	public buttonGroupDefaultValue: WritableSignal<string> = signal<string>('2');
+
 	public selectedDates: WritableSignal<Date[]> = signal<Date[]>([new Date(`${new Date().toLocaleDateString()} 00:00:00`)]);
 	// public selectedDates2: WritableSignal<Date[]> = signal<Date[]>([new Date(`${new Date().toLocaleDateString()} 00:00:00`)]);
 	public selectedDates2: WritableSignal<Date[]> = signal<Date[]>([]);
