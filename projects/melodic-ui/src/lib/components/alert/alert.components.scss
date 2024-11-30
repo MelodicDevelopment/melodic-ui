@@ -1,0 +1,42 @@
+@import '../../styles/dsl/partials/typography.mixins';
+
+:host {
+	div.alert {
+		display: flex;
+		flex-direction: column;
+		width: 300px;
+		background-color: var(--md-surface-primary-background-color);
+		color: var(--md-surface-primary-font-color);
+		border-radius: var(--md-radius-md);
+		border: var(--md-border-size-primary) var(--md-border-shape-primary) var(--md-surface-primary-border-color);
+		box-shadow: var(--md-drop-shadow-md);
+		padding: var(--md-spacing-xl);
+		margin: 10px 0;
+
+		div.header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: var(--md-spacing-md);
+		}
+
+		div.title {
+			@include text-styles(get-text(sm, semibold)...);
+		}
+
+		div.message {
+			@include text-styles(get-text(sm, regular)...);
+			margin-bottom: var(--md-spacing-md);
+		}
+
+		div.footer {
+			display: flex;
+			align-items: center;
+			gap: var(--md-spacing-md);
+
+			button {
+				padding: 0px;
+			}
+		}
+	}
+}

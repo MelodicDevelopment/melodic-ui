@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal, Type, Writa
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IMDDropDownOption, IMDMenuOption, MDDialogService, NotificationService } from '@melodic-ui';
+import { IMDDropDownOption, IMDMenuOption, MDDialogService, MDAlertService } from '@melodic-ui';
 import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
 import { CustomDropDownOptionComponent } from '../shared/components/custom-dropdown-option/custom-dropdown-option.component';
 import { CustomPopupComponent } from '../shared/components/custom-popup/custom-popup.component';
@@ -19,7 +19,7 @@ import { CustomToolTipComponent } from '../shared/components/custom-tool-tip/cus
 })
 export class MelodicUiTestAreaComponent implements OnInit {
 	private _dialogService: MDDialogService = inject(MDDialogService);
-	private _notificationService: NotificationService = inject(NotificationService);
+	private _alertService: MDAlertService = inject(MDAlertService);
 
 	public progressBarValueSuccess: number = 90;
 	public progressBarValueWarning: number = 75;
@@ -222,29 +222,54 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		console.log('Drop down changed:', value);
 	}
 
-	openNotification(): void {
-		this._notificationService.addNotification({
+	openAlert(): void {
+		this._alertService.addAlert({
+			title: 'Just Default',
+			message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum dolor.',
+			type: 'default',
+			link: {
+				text: 'View',
+				url: 'https://www.google.com',
+				routerLink: false
+			},
+			onClose: (action: string) => {
+				alert('Closed Me: ' + action);
+			}
+		});
+
+		this._alertService.addAlert({
+			title: 'Just Brand',
+			message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum dolor.',
+			type: 'brand',
+			duration: 8000
+		});
+
+		this._alertService.addAlert({
+			title: 'Success Has Occurred!',
+			message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum dolor.',
 			type: 'success',
-			message: 'This is a test notification',
-			duration: 5000
+			duration: 4000
 		});
 
-		this._notificationService.addNotification({
+		this._alertService.addAlert({
+			title: 'Just Informational',
+			message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum dolor.',
 			type: 'info',
-			message: 'This is a test notification',
-			duration: 5000
+			duration: 3000
 		});
 
-		this._notificationService.addNotification({
+		this._alertService.addAlert({
+			title: `You've Been Warned!`,
+			message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum dolor.',
 			type: 'warning',
-			message: 'This is a test notification',
-			duration: 5000
+			duration: 6000
 		});
 
-		this._notificationService.addNotification({
+		this._alertService.addAlert({
+			title: 'An Error Occurred!',
+			message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum dolor.',
 			type: 'error',
-			message: 'This is a test notification',
-			duration: 5000
+			duration: 7000
 		});
 	}
 }
