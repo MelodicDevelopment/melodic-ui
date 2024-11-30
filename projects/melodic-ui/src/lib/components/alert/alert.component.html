@@ -1,0 +1,21 @@
+@for (alert of alerts(); track alert.id) {
+	<div class="alert">
+		<div class="header">
+			<md-status-icon [status]="alert.type || 'default'"></md-status-icon>
+			<button md-button md-button-link (click)="dismiss(alert.id)">
+				<md-icon>close</md-icon>
+			</button>
+		</div>
+		<div class="title">{{ alert.title }}</div>
+		<div class="message">{{ alert.message }}</div>
+
+		<div class="footer">
+			<button md-button md-button-link (click)="dismiss(alert.id)">Dismiss</button>
+			@if (alert.link) {
+				<button md-button md-button-link (click)="openLink(alert.id, alert.link)">
+					{{ alert.link.text }}
+				</button>
+			}
+		</div>
+	</div>
+}

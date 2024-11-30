@@ -38,6 +38,7 @@
 	<div class="horizontal-spacer">
 		<md-tag>Default</md-tag>
 		<md-tag type="brand">Brand</md-tag>
+		<md-tag type="tertiary">Tertiary</md-tag>
 		<md-tag type="info">Information</md-tag>
 		<md-tag type="success">Success</md-tag>
 		<md-tag type="warning">Warning</md-tag>
@@ -397,6 +398,14 @@
 			This box has a tooltip on it. We shouldn't use the tooltip component directly. Instead of text this tooltip is using a component
 			<div style="background-color: #ccc">This is a child element just to test something quick</div>
 		</div>
+	</div>
+</div>
+
+<div class="component-group">
+	<md-header size="xs" variant="regular">Alerts</md-header>
+
+	<div class="horizontal-spacer">
+		<button md-button-success (click)="openAlert()">Open Alerts</button>
 	</div>
 </div>
 

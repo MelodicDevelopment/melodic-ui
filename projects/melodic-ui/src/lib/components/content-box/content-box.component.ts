@@ -1,7 +1,6 @@
 import { Component, effect, ElementRef, inject, input, InputSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-export type ContentBoxType = 'default' | 'brand' | 'info' | 'success' | 'warning' | 'error';
+import { IndicatorType, indicatorTypes } from '../../types/indicator-type.type';
 
 @Component({
 	selector: 'md-content-box',
@@ -13,11 +12,11 @@ export type ContentBoxType = 'default' | 'brand' | 'info' | 'success' | 'warning
 export class MDContentBoxComponent {
 	private _elementRef: ElementRef = inject(ElementRef);
 
-	public type: InputSignal<ContentBoxType> = input<ContentBoxType>('default');
+	public type: InputSignal<IndicatorType> = input<IndicatorType>('default');
 
 	constructor() {
 		effect(() => {
-			const contentBoxTypes = ['default', 'brand', 'info', 'success', 'warning', 'error'];
+			const contentBoxTypes = indicatorTypes;
 			this._elementRef.nativeElement.classList.remove(...contentBoxTypes);
 
 			this._elementRef.nativeElement.classList.add(this.type());
