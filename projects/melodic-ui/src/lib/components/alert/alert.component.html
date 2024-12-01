@@ -11,9 +11,9 @@
 
 		<div class="footer">
 			<button md-button md-button-link (click)="dismiss(alert.id)">Dismiss</button>
-			@if (alert.link) {
-				<button md-button md-button-link (click)="openLink(alert.id, alert.link)">
-					{{ alert.link.text }}
+			@if (alert.action) {
+				<button md-button md-button-link (click)="action(alert.id, alert.action.actionFn)">
+					{{ alert.action.text }}
 				</button>
 			}
 		</div>

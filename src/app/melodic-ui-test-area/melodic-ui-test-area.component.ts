@@ -231,10 +231,11 @@ export class MelodicUiTestAreaComponent implements OnInit {
 			title: 'Just Default',
 			message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum dolor.',
 			type: 'default',
-			link: {
+			action: {
 				text: 'View',
-				url: 'https://www.google.com',
-				routerLink: false
+				actionFn: () => {
+					window.open('https://www.google.com', '_blank');
+				}
 			},
 			onClose: (action: string) => {
 				alert('Closed Me: ' + action);

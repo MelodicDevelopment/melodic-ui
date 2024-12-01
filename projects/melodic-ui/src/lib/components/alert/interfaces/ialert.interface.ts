@@ -3,10 +3,9 @@ import { IndicatorType } from '../../../types/indicator-type.type';
 export interface IAlert {
 	title: string;
 	message: string;
-	link?: {
+	action?: {
 		text: string;
-		url: string;
-		routerLink: boolean;
+		actionFn: () => void;
 	};
 	type?: IndicatorType;
 	duration?: number;
