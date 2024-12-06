@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+	AfterViewInit,
 	Component,
 	computed,
 	ElementRef,
@@ -7,7 +8,6 @@ import {
 	inject,
 	input,
 	InputSignal,
-	OnInit,
 	output,
 	OutputEmitterRef,
 	Signal,
@@ -44,13 +44,18 @@ export interface IMDDropDownOption {
 	],
 	encapsulation: ViewEncapsulation.None
 })
-export class MDDropDownComponent implements ControlValueAccessor, OnInit {
+export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit {
 	private _elementRef: ElementRef = inject(ElementRef);
 
 	private onChange: (value: unknown) => void = () => {};
 	private onTouched: () => void = () => {};
 
 	private _value: unknown;
+	private _searchString: WritableSignal<string> = signal('');
+
+	private _inputElement: HTMLElement | undefined = undefined;
+	private _inputPlaceholderElement: HTMLElement | undefined = undefined;
+	private _dropdownWrapperElement: HTMLElement | undefined = undefined;
 
 	public value: InputSignal<unknown> = input();
 	public options: InputSignal<IMDDropDownOption[]> = input.required();
@@ -71,6 +76,15 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 		return this.internalOptions().filter((o) => o.selected);
 	});
 
+	public filteredOptions: Signal<IMDDropDownOption[]> = computed(() => {
+		const searchString: string = this._searchString();
+		if (!searchString) {
+			return this.internalOptions();
+		}
+
+		return this.internalOptions().filter((o) => o.label.toLowerCase().trim().includes(searchString.toLowerCase().trim()));
+	});
+
 	constructor() {
 		toObservable(this.options)
 			.pipe(skip(1), takeUntilDestroyed())
@@ -85,17 +99,19 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 			});
 	}
 
-	ngOnInit(): void {
-		const inputElement: HTMLInputElement = (this._elementRef.nativeElement as HTMLElement).querySelector('input') as HTMLInputElement;
-		const dropdownWrapperElement: HTMLElement = (this._elementRef.nativeElement as HTMLElement).querySelector('div.dropdown-input-wrapper') as HTMLElement;
+	ngAfterViewInit(): void {
+		this._inputElement = (this._elementRef.nativeElement as HTMLElement).querySelector('div.text-field') as HTMLElement;
+		this._inputPlaceholderElement = (this._elementRef.nativeElement as HTMLElement).querySelector('div.placeholder') as HTMLElement;
+		this._dropdownWrapperElement = (this._elementRef.nativeElement as HTMLElement).querySelector('div.dropdown-input-wrapper') as HTMLElement;
 
-		dropdownWrapperElement?.addEventListener('click', () => {
+		this._dropdownWrapperElement?.addEventListener('click', () => {
 			if (!this.disabled() && !this.isActive()) {
-				inputElement?.focus();
+				this._inputPlaceholderElement?.setAttribute('hidden', 'true');
+				this._inputElement?.focus();
 			}
 		});
 
-		inputElement?.addEventListener('focus', () => {
+		this._inputElement?.addEventListener('focus', () => {
 			this.isActive.set(true);
 		});
 
@@ -157,6 +173,8 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 			}
 
 			this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: value === o.value }))]);
+
+			this.resetInput();
 		}
 	}
 
@@ -166,5 +184,21 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 
 	public registerOnTouched(fn: any): void {
 		this.onTouched = fn;
+	}
+
+	public onInput(event: Event): void {
+		const value: string = (event.target as HTMLElement).innerText;
+		this._searchString.set(value);
+
+		this.input.emit(event);
+	}
+
+	private resetInput(): void {
+		this._searchString.set('');
+
+		if (this._inputElement) {
+			this._inputElement.innerText = '';
+			this._inputElement.focus();
+		}
 	}
 }

@@ -12,19 +12,16 @@
 			}
 		</div>
 
-		<input
-			type="text"
-			readonly
-			[placeholder]="selectedOptions().length === 0 ? placeholder() : ''"
-			(input)="input.emit($event)"
-			(focus)="focus.emit()"
-			(blur)="blur.emit()"
-			[disabled]="disabled()"
-		/>
+		<div class="input">
+			@if (selectedOptions().length === 0 && !isActive()) {
+				<div class="placeholder">{{ placeholder() }}</div>
+			}
+			<div class="text-field" contenteditable="true" (input)="onInput($event)" (focus)="focus.emit()" (blur)="blur.emit()"></div>
+		</div>
 	</div>
 
 	<div md-popup-content class="md-options-list">
-		@for (option of internalOptions(); track option.value) {
+		@for (option of filteredOptions(); track option.value) {
 			<div class="option" [ngClass]="{ selected: option.selected }" (click)="optionSelected(option)">
 				@if (optionComponent() !== undefined) {
 					<ng-container *ngComponentOutlet="optionComponent()!; inputs: { option }"></ng-container>

@@ -5,6 +5,8 @@ import {
 	inject,
 	input,
 	InputSignal,
+	output,
+	OutputEmitterRef,
 	signal,
 	TemplateRef,
 	ViewChild,
@@ -73,6 +75,9 @@ export class MDPopupComponent {
 	public visible: WritableSignal<boolean> = signal<boolean>(false);
 	public disableClickaway: InputSignal<boolean> = input<boolean>(false);
 
+	public onOpen: OutputEmitterRef<void> = output<void>();
+	public onClose: OutputEmitterRef<void> = output<void>();
+
 	@HostListener('document:click', ['$event'])
 	outsideClick(event: MouseEvent) {
 		if (!this.disableClickaway() && this.trigger() === 'click' && this.isEventOutside(event)) {
@@ -128,6 +133,8 @@ export class MDPopupComponent {
 		this._overlayRef.attach(portal);
 
 		this._active = true;
+
+		this.onOpen.emit();
 	}
 
 	private hide(): void {
@@ -136,6 +143,8 @@ export class MDPopupComponent {
 			this._overlayRef = null;
 
 			this._active = false;
+
+			this.onClose.emit();
 		}
 	}
 
