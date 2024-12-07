@@ -59,6 +59,7 @@ md-drop-down {
 				margin-right: 50px;
 
 				div.placeholder {
+					position: absolute;
 					white-space: nowrap;
 					color: var(--md-colors-gray-400);
 				}

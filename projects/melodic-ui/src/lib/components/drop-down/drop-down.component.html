@@ -1,4 +1,12 @@
-<md-popup [arrow]="false" position="bottom-start" popupClass="md-drop-down-options">
+<md-popup
+	#optionsPopup
+	[arrow]="false"
+	position="bottom-start"
+	popupClass="md-drop-down-options"
+	(onOpen)="onOptionsOpen($event)"
+	(onClose)="onOptionsClose()"
+	[disabled]="disabled()"
+>
 	<div md-popup-target class="dropdown-input-wrapper" [ngClass]="{ active: isActive() }">
 		<div class="selected-options-list" [ngClass]="{ multiple: multiple() }">
 			@for (option of selectedOptions(); track option.value) {
@@ -7,7 +15,9 @@
 						<md-icon>{{ option.icon }}</md-icon>
 					}
 					{{ option.label }}
-					<md-icon class="remove" (click)="optionSelected(option, $event)">close</md-icon>
+					@if (!disabled()) {
+						<md-icon class="remove" (click)="optionSelected(option, $event)">close</md-icon>
+					}
 				</span>
 			}
 		</div>
@@ -16,8 +26,8 @@
 			@if (selectedOptions().length === 0 && !isActive()) {
 				<div class="placeholder">{{ placeholder() }}</div>
 			}
-			@if (typeAhead()) {
-				<div class="text-field" contenteditable="true" (input)="onInput($event)" (focus)="focus.emit()" (blur)="blur.emit()"></div>
+			@if (typeAhead() && !disabled()) {
+				<div class="text-field" contenteditable="true" (input)="onInput($event, optionsPopup)" (focus)="focus.emit()" (blur)="blur.emit()"></div>
 			}
 		</div>
 	</div>

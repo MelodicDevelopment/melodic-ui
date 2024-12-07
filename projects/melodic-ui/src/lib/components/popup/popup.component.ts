@@ -43,7 +43,9 @@ export type PopupOffsetType = { x?: number; y?: number };
 })
 export class MDPopupComponent {
 	@ViewChild('popupContent', { static: true })
-	private _popupContent!: TemplateRef<any>;
+	private _popupContentTemplate!: TemplateRef<any>;
+
+	private _popupContent: HTMLElement | undefined = undefined;
 
 	private _overlay: Overlay = inject(Overlay);
 	private _elementRef: ElementRef = inject(ElementRef);
@@ -72,13 +74,19 @@ export class MDPopupComponent {
 	public popupClass: InputSignal<string> = input<string>('');
 	public offsets: InputSignal<PopupOffsetType> = input<PopupOffsetType>({});
 	public arrow: InputSignal<boolean> = input<boolean>(true);
+	public disabled: InputSignal<boolean> = input<boolean>(false);
+
 	public visible: WritableSignal<boolean> = signal<boolean>(false);
 	public disableClickaway: InputSignal<boolean> = input<boolean>(false);
 
-	public onOpen: OutputEmitterRef<void> = output<void>();
+	public onOpen: OutputEmitterRef<HTMLElement> = output<HTMLElement>();
 	public onClose: OutputEmitterRef<void> = output<void>();
 
 	click(): void {
+		if (this.disabled()) {
+			return;
+		}
+
 		if (this.trigger() === 'click') {
 			if (this._active) {
 				this.hide();
@@ -89,18 +97,26 @@ export class MDPopupComponent {
 	}
 
 	mouseOver(): void {
+		if (this.disabled()) {
+			return;
+		}
+
 		if (this.trigger() === 'hover') {
 			this.show();
 		}
 	}
 
 	mouseOut(): void {
+		if (this.disabled()) {
+			return;
+		}
+
 		if (this.trigger() === 'hover') {
 			this.hide();
 		}
 	}
 
-	private show(): void {
+	public show(): void {
 		if (this._active) {
 			return;
 		}
@@ -122,17 +138,18 @@ export class MDPopupComponent {
 			backdropClass: ''
 		});
 
-		const portal = new TemplatePortal(this._popupContent, this._viewContainerRef);
+		const portal = new TemplatePortal(this._popupContentTemplate, this._viewContainerRef);
 		this._overlayRef.attach(portal);
 
 		this._active = true;
 
-		this.onOpen.emit();
+		this._popupContent = this._overlayRef.hostElement.querySelector('div.md-popup-content') as HTMLElement;
+		this.onOpen.emit(this._popupContent);
 
 		setTimeout(() => document.addEventListener('click', this._outsideClickRef), 100); // delay to prevent immediate closing
 	}
 
-	private hide(): void {
+	public hide(): void {
 		if (this._overlayRef) {
 			this._overlayRef.detach();
 			this._overlayRef = null;
@@ -141,6 +158,7 @@ export class MDPopupComponent {
 
 			this.onClose.emit();
 
+			this._popupContent = undefined;
 			document.removeEventListener('click', this._outsideClickRef);
 		}
 	}
@@ -152,7 +170,6 @@ export class MDPopupComponent {
 	}
 
 	private isEventOutside(event: MouseEvent): boolean {
-		const popupContentEl = this._overlayRef?.hostElement.querySelector('div.md-popup-content');
-		return !(popupContentEl as HTMLElement).contains(event.target as HTMLElement);
+		return !(this._popupContent as HTMLElement).contains(event.target as HTMLElement);
 	}
 }

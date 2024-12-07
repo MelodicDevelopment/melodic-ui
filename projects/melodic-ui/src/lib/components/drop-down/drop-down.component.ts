@@ -60,6 +60,7 @@ export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit 
 	public value: InputSignal<unknown> = input();
 	public options: InputSignal<IMDDropDownOption[]> = input.required();
 	public typeAhead: InputSignal<boolean> = input(true);
+	public maxTypeAheadLength: InputSignal<number> = input(24);
 	public multiple: InputSignal<boolean> = input(false);
 	public placeholder: InputSignal<string> = input('');
 	public disabled: InputSignal<boolean> = input(false);
@@ -112,14 +113,9 @@ export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit 
 			}
 		});
 
-		this._inputElement?.addEventListener('focus', () => {
-			this.isActive.set(true);
-		});
-
 		document.addEventListener('click', (event: MouseEvent) => {
 			if (this.isActive()) {
 				if (!this._elementRef.nativeElement.contains(event.target as Node)) {
-					this.isActive.set(false);
 					this.onTouched();
 				}
 			}
@@ -136,7 +132,6 @@ export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit 
 
 		if (!this.multiple()) {
 			this.internalOptions().forEach((o) => (o.selected = false));
-			this.isActive.set(false);
 		}
 
 		option.selected = !option.selected;
@@ -187,11 +182,41 @@ export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit 
 		this.onTouched = fn;
 	}
 
-	public onInput(event: Event): void {
+	public onInput(event: Event, popup: MDPopupComponent): void {
 		const value: string = (event.target as HTMLElement).innerText;
+
+		if (value.includes('\n') || value.includes('\r') || value.includes('U+A0')) {
+			(event.target as HTMLElement).innerText = value.replace(/\n/g, ' ').replace(/\r/g, ' ').replace(/U+A0/g, ' ');
+			this.moveCursorToEnd();
+			return;
+		}
+
+		if (value.length > this.maxTypeAheadLength()) {
+			(event.target as HTMLElement).innerText = value.substring(0, this.maxTypeAheadLength());
+			this.moveCursorToEnd();
+			return;
+		}
+
 		this._searchString.set(value);
 
 		this.input.emit(event);
+
+		popup.show();
+	}
+
+	public onOptionsOpen(popupContent: HTMLElement): void {
+		const selectedOptions: HTMLElement[] = Array.from(popupContent.querySelectorAll('div.option.selected'));
+		if (selectedOptions.length > 0) {
+			const selectedOption: HTMLElement = selectedOptions[0];
+			selectedOption.scrollIntoView({ block: 'nearest' });
+		}
+
+		this.isActive.set(true);
+	}
+
+	public onOptionsClose(): void {
+		this.isActive.set(false);
+		this.resetInput();
 	}
 
 	private resetInput(): void {
@@ -200,6 +225,19 @@ export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit 
 		if (this._inputElement) {
 			this._inputElement.innerText = '';
 			this._inputElement.focus();
+		}
+	}
+
+	private moveCursorToEnd(): void {
+		const range = document.createRange();
+		const sel = window.getSelection();
+
+		range.selectNodeContents(this._inputElement as Node);
+		range.collapse(false);
+
+		if (sel) {
+			sel.removeAllRanges();
+			sel.addRange(range);
 		}
 	}
 }
