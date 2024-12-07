@@ -59,6 +59,50 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		{
 			value: 5,
 			label: 'Option 5'
+		},
+		{
+			value: 6,
+			label: 'Option 6',
+			icon: 'home'
+		},
+		{
+			value: 7,
+			label: 'Option 7',
+			icon: 'favorite'
+		},
+		{
+			value: 8,
+			label: 'Option 8'
+		},
+		{
+			value: 9,
+			label: 'Option 9'
+		},
+		{
+			value: 10,
+			label: 'Option 10'
+		},
+		{
+			value: 11,
+			label: 'Option 11',
+			icon: 'home'
+		},
+		{
+			value: 12,
+			label: 'Option 12',
+			icon: 'favorite'
+		},
+		{
+			value: 13,
+			label: 'Option 13'
+		},
+		{
+			value: 14,
+			label: 'Option 14'
+		},
+		{
+			value: 15,
+			label: 'Option 15'
 		}
 	];
 

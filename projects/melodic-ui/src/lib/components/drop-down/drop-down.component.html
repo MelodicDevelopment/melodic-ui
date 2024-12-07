@@ -16,7 +16,9 @@
 			@if (selectedOptions().length === 0 && !isActive()) {
 				<div class="placeholder">{{ placeholder() }}</div>
 			}
-			<div class="text-field" contenteditable="true" (input)="onInput($event)" (focus)="focus.emit()" (blur)="blur.emit()"></div>
+			@if (typeAhead()) {
+				<div class="text-field" contenteditable="true" (input)="onInput($event)" (focus)="focus.emit()" (blur)="blur.emit()"></div>
+			}
 		</div>
 	</div>
 

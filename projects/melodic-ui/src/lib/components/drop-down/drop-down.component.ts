@@ -59,6 +59,7 @@ export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit 
 
 	public value: InputSignal<unknown> = input();
 	public options: InputSignal<IMDDropDownOption[]> = input.required();
+	public typeAhead: InputSignal<boolean> = input(true);
 	public multiple: InputSignal<boolean> = input(false);
 	public placeholder: InputSignal<string> = input('');
 	public disabled: InputSignal<boolean> = input(false);
