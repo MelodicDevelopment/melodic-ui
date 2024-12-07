@@ -1,10 +1,11 @@
 import {
 	Component,
 	ElementRef,
-	HostListener,
 	inject,
 	input,
 	InputSignal,
+	output,
+	OutputEmitterRef,
 	signal,
 	TemplateRef,
 	ViewChild,
@@ -42,13 +43,16 @@ export type PopupOffsetType = { x?: number; y?: number };
 })
 export class MDPopupComponent {
 	@ViewChild('popupContent', { static: true })
-	private _popupContent!: TemplateRef<any>;
+	private _popupContentTemplate!: TemplateRef<any>;
+
+	private _popupContent: HTMLElement | undefined = undefined;
 
 	private _overlay: Overlay = inject(Overlay);
 	private _elementRef: ElementRef = inject(ElementRef);
 	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 	private _overlayRef: OverlayRef | null = null;
 	private _active: boolean = false;
+	private _outsideClickRef = (event: MouseEvent) => this.outsideClick(event);
 
 	private _positions: { [key in PopupPositionType]: any } = {
 		'left': { originX: 'start', originY: 'center', overlayX: 'end', overlayY: 'center', offsetX: -4, offsetY: 0 },
@@ -70,17 +74,19 @@ export class MDPopupComponent {
 	public popupClass: InputSignal<string> = input<string>('');
 	public offsets: InputSignal<PopupOffsetType> = input<PopupOffsetType>({});
 	public arrow: InputSignal<boolean> = input<boolean>(true);
+	public disabled: InputSignal<boolean> = input<boolean>(false);
+
 	public visible: WritableSignal<boolean> = signal<boolean>(false);
 	public disableClickaway: InputSignal<boolean> = input<boolean>(false);
 
-	@HostListener('document:click', ['$event'])
-	outsideClick(event: MouseEvent) {
-		if (!this.disableClickaway() && this.trigger() === 'click' && this.isEventOutside(event)) {
-			this.hide();
-		}
-	}
+	public onOpen: OutputEmitterRef<HTMLElement> = output<HTMLElement>();
+	public onClose: OutputEmitterRef<void> = output<void>();
 
 	click(): void {
+		if (this.disabled()) {
+			return;
+		}
+
 		if (this.trigger() === 'click') {
 			if (this._active) {
 				this.hide();
@@ -91,18 +97,26 @@ export class MDPopupComponent {
 	}
 
 	mouseOver(): void {
+		if (this.disabled()) {
+			return;
+		}
+
 		if (this.trigger() === 'hover') {
 			this.show();
 		}
 	}
 
 	mouseOut(): void {
+		if (this.disabled()) {
+			return;
+		}
+
 		if (this.trigger() === 'hover') {
 			this.hide();
 		}
 	}
 
-	private show(): void {
+	public show(): void {
 		if (this._active) {
 			return;
 		}
@@ -124,22 +138,38 @@ export class MDPopupComponent {
 			backdropClass: ''
 		});
 
-		const portal = new TemplatePortal(this._popupContent, this._viewContainerRef);
+		const portal = new TemplatePortal(this._popupContentTemplate, this._viewContainerRef);
 		this._overlayRef.attach(portal);
 
 		this._active = true;
+
+		this._popupContent = this._overlayRef.hostElement.querySelector('div.md-popup-content') as HTMLElement;
+		this.onOpen.emit(this._popupContent);
+
+		setTimeout(() => document.addEventListener('click', this._outsideClickRef), 100); // delay to prevent immediate closing
 	}
 
-	private hide(): void {
+	public hide(): void {
 		if (this._overlayRef) {
 			this._overlayRef.detach();
 			this._overlayRef = null;
 
 			this._active = false;
+
+			this.onClose.emit();
+
+			this._popupContent = undefined;
+			document.removeEventListener('click', this._outsideClickRef);
+		}
+	}
+
+	private outsideClick(event: MouseEvent): void {
+		if (this._active && !this.disableClickaway() && this.trigger() === 'click' && this.isEventOutside(event)) {
+			this.hide();
 		}
 	}
 
 	private isEventOutside(event: MouseEvent): boolean {
-		return !(this._elementRef.nativeElement as HTMLElement).contains(event.target as HTMLElement);
+		return !(this._popupContent as HTMLElement).contains(event.target as HTMLElement);
 	}
 }

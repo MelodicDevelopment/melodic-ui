@@ -1,4 +1,12 @@
-<md-popup [arrow]="false" position="bottom-start" popupClass="md-drop-down-options">
+<md-popup
+	#optionsPopup
+	[arrow]="false"
+	position="bottom-start"
+	popupClass="md-drop-down-options"
+	(onOpen)="onOptionsOpen($event)"
+	(onClose)="onOptionsClose()"
+	[disabled]="disabled()"
+>
 	<div md-popup-target class="dropdown-input-wrapper" [ngClass]="{ active: isActive() }">
 		<div class="selected-options-list" [ngClass]="{ multiple: multiple() }">
 			@for (option of selectedOptions(); track option.value) {
@@ -7,24 +15,25 @@
 						<md-icon>{{ option.icon }}</md-icon>
 					}
 					{{ option.label }}
-					<md-icon class="remove" (click)="optionSelected(option, $event)">close</md-icon>
+					@if (!disabled()) {
+						<md-icon class="remove" (click)="optionSelected(option, $event)">close</md-icon>
+					}
 				</span>
 			}
 		</div>
 
-		<input
-			type="text"
-			readonly
-			[placeholder]="selectedOptions().length === 0 ? placeholder() : ''"
-			(input)="input.emit($event)"
-			(focus)="focus.emit()"
-			(blur)="blur.emit()"
-			[disabled]="disabled()"
-		/>
+		<div class="input">
+			@if (selectedOptions().length === 0 && !isActive()) {
+				<div class="placeholder">{{ placeholder() }}</div>
+			}
+			@if (typeAhead() && !disabled()) {
+				<div class="text-field" contenteditable="true" (input)="onInput($event, optionsPopup)" (focus)="focus.emit()" (blur)="blur.emit()"></div>
+			}
+		</div>
 	</div>
 
 	<div md-popup-content class="md-options-list">
-		@for (option of internalOptions(); track option.value) {
+		@for (option of filteredOptions(); track option.value) {
 			<div class="option" [ngClass]="{ selected: option.selected }" (click)="optionSelected(option)">
 				@if (optionComponent() !== undefined) {
 					<ng-container *ngComponentOutlet="optionComponent()!; inputs: { option }"></ng-container>

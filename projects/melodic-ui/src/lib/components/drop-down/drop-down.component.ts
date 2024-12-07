@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+	AfterViewInit,
 	Component,
 	computed,
 	ElementRef,
@@ -7,7 +8,6 @@ import {
 	inject,
 	input,
 	InputSignal,
-	OnInit,
 	output,
 	OutputEmitterRef,
 	Signal,
@@ -44,16 +44,23 @@ export interface IMDDropDownOption {
 	],
 	encapsulation: ViewEncapsulation.None
 })
-export class MDDropDownComponent implements ControlValueAccessor, OnInit {
+export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit {
 	private _elementRef: ElementRef = inject(ElementRef);
 
 	private onChange: (value: unknown) => void = () => {};
 	private onTouched: () => void = () => {};
 
 	private _value: unknown;
+	private _searchString: WritableSignal<string> = signal('');
+
+	private _inputElement: HTMLElement | undefined = undefined;
+	private _inputPlaceholderElement: HTMLElement | undefined = undefined;
+	private _dropdownWrapperElement: HTMLElement | undefined = undefined;
 
 	public value: InputSignal<unknown> = input();
 	public options: InputSignal<IMDDropDownOption[]> = input.required();
+	public typeAhead: InputSignal<boolean> = input(true);
+	public maxTypeAheadLength: InputSignal<number> = input(24);
 	public multiple: InputSignal<boolean> = input(false);
 	public placeholder: InputSignal<string> = input('');
 	public disabled: InputSignal<boolean> = input(false);
@@ -71,6 +78,15 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 		return this.internalOptions().filter((o) => o.selected);
 	});
 
+	public filteredOptions: Signal<IMDDropDownOption[]> = computed(() => {
+		const searchString: string = this._searchString();
+		if (!searchString) {
+			return this.internalOptions();
+		}
+
+		return this.internalOptions().filter((o) => o.label.toLowerCase().trim().includes(searchString.toLowerCase().trim()));
+	});
+
 	constructor() {
 		toObservable(this.options)
 			.pipe(skip(1), takeUntilDestroyed())
@@ -85,24 +101,21 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 			});
 	}
 
-	ngOnInit(): void {
-		const inputElement: HTMLInputElement = (this._elementRef.nativeElement as HTMLElement).querySelector('input') as HTMLInputElement;
-		const dropdownWrapperElement: HTMLElement = (this._elementRef.nativeElement as HTMLElement).querySelector('div.dropdown-input-wrapper') as HTMLElement;
+	ngAfterViewInit(): void {
+		this._inputElement = (this._elementRef.nativeElement as HTMLElement).querySelector('div.text-field') as HTMLElement;
+		this._inputPlaceholderElement = (this._elementRef.nativeElement as HTMLElement).querySelector('div.placeholder') as HTMLElement;
+		this._dropdownWrapperElement = (this._elementRef.nativeElement as HTMLElement).querySelector('div.dropdown-input-wrapper') as HTMLElement;
 
-		dropdownWrapperElement?.addEventListener('click', () => {
+		this._dropdownWrapperElement?.addEventListener('click', () => {
 			if (!this.disabled() && !this.isActive()) {
-				inputElement?.focus();
+				this._inputPlaceholderElement?.setAttribute('hidden', 'true');
+				this._inputElement?.focus();
 			}
-		});
-
-		inputElement?.addEventListener('focus', () => {
-			this.isActive.set(true);
 		});
 
 		document.addEventListener('click', (event: MouseEvent) => {
 			if (this.isActive()) {
 				if (!this._elementRef.nativeElement.contains(event.target as Node)) {
-					this.isActive.set(false);
 					this.onTouched();
 				}
 			}
@@ -119,7 +132,6 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 
 		if (!this.multiple()) {
 			this.internalOptions().forEach((o) => (o.selected = false));
-			this.isActive.set(false);
 		}
 
 		option.selected = !option.selected;
@@ -157,6 +169,8 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 			}
 
 			this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: value === o.value }))]);
+
+			this.resetInput();
 		}
 	}
 
@@ -166,5 +180,64 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit {
 
 	public registerOnTouched(fn: any): void {
 		this.onTouched = fn;
+	}
+
+	public onInput(event: Event, popup: MDPopupComponent): void {
+		const value: string = (event.target as HTMLElement).innerText;
+
+		if (value.includes('\n') || value.includes('\r') || value.includes('U+A0')) {
+			(event.target as HTMLElement).innerText = value.replace(/\n/g, ' ').replace(/\r/g, ' ').replace(/U+A0/g, ' ');
+			this.moveCursorToEnd();
+			return;
+		}
+
+		if (value.length > this.maxTypeAheadLength()) {
+			(event.target as HTMLElement).innerText = value.substring(0, this.maxTypeAheadLength());
+			this.moveCursorToEnd();
+			return;
+		}
+
+		this._searchString.set(value);
+
+		this.input.emit(event);
+
+		popup.show();
+	}
+
+	public onOptionsOpen(popupContent: HTMLElement): void {
+		const selectedOptions: HTMLElement[] = Array.from(popupContent.querySelectorAll('div.option.selected'));
+		if (selectedOptions.length > 0) {
+			const selectedOption: HTMLElement = selectedOptions[0];
+			selectedOption.scrollIntoView({ block: 'nearest' });
+		}
+
+		this.isActive.set(true);
+	}
+
+	public onOptionsClose(): void {
+		this.isActive.set(false);
+		this.resetInput();
+	}
+
+	private resetInput(): void {
+		this._searchString.set('');
+
+		if (this._inputElement) {
+			this._inputElement.innerText = '';
+			this._inputElement.focus();
+		}
+	}
+
+	private moveCursorToEnd(): void {
+		const range = document.createRange();
+		const sel = window.getSelection();
+
+		range.selectNodeContents(this._inputElement as Node);
+		range.collapse(false);
+
+		if (sel) {
+			sel.removeAllRanges();
+			sel.addRange(range);
+		}
 	}
 }

@@ -39,7 +39,7 @@ md-drop-down {
 
 			&::after {
 				position: absolute;
-				right: var(--md-spacing-xl);
+				right: var(--md-spacing-md);
 				content: 'keyboard_arrow_down';
 				@include material-icons;
 			}
@@ -50,15 +50,27 @@ md-drop-down {
 				}
 			}
 
-			input {
+			div.input {
 				display: flex;
 				align-items: center;
 				flex: 1;
+				gap: var(--md-spacing-md);
 				border: none;
 				margin-right: 50px;
 
-				&:focus {
-					outline: none;
+				div.placeholder {
+					position: absolute;
+					white-space: nowrap;
+					color: var(--md-colors-gray-400);
+				}
+
+				div.text-field {
+					white-space: nowrap;
+					width: 100%;
+
+					&:focus {
+						outline: none;
+					}
 				}
 			}
 
