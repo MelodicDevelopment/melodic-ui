@@ -1,7 +1,6 @@
 import {
 	Component,
 	ElementRef,
-	HostListener,
 	inject,
 	input,
 	InputSignal,
@@ -51,6 +50,7 @@ export class MDPopupComponent {
 	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 	private _overlayRef: OverlayRef | null = null;
 	private _active: boolean = false;
+	private _outsideClickRef = (event: MouseEvent) => this.outsideClick(event);
 
 	private _positions: { [key in PopupPositionType]: any } = {
 		'left': { originX: 'start', originY: 'center', overlayX: 'end', overlayY: 'center', offsetX: -4, offsetY: 0 },
@@ -77,13 +77,6 @@ export class MDPopupComponent {
 
 	public onOpen: OutputEmitterRef<void> = output<void>();
 	public onClose: OutputEmitterRef<void> = output<void>();
-
-	@HostListener('document:click', ['$event'])
-	outsideClick(event: MouseEvent) {
-		if (!this.disableClickaway() && this.trigger() === 'click' && this.isEventOutside(event)) {
-			this.hide();
-		}
-	}
 
 	click(): void {
 		if (this.trigger() === 'click') {
@@ -135,6 +128,8 @@ export class MDPopupComponent {
 		this._active = true;
 
 		this.onOpen.emit();
+
+		setTimeout(() => document.addEventListener('click', this._outsideClickRef), 100); // delay to prevent immediate closing
 	}
 
 	private hide(): void {
@@ -145,10 +140,19 @@ export class MDPopupComponent {
 			this._active = false;
 
 			this.onClose.emit();
+
+			document.removeEventListener('click', this._outsideClickRef);
+		}
+	}
+
+	private outsideClick(event: MouseEvent): void {
+		if (this._active && !this.disableClickaway() && this.trigger() === 'click' && this.isEventOutside(event)) {
+			this.hide();
 		}
 	}
 
 	private isEventOutside(event: MouseEvent): boolean {
-		return !(this._elementRef.nativeElement as HTMLElement).contains(event.target as HTMLElement);
+		const popupContentEl = this._overlayRef?.hostElement.querySelector('div.md-popup-content');
+		return !(popupContentEl as HTMLElement).contains(event.target as HTMLElement);
 	}
 }
