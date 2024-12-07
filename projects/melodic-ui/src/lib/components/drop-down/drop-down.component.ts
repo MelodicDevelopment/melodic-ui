@@ -8,6 +8,7 @@ import {
 	inject,
 	input,
 	InputSignal,
+	OnInit,
 	output,
 	OutputEmitterRef,
 	Signal,
@@ -44,7 +45,7 @@ export interface IMDDropDownOption {
 	],
 	encapsulation: ViewEncapsulation.None
 })
-export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit {
+export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterViewInit {
 	private _elementRef: ElementRef = inject(ElementRef);
 
 	private onChange: (value: unknown) => void = () => {};
@@ -59,7 +60,7 @@ export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit 
 
 	public value: InputSignal<unknown> = input();
 	public options: InputSignal<IMDDropDownOption[]> = input.required();
-	public typeAhead: InputSignal<boolean> = input(true);
+	public typeAhead: InputSignal<boolean> = input(false);
 	public maxTypeAheadLength: InputSignal<number> = input(24);
 	public multiple: InputSignal<boolean> = input(false);
 	public placeholder: InputSignal<string> = input('');
@@ -101,6 +102,11 @@ export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit 
 			});
 	}
 
+	ngOnInit(): void {
+		this.internalOptions.set(this.options());
+		this.writeValue(this.value());
+	}
+
 	ngAfterViewInit(): void {
 		this._inputElement = (this._elementRef.nativeElement as HTMLElement).querySelector('div.text-field') as HTMLElement;
 		this._inputPlaceholderElement = (this._elementRef.nativeElement as HTMLElement).querySelector('div.placeholder') as HTMLElement;
@@ -120,9 +126,6 @@ export class MDDropDownComponent implements ControlValueAccessor, AfterViewInit 
 				}
 			}
 		});
-
-		this.internalOptions.set(this.options());
-		this.writeValue(this.value());
 	}
 
 	public optionSelected(option: IMDDropDownOption, event?: MouseEvent): void {

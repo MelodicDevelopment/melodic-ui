@@ -184,7 +184,6 @@
 			placeholder="Make a selection..."
 			[multiple]="true"
 			[value]="['Option 2', 'Option 3']"
-			[typeAhead]="false"
 		></md-drop-down>
 	</div>
 
@@ -205,14 +204,14 @@
 			placeholder="Make a selection..."
 			[multiple]="true"
 			[value]="['Option 2', 'Option 3']"
-			[typeAhead]="false"
 			[disabled]="true"
 		></md-drop-down>
 	</div>
 
 	<div class="horizontal-spacer">
 		<form [formGroup]="dropdownFormGroup">
-			<md-drop-down formControlName="dropdownInput1" [options]="dropDownOptions3" placeholder="Make a selection..."></md-drop-down><br /><br />
+			<md-drop-down formControlName="dropdownInput1" [options]="dropDownOptions3" placeholder="Make a selection..." [typeAhead]="true"></md-drop-down
+			><br /><br />
 			<md-drop-down
 				formControlName="dropdownInput2"
 				[options]="dropDownOptions4"
