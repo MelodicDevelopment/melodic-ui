@@ -150,12 +150,12 @@ export class MDPopupComponent {
 
 	public hide(): void {
 		if (this._overlayRef) {
+			this.onClose.emit();
+
 			this._overlayRef.detach();
 			this._overlayRef = null;
 
 			this._active = false;
-
-			this.onClose.emit();
 
 			this._popupContent = undefined;
 			document.removeEventListener('click', this._outsideClickRef);
