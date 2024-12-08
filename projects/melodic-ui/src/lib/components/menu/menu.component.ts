@@ -27,6 +27,7 @@ export class MDMenuComponent implements AfterViewInit {
 	private _elementRef: ElementRef = inject(ElementRef);
 
 	public menuItems: InputSignal<IMDMenuOption[]> = input.required();
+	public closeOnAction: InputSignal<boolean> = input(true);
 	public menuItemComponent: InputSignal<Type<Component> | undefined> = input();
 
 	ngAfterViewInit(): void {
@@ -41,5 +42,11 @@ export class MDMenuComponent implements AfterViewInit {
 		attributes.forEach((attr) => {
 			popupTriggerButton.setAttribute(attr, '');
 		});
+	}
+
+	public closeMenu(popupComponent: MDPopupComponent): void {
+		if (this.closeOnAction()) {
+			popupComponent.hide();
+		}
 	}
 }

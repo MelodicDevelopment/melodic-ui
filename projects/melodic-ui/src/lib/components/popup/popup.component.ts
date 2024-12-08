@@ -76,7 +76,6 @@ export class MDPopupComponent {
 	public arrow: InputSignal<boolean> = input<boolean>(true);
 	public disabled: InputSignal<boolean> = input<boolean>(false);
 
-	public visible: WritableSignal<boolean> = signal<boolean>(false);
 	public disableClickaway: InputSignal<boolean> = input<boolean>(false);
 
 	public onOpen: OutputEmitterRef<HTMLElement> = output<HTMLElement>();
