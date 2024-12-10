@@ -7,6 +7,7 @@
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
+		"build:melodic-rx": "ng build melodic-rx && cp .npmrc dist/melodic-rx",
 		"build:melodic-ui": "ng build melodic-ui && npm run build:melodic-ui-compile-styles && npm run build:melodic-ui-styles && npm run build:melodic-ui-assets && cp .npmrc dist/melodic-ui",
 		"build:melodic-ui-compile-styles": "sass projects/melodic-ui/src/lib/styles/melodic-ui.scss dist/melodic-ui/lib/melodic-ui.css --style=compressed",
 		"build:melodic-ui-styles": "cp -r projects/melodic-ui/src/lib/styles dist/melodic-ui/lib",

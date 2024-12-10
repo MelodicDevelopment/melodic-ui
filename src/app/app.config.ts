@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-import { provideMD } from '@melodic-ui';
+import { provideMDUI } from '@melodic-ui';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
@@ -12,6 +12,6 @@ export const appConfig: ApplicationConfig = {
 		importProvidersFrom(BrowserAnimationsModule),
 		provideRouter(routes),
 		provideHttpClient(),
-		provideMD({ iconBaseUrl: './public/icons' })
+		provideMDUI({ iconBaseUrl: './public/icons' })
 	]
 };

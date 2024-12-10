@@ -1,1 +1,1 @@
-export * from './provide-md.function';
+export * from './provide-mdui.function';
