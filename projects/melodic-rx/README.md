@@ -167,7 +167,6 @@ export class AppComponent implements OnInit {
 
 	ngOnInit(): void {
 		this._signalStore.dispatch('lessonState', loadLessonTypes());
-		this._signalStore.dispatch('lessonState', loadAttendanceStatuses());
 	}
 }
 ```
