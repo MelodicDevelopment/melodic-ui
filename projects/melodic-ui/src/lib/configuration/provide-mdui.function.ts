@@ -7,7 +7,7 @@ export type MDConfiguration = {
 	iconBaseUrl: string; // default: ./public/icons
 };
 
-export function provideMD(configuration?: MDConfiguration): EnvironmentProviders {
+export function provideMDUI(configuration?: MDConfiguration): EnvironmentProviders {
 	return makeEnvironmentProviders([
 		{
 			provide: MD_ICON_BASE_URL,
