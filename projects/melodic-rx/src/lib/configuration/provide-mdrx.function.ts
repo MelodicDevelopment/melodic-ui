@@ -1,6 +1,8 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
-import { ActionReducerMap, ActionEffectsMap, INIT_STATE, ACTION_PROVIDERS, EFFECTS_PROVIDERS, SignalStoreService } from '../services/signal-store.service';
+import { SignalStoreService } from '../services/signal-store.service';
 import { State } from '../types/state.type';
+import { INIT_STATE, ACTION_PROVIDERS, EFFECTS_PROVIDERS } from '../injection.tokens';
+import { ActionReducerMap, ActionEffectsMap } from '../types';
 
 export function provideMDRX<S extends object>(initState: State<S>, actionReducers: ActionReducerMap<S>, effects: ActionEffectsMap<S>): EnvironmentProviders {
 	return makeEnvironmentProviders([
