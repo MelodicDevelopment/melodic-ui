@@ -4,6 +4,7 @@ import {
 	inject,
 	input,
 	InputSignal,
+	OnDestroy,
 	output,
 	OutputEmitterRef,
 	TemplateRef,
@@ -39,7 +40,7 @@ export type PopupOffsetType = { x?: number; y?: number };
 	styleUrl: './popup.component.scss',
 	encapsulation: ViewEncapsulation.None
 })
-export class MDPopupComponent {
+export class MDPopupComponent implements OnDestroy {
 	@ViewChild('popupContent', { static: true })
 	private _popupContentTemplate!: TemplateRef<any>;
 
@@ -52,6 +53,7 @@ export class MDPopupComponent {
 
 	private _overlayRef: OverlayRef | null = null;
 	private _active: boolean = false;
+	private _destroyed: boolean = false;
 	private _outsideClickRef = (event: Event) => this.outsideClick(event);
 
 	private _positions: { [key in PopupPositionType]: any } = {
@@ -81,7 +83,11 @@ export class MDPopupComponent {
 	public onOpen: OutputEmitterRef<HTMLElement> = output<HTMLElement>();
 	public onClose: OutputEmitterRef<void> = output<void>();
 
-	click(): void {
+	ngOnDestroy(): void {
+		this._destroyed = true;
+	}
+
+	public click(): void {
 		if (this.disabled()) {
 			return;
 		}
@@ -95,7 +101,7 @@ export class MDPopupComponent {
 		}
 	}
 
-	mouseOver(): void {
+	public mouseOver(): void {
 		if (this.disabled()) {
 			return;
 		}
@@ -105,7 +111,7 @@ export class MDPopupComponent {
 		}
 	}
 
-	mouseOut(): void {
+	public mouseOut(): void {
 		if (this.disabled()) {
 			return;
 		}
@@ -156,19 +162,17 @@ export class MDPopupComponent {
 
 	public hide(): void {
 		if (this._overlayRef) {
-			this.onClose.emit();
+			if (!this._destroyed) {
+				this.onClose.emit();
+			}
 
-			setTimeout(() => {
-				if (this._overlayRef) {
-					this._overlayRef.detach();
-					this._overlayRef = null;
-				}
+			this._overlayRef.detach();
+			this._overlayRef = null;
 
-				this._active = false;
+			this._active = false;
 
-				this._popupContent = undefined;
-				document.removeEventListener('click', this._outsideClickRef);
-			}, 10);
+			this._popupContent = undefined;
+			document.removeEventListener('click', this._outsideClickRef);
 		}
 	}
 
