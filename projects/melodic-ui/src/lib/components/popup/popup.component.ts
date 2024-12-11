@@ -158,13 +158,17 @@ export class MDPopupComponent {
 		if (this._overlayRef) {
 			this.onClose.emit();
 
-			this._overlayRef.detach();
-			this._overlayRef = null;
+			setTimeout(() => {
+				if (this._overlayRef) {
+					this._overlayRef.detach();
+					this._overlayRef = null;
+				}
 
-			this._active = false;
+				this._active = false;
 
-			this._popupContent = undefined;
-			document.removeEventListener('click', this._outsideClickRef);
+				this._popupContent = undefined;
+				document.removeEventListener('click', this._outsideClickRef);
+			}, 10);
 		}
 	}
 
