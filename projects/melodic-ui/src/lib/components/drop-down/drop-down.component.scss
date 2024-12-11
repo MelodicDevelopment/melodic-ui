@@ -57,6 +57,9 @@ md-drop-down {
 				gap: var(--md-spacing-md);
 				border: none;
 				margin-right: 50px;
+				position: relative;
+				overflow: hidden;
+				height: 20px;
 
 				div.placeholder {
 					position: absolute;
@@ -116,58 +119,55 @@ md-drop-down {
 
 div.md-popup-content {
 	&.md-drop-down-options {
-		padding: var(--md-spacing-none);
-	}
-}
-
-div.md-options-list {
-	display: flex;
-	flex-direction: column;
-	padding: var(--md-spacing-none);
-	z-index: 1000;
-	max-height: 350px;
-	overflow: hidden;
-	overflow-y: auto;
-
-	div.option {
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: var(--md-spacing-md);
-		margin: var(--md-spacing-xxs) var(--md-spacing-xxs) calc(var(--md-spacing-xxs) - 1px);
-		border-radius: var(--md-radius-xs);
-		white-space: nowrap;
-		cursor: pointer;
+		flex-direction: column;
+		padding: var(--md-spacing-none);
+		z-index: 1000;
+		max-height: 350px;
+		overflow: hidden;
+		overflow-y: auto;
 
-		&.last-child {
-			margin-bottom: var(--md-spacing-xxs);
-		}
-
-		&:hover {
-			background-color: var(--md-surface-primary-background-color-hover);
-		}
-
-		&.selected {
-			background-color: var(--md-surface-primary-background-color-hover);
-
-			&::after {
-				content: 'check';
-				margin-left: var(--md-spacing-2xl);
-				color: var(--md-surface-primary-font-color-brand);
-				@include material-icons;
-			}
-		}
-
-		div.option-template {
+		div.option {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			flex: 1;
+			padding: var(--md-spacing-md);
+			margin: var(--md-spacing-xxs) var(--md-spacing-xxs) calc(var(--md-spacing-xxs) - 1px);
+			border-radius: var(--md-radius-xs);
+			white-space: nowrap;
+			cursor: pointer;
 
-			div.option-left {
+			&.last-child {
+				margin-bottom: var(--md-spacing-xxs);
+			}
+
+			&:hover,
+			&.active {
+				background-color: var(--md-surface-primary-background-color-hover);
+			}
+
+			&.selected {
+				background-color: var(--md-surface-primary-background-color-hover);
+
+				&::after {
+					content: 'check';
+					margin-left: var(--md-spacing-2xl);
+					color: var(--md-surface-primary-font-color-brand);
+					@include material-icons;
+				}
+			}
+
+			div.option-template {
 				display: flex;
 				align-items: center;
-				gap: var(--md-spacing-md);
+				justify-content: space-between;
+				flex: 1;
+
+				div.option-left {
+					display: flex;
+					align-items: center;
+					gap: var(--md-spacing-md);
+				}
 			}
 		}
 	}

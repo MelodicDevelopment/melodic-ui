@@ -14,20 +14,27 @@ import {
 	Signal,
 	signal,
 	Type,
+	ViewChild,
 	ViewEncapsulation,
 	WritableSignal
 } from '@angular/core';
 import { MDIconComponent } from '../icon/icon.component';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { skip } from 'rxjs';
+import { filter, skip } from 'rxjs';
 import { MDPopupComponent } from '../popup/popup.component';
+import { KeyboardService } from '../../services/keyboard.service';
+import { IKeyboardEvent } from '../../services/interfaces/ikeyboard-event.interface';
 
 export interface IMDDropDownOption {
 	value: string | number;
 	label: string;
 	icon?: string;
 	selected?: boolean;
+}
+
+interface IMDDropDownOptionInternal extends IMDDropDownOption {
+	active?: boolean;
 }
 
 @Component({
@@ -46,13 +53,18 @@ export interface IMDDropDownOption {
 	encapsulation: ViewEncapsulation.None
 })
 export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterViewInit {
+	@ViewChild(MDPopupComponent) private _popupRef!: MDPopupComponent;
+	@ViewChild('popupContent') private _popupContentRef!: ElementRef;
+
 	private _elementRef: ElementRef = inject(ElementRef);
+	private _keyboardService: KeyboardService = inject(KeyboardService);
 
 	private onChange: (value: unknown) => void = () => {};
 	private onTouched: () => void = () => {};
 
 	private _value: unknown;
 	private _searchString: WritableSignal<string> = signal('');
+	private _activeOptionIndex: WritableSignal<number> = signal(-1);
 
 	private _inputElement: HTMLElement | undefined = undefined;
 	private _inputPlaceholderElement: HTMLElement | undefined = undefined;
@@ -74,31 +86,45 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 
 	public isActive: WritableSignal<boolean> = signal(false);
 
-	public internalOptions: WritableSignal<IMDDropDownOption[]> = signal([]);
+	public internalOptions: WritableSignal<IMDDropDownOptionInternal[]> = signal([]);
 	public selectedOptions: Signal<IMDDropDownOption[]> = computed(() => {
 		return this.internalOptions().filter((o) => o.selected);
 	});
 
-	public filteredOptions: Signal<IMDDropDownOption[]> = computed(() => {
+	public filteredOptions: Signal<IMDDropDownOptionInternal[]> = computed(() => {
 		const searchString: string = this._searchString();
-		if (!searchString) {
-			return this.internalOptions();
-		}
 
-		return this.internalOptions().filter((o) => o.label.toLowerCase().trim().includes(searchString.toLowerCase().trim()));
+		const activeIndex: number = this._activeOptionIndex();
+
+		const filteredOptions: IMDDropDownOptionInternal[] = this.internalOptions()
+			.filter((o) => !searchString || o.label.toLowerCase().trim().includes(searchString.toLowerCase().trim()))
+			.map((option, index) => {
+				return { ...option, active: index === activeIndex };
+			});
+
+		return filteredOptions;
 	});
 
 	constructor() {
 		toObservable(this.options)
 			.pipe(skip(1), takeUntilDestroyed())
 			.subscribe((options) => {
-				this.internalOptions.set(options);
+				this.internalOptions.set(options.map((o) => ({ ...o, active: false })));
 			});
 
 		toObservable(this.value)
 			.pipe(skip(1), takeUntilDestroyed())
 			.subscribe((value) => {
 				this.writeValue(value);
+			});
+
+		toObservable(this._keyboardService.keydown)
+			.pipe(
+				filter((event) => event !== null),
+				takeUntilDestroyed()
+			)
+			.subscribe((event) => {
+				this.navigateOptions(event);
 			});
 	}
 
@@ -185,7 +211,7 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 		this.onTouched = fn;
 	}
 
-	public onInput(event: Event, popup: MDPopupComponent): void {
+	public onInput(event: Event): void {
 		const value: string = (event.target as HTMLElement).innerText;
 
 		if (value.includes('\n') || value.includes('\r') || value.includes('U+A0')) {
@@ -204,21 +230,24 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 
 		this.input.emit(event);
 
-		popup.show();
+		this._popupRef.show();
 	}
 
-	public onOptionsOpen(popupContent: HTMLElement): void {
-		const selectedOptions: HTMLElement[] = Array.from(popupContent.querySelectorAll('div.option.selected'));
-		if (selectedOptions.length > 0) {
-			const selectedOption: HTMLElement = selectedOptions[0];
-			selectedOption.scrollIntoView({ block: 'nearest' });
-		}
+	public scrollToActiveOrSelected(state: 'selected' | 'active' = 'selected'): void {
+		setTimeout(() => {
+			const selectedOptions: HTMLElement[] = Array.from(this._popupContentRef.nativeElement.querySelectorAll(`div.option.${state}`));
+			if (selectedOptions.length > 0) {
+				const selectedOption: HTMLElement = selectedOptions[0];
+				selectedOption.scrollIntoView({ block: 'start' });
+			}
 
-		this.isActive.set(true);
+			this.isActive.set(true);
+		}, 10); //TODO: Not sure why it needs to be in a timeout
 	}
 
 	public onOptionsClose(): void {
 		this.isActive.set(false);
+		this._activeOptionIndex.set(-1);
 		this.resetInput();
 	}
 
@@ -241,6 +270,37 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 		if (sel) {
 			sel.removeAllRanges();
 			sel.addRange(range);
+		}
+	}
+
+	private navigateOptions(event: IKeyboardEvent): void {
+		if (!this.isActive()) {
+			return;
+		}
+
+		if (event.key === 'Escape') {
+			this.onOptionsClose();
+			this._popupRef.hide();
+			return;
+		}
+
+		if (['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key)) {
+			event.eventRef.preventDefault();
+
+			if (event.key === 'ArrowDown') {
+				this._activeOptionIndex.set((this._activeOptionIndex() + 1) % this.filteredOptions().length);
+			} else if (event.key === 'ArrowUp') {
+				this._activeOptionIndex.set((this._activeOptionIndex() - 1 + this.filteredOptions().length) % this.filteredOptions().length);
+			} else if (event.key === 'Enter') {
+				this.setSelectedOptions([
+					...this.filteredOptions()
+						.filter((o) => o.selected)
+						.map((o) => o.value),
+					this.filteredOptions()[this._activeOptionIndex()].value
+				]);
+			}
+
+			this.scrollToActiveOrSelected('active');
 		}
 	}
 }

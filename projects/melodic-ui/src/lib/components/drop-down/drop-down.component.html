@@ -1,9 +1,8 @@
 <md-popup
-	#optionsPopup
 	[arrow]="false"
 	position="bottom-start"
 	popupClass="md-drop-down-options"
-	(onOpen)="onOptionsOpen($event)"
+	(onOpen)="scrollToActiveOrSelected()"
 	(onClose)="onOptionsClose()"
 	[disabled]="disabled()"
 >
@@ -27,14 +26,14 @@
 				<div class="placeholder">{{ placeholder() }}</div>
 			}
 			@if (typeAhead() && !disabled()) {
-				<div class="text-field" contenteditable="true" (input)="onInput($event, optionsPopup)" (focus)="focus.emit()" (blur)="blur.emit()"></div>
+				<div class="text-field" contenteditable="true" (input)="onInput($event)" (focus)="focus.emit()" (blur)="blur.emit()"></div>
 			}
 		</div>
 	</div>
 
-	<div md-popup-content class="md-options-list">
+	<div md-popup-content #popupContent>
 		@for (option of filteredOptions(); track option.value) {
-			<div class="option" [ngClass]="{ selected: option.selected }" (click)="optionSelected(option)">
+			<div class="option" [ngClass]="{ selected: option.selected, active: option.active }" (click)="optionSelected(option)">
 				@if (optionComponent() !== undefined) {
 					<ng-container *ngComponentOutlet="optionComponent()!; inputs: { option }"></ng-container>
 				} @else {

@@ -6,15 +6,13 @@ import {
 	InputSignal,
 	output,
 	OutputEmitterRef,
-	signal,
 	TemplateRef,
 	ViewChild,
 	ViewContainerRef,
-	ViewEncapsulation,
-	WritableSignal
+	ViewEncapsulation
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Overlay, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, PositionStrategy, ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 
 export type PopupTriggerType = 'click' | 'hover';
@@ -50,9 +48,11 @@ export class MDPopupComponent {
 	private _overlay: Overlay = inject(Overlay);
 	private _elementRef: ElementRef = inject(ElementRef);
 	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
+	private _scrollStrategyOptions: ScrollStrategyOptions = inject(ScrollStrategyOptions);
+
 	private _overlayRef: OverlayRef | null = null;
 	private _active: boolean = false;
-	private _outsideClickRef = (event: MouseEvent) => this.outsideClick(event);
+	private _outsideClickRef = (event: Event) => this.outsideClick(event);
 
 	private _positions: { [key in PopupPositionType]: any } = {
 		'left': { originX: 'start', originY: 'center', overlayX: 'end', overlayY: 'center', offsetX: -4, offsetY: 0 },
@@ -131,8 +131,11 @@ export class MDPopupComponent {
 				}
 			]);
 
+		const scrollStrategy = this._overlay.scrollStrategies.close();
+
 		this._overlayRef = this._overlay.create({
 			positionStrategy,
+			scrollStrategy,
 			hasBackdrop: false,
 			backdropClass: ''
 		});
@@ -145,7 +148,10 @@ export class MDPopupComponent {
 		this._popupContent = this._overlayRef.hostElement.querySelector('div.md-popup-content') as HTMLElement;
 		this.onOpen.emit(this._popupContent);
 
-		setTimeout(() => document.addEventListener('click', this._outsideClickRef), 100); // delay to prevent immediate closing
+		setTimeout(() => {
+			document.addEventListener('click', this._outsideClickRef);
+			document.addEventListener('scroll', this._outsideClickRef);
+		}, 100); // delay to prevent immediate closing
 	}
 
 	public hide(): void {
@@ -162,13 +168,13 @@ export class MDPopupComponent {
 		}
 	}
 
-	private outsideClick(event: MouseEvent): void {
+	private outsideClick(event: Event): void {
 		if (this._active && !this.disableClickaway() && this.trigger() === 'click' && this.isEventOutside(event)) {
 			this.hide();
 		}
 	}
 
-	private isEventOutside(event: MouseEvent): boolean {
+	private isEventOutside(event: Event): boolean {
 		return !(this._popupContent as HTMLElement).contains(event.target as HTMLElement);
 	}
 }
