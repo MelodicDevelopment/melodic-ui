@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal, Type, WritableSignal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit, signal, Type, WritableSignal } from '@angular/core';
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -17,7 +17,7 @@ import { CustomToolTipComponent } from '../shared/components/custom-tool-tip/cus
 	styleUrl: './melodic-ui-test-area.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MelodicUiTestAreaComponent implements OnInit {
+export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 	private _dialogService: MDDialogService = inject(MDDialogService);
 	private _alertService: MDAlertService = inject(MDAlertService);
 
@@ -210,6 +210,12 @@ export class MelodicUiTestAreaComponent implements OnInit {
 		this.dropdownFormGroup.get('dropdownInput2')?.valueChanges.subscribe((value) => {
 			console.log('Drop down input 2 changed:', value);
 		});
+	}
+
+	public buttonGroupDisabled: WritableSignal<boolean> = signal<boolean>(false);
+
+	ngAfterViewInit(): void {
+		this.buttonGroupDisabled.set(true);
 	}
 
 	public buttonGroupForm: FormGroup = new FormGroup({

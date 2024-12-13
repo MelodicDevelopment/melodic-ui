@@ -1,4 +1,18 @@
-import { AfterViewInit, Component, ContentChildren, forwardRef, Input, OnInit, output, OutputEmitterRef, QueryList } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	ComponentRef,
+	ContentChildren,
+	effect,
+	forwardRef,
+	input,
+	Input,
+	InputSignal,
+	OnInit,
+	output,
+	OutputEmitterRef,
+	QueryList
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MDButtonToggleComponent } from './components/button-toggle/button-toggle.component';
@@ -17,7 +31,7 @@ import { MDButtonToggleComponent } from './components/button-toggle/button-toggl
 		}
 	]
 })
-export class MDButtonGroupComponent implements ControlValueAccessor, OnInit, AfterViewInit {
+export class MDButtonGroupComponent implements ControlValueAccessor, AfterViewInit {
 	private _values: unknown[] = [];
 
 	private onChange: (value: unknown) => void = () => {};
@@ -25,16 +39,27 @@ export class MDButtonGroupComponent implements ControlValueAccessor, OnInit, Aft
 
 	@ContentChildren(MDButtonToggleComponent) private _buttonToggles!: QueryList<MDButtonToggleComponent>;
 
-	@Input() public value: unknown;
-	@Input() public multiple: boolean = false;
-	@Input() public disabled: boolean = false;
+	public value: InputSignal<unknown> = input();
+	public multiple: InputSignal<boolean> = input(false);
+	public disabled: InputSignal<boolean> = input(false);
 
 	public change: OutputEmitterRef<unknown> = output<unknown>();
 
-	ngOnInit(): void {
-		if (this.value) {
-			this._values = Array.isArray(this.value) ? this.value : [this.value];
-		}
+	constructor() {
+		effect(() => {
+			if (!this._buttonToggles) {
+				return;
+			}
+			this._buttonToggles.forEach((toggle) => {
+				toggle.disabled = this.disabled();
+			});
+		});
+
+		effect(() => {
+			if (this.value()) {
+				this._values = Array.isArray(this.value()) ? (this.value() as unknown[]) : [this.value()];
+			}
+		});
 	}
 
 	ngAfterViewInit(): void {
@@ -44,10 +69,9 @@ export class MDButtonGroupComponent implements ControlValueAccessor, OnInit, Aft
 
 		this._buttonToggles.forEach((toggle) => {
 			toggle.checked.set(this._values.includes(toggle.value()));
-			toggle.disabled = this.disabled;
 
 			toggle.change.subscribe((value) => {
-				if (this.multiple) {
+				if (this.multiple()) {
 					if (this._values.includes(toggle.value())) {
 						this._values = this._values.filter((v) => v !== toggle.value());
 					}
@@ -62,7 +86,7 @@ export class MDButtonGroupComponent implements ControlValueAccessor, OnInit, Aft
 					}
 				}
 
-				this.writeValue(this.multiple ? this._values : this._values[0]);
+				this.writeValue(this.multiple() ? this._values : this._values[0]);
 
 				this._buttonToggles.forEach((t) => {
 					if (!this._values.includes(t.value())) {
@@ -71,17 +95,13 @@ export class MDButtonGroupComponent implements ControlValueAccessor, OnInit, Aft
 				});
 			});
 		});
-
-		this.setDisabledState(this.disabled);
 	}
 
 	writeValue(value: unknown): void {
-		this.value = value;
-
-		this.onChange(this.value);
+		this.onChange(this._values);
 		this.onTouched();
 
-		this.change.emit(this.value);
+		this.change.emit(this._values);
 	}
 
 	// used internally by angular forms
@@ -92,15 +112,5 @@ export class MDButtonGroupComponent implements ControlValueAccessor, OnInit, Aft
 	// used internally by angular forms
 	registerOnTouched(fn: () => void): void {
 		this.onTouched = fn;
-	}
-
-	setDisabledState(isDisabled: boolean): void {
-		this.disabled = isDisabled;
-		if (!this._buttonToggles) {
-			return;
-		}
-		this._buttonToggles.forEach((toggle) => {
-			toggle.disabled = isDisabled;
-		});
 	}
 }

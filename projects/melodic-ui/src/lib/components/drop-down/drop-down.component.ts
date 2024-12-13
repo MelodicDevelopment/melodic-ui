@@ -62,7 +62,6 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 	private onChange: (value: unknown) => void = () => {};
 	private onTouched: () => void = () => {};
 
-	private _value: unknown;
 	private _searchString: WritableSignal<string> = signal('');
 	private _activeOptionIndex: WritableSignal<number> = signal(-1);
 
@@ -160,23 +159,22 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 		}
 
 		if (!this.multiple()) {
-			this.internalOptions().forEach((o) => (o.selected = false));
-		}
-
-		option.selected = !option.selected;
-
-		this.internalOptions.set([...this.internalOptions()]);
-
-		if (!this.multiple()) {
 			this.writeValue(option.value);
 			return;
 		}
 
-		this.writeValue(
-			this.internalOptions()
-				.filter((o) => o.selected)
-				.map((o) => o.value)
-		);
+		const selectedOptions = this.internalOptions().filter((o) => o.selected);
+		const matchingOption = selectedOptions.findIndex((o) => o.value === option.value);
+
+		if (matchingOption > -1) {
+			selectedOptions.splice(matchingOption, 1);
+		}
+
+		if (matchingOption === -1) {
+			selectedOptions.push(option);
+		}
+
+		this.writeValue([...selectedOptions.map((o) => o.value)]);
 	}
 
 	public writeValue(value: unknown): void {
@@ -185,12 +183,14 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 
 		this.change.emit(value);
 
-		this._value = value;
-
 		this.setSelectedOptions(value);
 	}
 
 	public setSelectedOptions(value: unknown): void {
+		if (!this.multiple() && this._popupRef) {
+			this._popupRef.hide();
+		}
+
 		if (value) {
 			if (Array.isArray(value)) {
 				this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number>).includes(o.value) }))]);
@@ -292,12 +292,7 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 			} else if (event.key === 'ArrowUp') {
 				this._activeOptionIndex.set((this._activeOptionIndex() - 1 + this.filteredOptions().length) % this.filteredOptions().length);
 			} else if (event.key === 'Enter') {
-				this.setSelectedOptions([
-					...this.filteredOptions()
-						.filter((o) => o.selected)
-						.map((o) => o.value),
-					this.filteredOptions()[this._activeOptionIndex()].value
-				]);
+				this.optionSelected(this.filteredOptions()[this._activeOptionIndex()]);
 			}
 
 			this.scrollToActiveOrSelected('active');

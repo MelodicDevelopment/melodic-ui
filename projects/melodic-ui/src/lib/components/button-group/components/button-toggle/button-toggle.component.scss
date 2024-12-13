@@ -1,11 +1,13 @@
 :host {
 	display: flex;
 	align-items: center;
+	align-self: stretch;
 
 	a[md-button],
 	a[md-button]:not([md-button-link]),
 	button[md-button],
 	button[md-button]:not([md-button-link]) {
+		height: 100%;
 		border-radius: var(--md-radius-none);
 		border-right: none;
 
