@@ -8,5 +8,12 @@ export const userReducers = createReducer<IGlobalState, 'userState'>(
 	}),
 	onAction(userActions.setUsers(), (state, action) => {
 		return { ...state, users: action.payload.users, loaded: true, loading: false };
+	}),
+
+	onAction(userActions.loadUserByID(), (state, action) => {
+		return { ...state, userByID: undefined, loaded: false, loading: true };
+	}),
+	onAction(userActions.setUserByID(), (state, action) => {
+		return { ...state, userByID: action.payload.user, loaded: true, loading: false };
 	})
 );

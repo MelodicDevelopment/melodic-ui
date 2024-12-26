@@ -6,14 +6,14 @@ export interface IUser {
 
 export interface IUserState {
 	users: IUser[];
-	userByID: IUser | null;
+	userByID: IUser | undefined;
 	loading: boolean;
 	loaded: boolean;
 }
 
 export const initUserState: IUserState = {
 	users: [],
-	userByID: null,
+	userByID: undefined,
 	loading: false,
 	loaded: false
 };

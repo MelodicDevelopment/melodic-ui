@@ -4,7 +4,7 @@ import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { SignalStoreService } from '@melodic-rx';
 import { IGlobalState } from '../shared/state/global.state';
-import { loadUsers } from '../shared/state/user.actions';
+import { loadUserByID, loadUsers } from '../shared/state/user.actions';
 import { IUser } from '../shared/state/user.state';
 
 @Component({
@@ -19,10 +19,16 @@ export class MelodicRxTestAreaComponent implements OnInit {
 	private _signalStoreService: SignalStoreService<IGlobalState> = inject(SignalStoreService<IGlobalState>);
 
 	public users: Signal<IUser[]> = this._signalStoreService.select('userState', (state) => state.users);
+	public userByID: Signal<IUser | undefined> = this._signalStoreService.select('userState', (state) => state.userByID);
 	public usersLoading: Signal<boolean> = this._signalStoreService.select('userState', (state) => state.loading);
 	public usersLoaded: Signal<boolean> = this._signalStoreService.select('userState', (state) => state.loaded);
 
 	ngOnInit(): void {
 		this._signalStoreService.dispatch('userState', loadUsers());
+	}
+
+	loadUserByID(): void {
+		const index = Math.floor(Math.random() * this.users().length);
+		this._signalStoreService.dispatch('userState', loadUserByID({ userID: this.users()[index].userID }));
 	}
 }

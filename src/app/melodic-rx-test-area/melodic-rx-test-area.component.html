@@ -10,7 +10,7 @@
 	</thead>
 	<tbody>
 		@for (user of users(); track $index) {
-			<tr>
+			<tr [ngClass]="{ highlight: user.userID === userByID()?.userID }">
 				<td>{{ user.userID }}</td>
 				<td>{{ user.username }}</td>
 				<td>{{ user.displayName }}</td>
@@ -24,3 +24,7 @@
 		}
 	</tbody>
 </table>
+
+@if (users().length > 0) {
+	<button md-button-success (click)="loadUserByID()">Load Random User</button>
+}

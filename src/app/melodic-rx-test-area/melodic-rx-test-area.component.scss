@@ -15,8 +15,18 @@
 			}
 		}
 
+		tr.highlight {
+			td {
+				background-color: #efefef;
+			}
+		}
+
 		td {
 			padding: 2px 5px;
 		}
+	}
+
+	button {
+		width: 150px;
 	}
 }
