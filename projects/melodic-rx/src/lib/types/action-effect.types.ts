@@ -3,7 +3,7 @@ import { Action } from './action.types';
 
 export type ActionEffect = {
 	actions: Action[];
-	effect: (action: Action) => Promise<Action>;
+	effect: (action: Action) => Promise<Action | Action[]>;
 };
 
 export type ActionEffects = {

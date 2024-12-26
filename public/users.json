@@ -1,0 +1,27 @@
+[
+	{
+		"userID": 1,
+		"username": "rhopkins",
+		"displayName": "Rick Hopkins"
+	},
+	{
+		"userID": 2,
+		"username": "jdoe",
+		"displayName": "John Doe"
+	},
+	{
+		"userID": 3,
+		"username": "jdoe2",
+		"displayName": "Jane Doe"
+	},
+	{
+		"userID": 4,
+		"username": "jdoe3",
+		"displayName": "Joe Doe"
+	},
+	{
+		"userID": 5,
+		"username": "jdoe4",
+		"displayName": "Jill Doe"
+	}
+]

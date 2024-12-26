@@ -12,8 +12,8 @@
 		"paths": {
 			"@melodic-ui-dist": ["./dist/melodic-ui"],
 			"@melodic-ui": ["./projects/melodic-ui/src/lib"],
-			"melodic-rx-dist": ["./dist/melodic-rx"],
-			"melodic-rx": ["./projects/melodic-rx/src/lib"]
+			"@melodic-rx-dist": ["./dist/melodic-rx"],
+			"@melodic-rx": ["./projects/melodic-rx/src/lib"]
 		},
 		"skipLibCheck": true,
 		"isolatedModules": true,
