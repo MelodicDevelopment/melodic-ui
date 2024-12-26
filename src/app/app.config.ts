@@ -15,6 +15,6 @@ export const appConfig: ApplicationConfig = {
 		provideRouter(routes),
 		provideHttpClient(),
 		provideMDUI({ iconBaseUrl: './public/icons' }),
-		provideMDRX(appState, actionReducerMap, actionEffectsMap)
+		provideMDRX(appState, actionReducerMap, actionEffectsMap, true)
 	]
 };
