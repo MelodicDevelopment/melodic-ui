@@ -1,0 +1,30 @@
+<div>Melodic RX Test Grounds</div>
+
+<table>
+	<thead>
+		<tr>
+			<td>ID</td>
+			<td>Username</td>
+			<td>Display Name</td>
+		</tr>
+	</thead>
+	<tbody>
+		@for (user of users(); track $index) {
+			<tr [ngClass]="{ highlight: user.userID === userByID()?.userID }">
+				<td>{{ user.userID }}</td>
+				<td>{{ user.username }}</td>
+				<td>{{ user.displayName }}</td>
+			</tr>
+		}
+
+		@if (users().length === 0) {
+			<tr>
+				<td colspan="3">No users found</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@if (users().length > 0) {
+	<button md-button-success (click)="loadUserByID()">Load Random User</button>
+}

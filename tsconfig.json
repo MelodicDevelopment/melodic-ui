@@ -9,12 +9,6 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
-		"paths": {
-			"@melodic-ui-dist": ["./dist/melodic-ui"],
-			"@melodic-ui": ["./projects/melodic-ui/src/lib"],
-			"melodic-rx-dist": ["./dist/melodic-rx"],
-			"melodic-rx": ["./projects/melodic-rx/src/lib"]
-		},
 		"skipLibCheck": true,
 		"isolatedModules": true,
 		"esModuleInterop": true,
@@ -25,7 +19,13 @@
 		"importHelpers": true,
 		"target": "ES2022",
 		"module": "ES2022",
-		"lib": ["ES2022", "dom"]
+		"lib": ["ES2022", "dom"],
+		"paths": {
+			"@melodic-ui-dist": ["./dist/melodic-ui"],
+			"@melodic-ui": ["./projects/melodic-ui/src/lib"],
+			"@melodic-rx-dist": ["./dist/melodic-rx"],
+			"@melodic-rx": ["./projects/melodic-rx/src/lib"]
+		}
 	},
 	"angularCompilerOptions": {
 		"enableI18nLegacyMessageIdFormat": false,

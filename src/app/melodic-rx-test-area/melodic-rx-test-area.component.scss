@@ -1,0 +1,32 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+
+	table {
+		width: 25%;
+
+		thead {
+			tr {
+				td {
+					border-bottom: 1px solid #efefef;
+					font-weight: bold;
+				}
+			}
+		}
+
+		tr.highlight {
+			td {
+				background-color: #efefef;
+			}
+		}
+
+		td {
+			padding: 2px 5px;
+		}
+	}
+
+	button {
+		width: 150px;
+	}
+}

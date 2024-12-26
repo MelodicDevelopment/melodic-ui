@@ -1,7 +1,7 @@
-import { computed, Signal, signal, Type, WritableSignal, Injectable, inject, Injector } from '@angular/core';
+import { computed, Signal, WritableSignal, Injectable, inject, Injector } from '@angular/core';
 import { State } from '../types/state.type';
 import { TypedAction } from '../types/action.types';
-import { ActionEffects, ActionEffectsMap } from '../types/action-effect.types';
+import { ActionEffect, ActionEffects, ActionEffectsMap } from '../types/action-effect.types';
 import { ActionReducerMap } from '../types/reducer-config.type';
 import { INIT_STATE, ACTION_PROVIDERS, EFFECTS_PROVIDERS } from '../injection.tokens';
 
@@ -11,19 +11,6 @@ export class SignalStoreService<S extends object> {
 	private _state: State<S> = inject(INIT_STATE) as State<S>;
 	private _reducerMap: ActionReducerMap<S> = inject(ACTION_PROVIDERS) as ActionReducerMap<S>;
 	private _effectMap: ActionEffectsMap<S> = inject(EFFECTS_PROVIDERS) as ActionEffectsMap<S>;
-
-	private _effects: { [key: string]: ActionEffects } = {};
-
-	constructor() {
-		Object.keys(this._state).forEach((key) => {
-			const effects = this._effectMap[key as keyof S];
-
-			if (effects) {
-				const effectService = this._injector.get(effects);
-				this._effects[key] = effectService;
-			}
-		});
-	}
 
 	select<T, K extends keyof S>(key: K, selectFn: (state: S[K]) => T): Signal<T> {
 		return computed(() => {
@@ -48,14 +35,27 @@ export class SignalStoreService<S extends object> {
 			(this._state[key] as WritableSignal<S[K]>).set(newState);
 		}
 
-		const effects = this._effects[key as string];
-		if (effects) {
-			const actionEffect = effects.getEffects().find((effect) => effect.actions.some((a) => a.type === action.type));
-			if (actionEffect) {
-				actionEffect.effect(action).then((newAction) => {
-					this.dispatch(key, newAction as TypedAction<string, object>);
+		const actionEffects: ActionEffect[] = this.getEffects(key, action);
+		actionEffects.forEach((effect) => {
+			effect.effect(action).then((newAction) => {
+				if (!Array.isArray(newAction)) {
+					newAction = [newAction];
+				}
+
+				newAction.forEach((na) => {
+					this.dispatch(key, na as TypedAction<string, object>);
 				});
-			}
+			});
+		});
+	}
+
+	private getEffects<K extends keyof S, T extends string, P extends object>(key: K, action: TypedAction<T, P>): ActionEffect[] {
+		const effectClass = this._effectMap[key as keyof S];
+		if (effectClass) {
+			const effectService: ActionEffects = this._injector.get(effectClass);
+			return effectService.getEffects().filter((effect) => effect.actions.some((a) => a.type === action.type));
 		}
+
+		return [];
 	}
 }
