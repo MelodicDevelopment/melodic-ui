@@ -26,7 +26,8 @@
 						"assets": [
 							{
 								"glob": "**/*",
-								"input": "public"
+								"input": "public",
+								"output": "public"
 							},
 							{
 								"glob": "**/*",
@@ -134,42 +135,39 @@
 					}
 				}
 			}
-    },
-    "melodic-rx": {
-      "projectType": "library",
-      "root": "projects/melodic-rx",
-      "sourceRoot": "projects/melodic-rx/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/melodic-rx/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/melodic-rx/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/melodic-rx/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/melodic-rx/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
-        }
-      }
-    }
-  },
-  "cli": {
-    "analytics": false
-  }
+		},
+		"melodic-rx": {
+			"projectType": "library",
+			"root": "projects/melodic-rx",
+			"sourceRoot": "projects/melodic-rx/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/melodic-rx/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/melodic-rx/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/melodic-rx/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"tsConfig": "projects/melodic-rx/tsconfig.spec.json",
+						"polyfills": ["zone.js", "zone.js/testing"]
+					}
+				}
+			}
+		}
+	},
+	"cli": {
+		"analytics": false
+	}
 }

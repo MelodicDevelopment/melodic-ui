@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy, OnInit, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, inject, Signal } from '@angular/core';
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { SignalStoreService } from '@melodic-rx';
 import { IGlobalState } from '../shared/state/global.state';
 import { loadUsers } from '../shared/state/user.actions';
+import { IUser } from '../shared/state/user.state';
 
 @Component({
 	selector: 'app-melodic-rx-test-area',
@@ -15,10 +16,13 @@ import { loadUsers } from '../shared/state/user.actions';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MelodicRxTestAreaComponent implements OnInit {
-	private _signalStoreService: SignalStoreService<IGlobalState> = inject(SignalStoreService);
+	private _signalStoreService: SignalStoreService<IGlobalState> = inject(SignalStoreService<IGlobalState>);
+
+	public users: Signal<IUser[]> = this._signalStoreService.select('userState', (state) => state.users);
+	public usersLoading: Signal<boolean> = this._signalStoreService.select('userState', (state) => state.loading);
+	public usersLoaded: Signal<boolean> = this._signalStoreService.select('userState', (state) => state.loaded);
 
 	ngOnInit(): void {
-		console.log('MelodicRxTestAreaComponent initialized');
 		this._signalStoreService.dispatch('userState', loadUsers());
 	}
 }
