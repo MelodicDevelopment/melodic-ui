@@ -1,7 +1,8 @@
-import { Component, computed, Injectable, Signal, signal, Type, WritableSignal } from '@angular/core';
+import { computed, Injectable, Signal, signal, Type, WritableSignal } from '@angular/core';
+import { ILoadableComponent } from './interfaces/iloadable-component.interface';
 
 export type LoadableComponent = {
-	component: WritableSignal<Type<Component> | null>;
+	component: WritableSignal<Type<ILoadableComponent> | null>;
 	inputs: WritableSignal<Record<string, unknown>>;
 };
 
@@ -17,7 +18,7 @@ export class ComponentLoaderService {
 
 	addContainer(key: string): LoadableComponent {
 		this.containers[key] = {
-			component: signal<Type<Component> | null>(null),
+			component: signal<Type<ILoadableComponent> | null>(null),
 			inputs: signal<Record<string, unknown>>({})
 		};
 
