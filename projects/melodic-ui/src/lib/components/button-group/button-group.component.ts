@@ -4,6 +4,7 @@ import {
 	ComponentRef,
 	ContentChildren,
 	effect,
+	ElementRef,
 	forwardRef,
 	input,
 	Input,
@@ -38,6 +39,7 @@ export class MDButtonGroupComponent implements ControlValueAccessor, AfterViewIn
 	private onTouched: () => void = () => {};
 
 	@ContentChildren(MDButtonToggleComponent) private _buttonToggles!: QueryList<MDButtonToggleComponent>;
+	@ContentChildren(MDButtonToggleComponent, { read: ElementRef }) private _buttonToggleRefs!: QueryList<ElementRef>;
 
 	public value: InputSignal<unknown> = input();
 	public multiple: InputSignal<boolean> = input(false);
@@ -50,8 +52,11 @@ export class MDButtonGroupComponent implements ControlValueAccessor, AfterViewIn
 			if (!this._buttonToggles) {
 				return;
 			}
-			this._buttonToggles.forEach((toggle) => {
-				toggle.disabled = this.disabled();
+			this._buttonToggles.forEach((toggle, index) => {
+				console.log(this._buttonToggleRefs.toArray()[index].nativeElement);
+				if (!(this._buttonToggleRefs.toArray()[index].nativeElement as HTMLElement).hasAttribute('ng-reflect-disabled')) {
+					toggle.disabled = this.disabled();
+				}
 			});
 		});
 
