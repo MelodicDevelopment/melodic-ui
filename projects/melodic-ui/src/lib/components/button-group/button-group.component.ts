@@ -53,7 +53,6 @@ export class MDButtonGroupComponent implements ControlValueAccessor, AfterViewIn
 				return;
 			}
 			this._buttonToggles.forEach((toggle, index) => {
-				console.log(this._buttonToggleRefs.toArray()[index].nativeElement);
 				if (!(this._buttonToggleRefs.toArray()[index].nativeElement as HTMLElement).hasAttribute('ng-reflect-disabled')) {
 					toggle.disabled = this.disabled();
 				}
