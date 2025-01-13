@@ -23,6 +23,7 @@ export class UserEffects extends EffectsBase {
 					.pipe(take(1))
 					.subscribe({
 						next: (users: IUser[]) => {
+							debugger;
 							resolve([setUsers({ users }), setUserByID({ user: users.find((user) => user.userID === 1) })]);
 						},
 						error: (error) => {
@@ -35,6 +36,7 @@ export class UserEffects extends EffectsBase {
 
 		this.addEffect([loadUserByID()], (action) => {
 			return new Promise((resolve, reject) => {
+				debugger;
 				const users = this._signalStoreService.select('userState', (state) => state.users)();
 				resolve(setUserByID({ user: users.find((user) => user.userID === action.payload.userID) }));
 			});
