@@ -29,6 +29,7 @@ export class MDMenuComponent implements AfterViewInit {
 	public menuItems: InputSignal<IMDMenuOption[]> = input.required();
 	public closeOnAction: InputSignal<boolean> = input(true);
 	public menuItemComponent: InputSignal<Type<Component> | undefined> = input();
+	public triggerIcon: InputSignal<string> = input('keyboard_arrow_down');
 
 	ngAfterViewInit(): void {
 		const element: HTMLElement = this._elementRef.nativeElement as HTMLElement;
