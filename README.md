@@ -139,7 +139,7 @@ A surface designates background-color, border-color, and font-color. It is not r
 
 	// warning alternates
 	--md-surface-warning-background-color-variant: var(--md-colors-warning-40);
-	--md-surface-warning-border-color-variant: var(--md-colors-warning-590);
+	--md-surface-warning-border-color-variant: var(--md-colors-warning-150);
 	--md-surface-warning-font-color-variant: var(--md-colors-gray-600);
 
 	// error surface (error 25)
