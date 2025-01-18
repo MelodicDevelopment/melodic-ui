@@ -2,11 +2,12 @@ import { Component, Host, HostBinding, inject, input, InputSignal, OnInit, signa
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom, take, map, catchError, of } from 'rxjs';
+import { take } from 'rxjs';
 import { MD_ICON_BASE_URL } from '../../configuration';
 
 // hold icons in memory so we don't have to fetch them multiple times
-const IconCache: { [key: string]: SafeHtml } = {};
+export const IconCache: { [key: string]: SafeHtml } = {};
+export const IconCachePromise: { [key: string]: Promise<SafeHtml> } = {};
 
 @Component({
 	selector: 'md-icon',
@@ -21,7 +22,8 @@ export class MDIconComponent implements OnInit {
 	private _sanitizer: DomSanitizer = inject(DomSanitizer);
 	private _iconUrlBase: string = inject(MD_ICON_BASE_URL);
 
-	@HostBinding('class.material-icons') private _isMaterialIcon = false;
+	@HostBinding('class.material-icons')
+	private _isMaterialIcon = false;
 
 	public icon: InputSignal<string> = input('');
 	public iconString: WritableSignal<SafeHtml> = signal('');
@@ -34,25 +36,39 @@ export class MDIconComponent implements OnInit {
 		}
 	}
 
-	private getIcon(iconName: string): Promise<SafeHtml> {
+	private async getIcon(iconName: string): Promise<SafeHtml> {
 		if (IconCache[iconName]) {
-			return Promise.resolve(IconCache[iconName]);
+			return Promise.resolve<SafeHtml>(IconCache[iconName]);
 		}
 
-		return firstValueFrom(
-			this._http.get(`${this._iconUrlBase}/${iconName}.svg`, { responseType: 'text' }).pipe(
-				take(1),
-				map((svgContent) => {
-					const svg: SafeHtml = this._sanitizer.bypassSecurityTrustHtml(svgContent);
-					IconCache[iconName] = svg;
+		if (Object.keys(IconCachePromise).includes(iconName)) {
+			return await IconCachePromise[iconName];
+		}
 
-					return svg;
-				}),
-				catchError((error) => {
-					console.error('Error loading icon', error);
-					return of(``);
-				})
-			)
-		);
+		const iconPromise = new Promise<SafeHtml>((resolve, reject) => {
+			if (IconCache[iconName]) {
+				resolve(IconCache[iconName]);
+				return;
+			}
+
+			this._http
+				.get(`${this._iconUrlBase}/${iconName}.svg`, { responseType: 'text' })
+				.pipe(take(1))
+				.subscribe({
+					next: (svgContent) => {
+						const svg: SafeHtml = this._sanitizer.bypassSecurityTrustHtml(svgContent);
+						IconCache[iconName] = svg;
+						resolve(svg);
+					},
+					error: (error) => {
+						console.error('Error loading icon', error);
+						reject(error);
+					}
+				});
+		});
+
+		IconCachePromise[iconName] = iconPromise;
+
+		return iconPromise;
 	}
 }
