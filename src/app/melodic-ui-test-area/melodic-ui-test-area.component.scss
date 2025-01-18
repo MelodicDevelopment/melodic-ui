@@ -33,4 +33,8 @@
 			margin-top: var(--md-spacing-4xl);
 		}
 	}
+
+	md-menu.square-md-menu {
+		--md-menu-button-padding: 6px 8px;
+	}
 }

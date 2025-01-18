@@ -1,3 +1,17 @@
+md-menu {
+	--md-menu-button-padding: var(--md-spacing-sm) var(--md-spacing-2xl);
+
+	md-popup {
+		div.md-popup-trigger {
+			div[md-popup-target] {
+				button[md-button] {
+					padding: var(--md-menu-button-padding);
+				}
+			}
+		}
+	}
+}
+
 div.md-popup-content.md-menu {
 	padding: 0px;
 
