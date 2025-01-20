@@ -298,7 +298,10 @@ export const appConfig: ApplicationConfig = {
 Then you can use these icons like this:
 
 ```html
-<md-icon icon="untitled-ui/alerts/alert-triangle"></md-icon>
+<md-icon>add</md-icon> Assuming Material icon
+<md-icon [icon]="{ type: 'material', icon: 'add' }"></md-icon>
+<md-icon [icon]="{ type: 'url', icon: 'untitled-ui/general/check' }"></md-icon>
+<md-icon icon="untitled-ui/alerts/alert-triangle" iconType="url"></md-icon>
 ```
 
 You could also utilize any other icons that are under the `./assets/icons` directory. The icon property value is just the url path of the icon. It is loaded with an fetch request.

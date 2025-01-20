@@ -37,14 +37,17 @@ div.md-popup-content.md-menu {
 
 				a,
 				button {
-					display: flex;
-					align-items: center;
-					justify-content: flex-start;
-					gap: var(--md-spacing-md);
-					white-space: nowrap;
 					padding: var(--md-spacing-md) var(--md-spacing-3xl) var(--md-spacing-md) var(--md-spacing-md);
 					flex: 1;
-					font-weight: normal;
+
+					> span {
+						display: flex;
+						align-items: center;
+						justify-content: flex-start;
+						gap: var(--md-spacing-md);
+						white-space: nowrap;
+						font-weight: normal;
+					}
 				}
 			}
 		}

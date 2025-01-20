@@ -11,7 +11,7 @@
 			@for (option of selectedOptions(); track option.value) {
 				<span class="selected-option">
 					@if (option.icon !== undefined) {
-						<md-icon>{{ option.icon }}</md-icon>
+						<md-icon [icon]="option.icon"></md-icon>
 					}
 					{{ option.label }}
 					@if (!disabled()) {
@@ -48,7 +48,7 @@
 	<div class="option-template">
 		<div class="option-left">
 			@if (option.icon !== undefined) {
-				<md-icon>{{ option.icon }}</md-icon>
+				<md-icon [icon]="option.icon"></md-icon>
 			}
 			<span>{{ option.label }}</span>
 		</div>
