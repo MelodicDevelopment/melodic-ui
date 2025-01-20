@@ -37,6 +37,9 @@ div.md-popup-content.md-menu {
 
 				a,
 				button {
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
 					padding: var(--md-spacing-md) var(--md-spacing-3xl) var(--md-spacing-md) var(--md-spacing-md);
 					flex: 1;
 
