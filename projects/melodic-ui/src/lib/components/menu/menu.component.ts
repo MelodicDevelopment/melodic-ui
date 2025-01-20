@@ -3,16 +3,18 @@ import { AfterViewInit, Component, ElementRef, inject, input, Input, InputSignal
 import { MDIconComponent } from '../icon/icon.component';
 import { MDPopupComponent } from '../popup/popup.component';
 import { RouterModule } from '@angular/router';
+import { IconRef } from '../../types/icon-ref.type';
 
 type actionGetter = (item: unknown) => unknown;
 
 export interface IMDMenuOption {
 	label: string;
-	icon?: string;
+	icon?: IconRef;
 	link?: string;
 	linkTarget?: string;
 	isRouteLink?: boolean;
 	click?: actionGetter;
+	class?: string;
 }
 
 @Component({
@@ -29,7 +31,7 @@ export class MDMenuComponent implements AfterViewInit {
 	public menuItems: InputSignal<IMDMenuOption[]> = input.required();
 	public closeOnAction: InputSignal<boolean> = input(true);
 	public menuItemComponent: InputSignal<Type<Component> | undefined> = input();
-	public triggerIcon: InputSignal<string> = input('keyboard_arrow_down');
+	public triggerIcon: InputSignal<IconRef> = input<IconRef>('keyboard_arrow_down');
 
 	ngAfterViewInit(): void {
 		const element: HTMLElement = this._elementRef.nativeElement as HTMLElement;

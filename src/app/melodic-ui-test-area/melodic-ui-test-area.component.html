@@ -78,39 +78,39 @@
 		<button md-button md-button-link disabled>Button Link Disabled</button>
 
 		<button md-button md-button-circle>
-			<md-icon icon="untitled-ui/general/plus">add</md-icon>
+			<md-icon icon="untitled-ui/general/plus" iconType="url"></md-icon>
 		</button>
 		<button md-button>Default</button>
 
 		<button md-button-brand>Brand</button>
 		<button md-button-brand md-button-circle>
-			<md-icon icon="untitled-ui/general/plus">add</md-icon>
+			<md-icon icon="untitled-ui/general/plus" iconType="url"></md-icon>
 		</button>
 
 		<button md-button-info>Information</button>
 		<button md-button-info md-button-circle>
-			<md-icon icon="untitled-ui/general/check">add</md-icon>
+			<md-icon [icon]="{ type: 'url', icon: 'untitled-ui/general/check' }"></md-icon>
 		</button>
 
 		<button md-button-success>Success</button>
 		<button md-button-success md-button-circle>
-			<md-icon icon="untitled-ui/general/check">add</md-icon>
+			<md-icon [icon]="{ type: 'url', icon: 'untitled-ui/general/check' }"></md-icon>
 		</button>
 
 		<button md-button-warning>Warning</button>
 		<button md-button-warning disabled>Warning Disabled</button>
 		<button md-button-warning md-button-circle>
-			<md-icon icon="untitled-ui/alerts/alert-triangle">add</md-icon>
+			<md-icon [icon]="{ type: 'url', icon: 'untitled-ui/alerts/alert-triangle' }"></md-icon>
 		</button>
 
 		<button md-button-error>Error</button>
 		<button md-button-error md-button-circle>
-			<md-icon icon="untitled-ui/alerts/alert-triangle">add</md-icon>
+			<md-icon icon="untitled-ui/alerts/alert-triangle" iconType="url"></md-icon>
 		</button>
 
 		<button md-button disabled>Disabled</button>
 		<button md-button disabled md-button-circle>
-			<md-icon icon="untitled-ui/general/plus">add</md-icon>
+			<md-icon>add</md-icon>
 		</button>
 
 		<button md-button md-button-brand disabled>Disabled Brand Style</button>
@@ -123,8 +123,8 @@
 	<div class="horizontal-spacer">
 		<md-icon style="font-size: 50px">add</md-icon>
 		<md-icon style="font-size: 50px" md-border>add</md-icon>
-		<md-icon icon="untitled-ui/alerts/alert-triangle"></md-icon>
-		<md-icon md-border icon="untitled-ui/alerts/alert-triangle"></md-icon>
+		<md-icon [icon]="{ type: 'url', icon: 'untitled-ui/alerts/alert-triangle' }"></md-icon>
+		<md-icon md-border [icon]="{ type: 'url', icon: 'untitled-ui/alerts/alert-triangle' }"></md-icon>
 	</div>
 </div>
 
@@ -158,7 +158,7 @@
 		<md-date-picker (change)="captureDate2($event)" [isMultiSelect]="false" [isPastDaysDisabled]="true" [selectedDates]="selectedDates2()"></md-date-picker>
 		<div>
 			<button md-button-success (click)="setDate()">
-				<md-icon icon="untitled-ui/arrows/chevron-left"></md-icon>
+				<md-icon>bolt</md-icon>
 			</button>
 			Selected Date:<br />
 			{{ selectedDates2().join(', ') }}

@@ -183,6 +183,11 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 		},
 		{
 			label: 'Menu Item 4',
+			icon: {
+				type: 'url',
+				icon: 'untitled-ui/general/link-01'
+			},
+			class: 'test-class',
 			link: 'https://www.google.com',
 			linkTarget: '_blank'
 		},

@@ -2,7 +2,7 @@
 	<div md-popup-target>
 		<button>
 			<ng-content></ng-content>
-			<md-icon>{{ triggerIcon() }}</md-icon>
+			<md-icon [icon]="triggerIcon()"></md-icon>
 		</button>
 	</div>
 	<div md-popup-content>
@@ -57,8 +57,10 @@
 </md-popup>
 
 <ng-template #menuItemTemplate let-item="item">
-	@if (item.icon !== undefined) {
-		<md-icon>{{ item.icon }}</md-icon>
-	}
-	<span>{{ item.label }}</span>
+	<span [ngClass]="item.class">
+		@if (item.icon !== undefined) {
+			<md-icon [icon]="item.icon"></md-icon>
+		}
+		<span>{{ item.label }}</span>
+	</span>
 </ng-template>

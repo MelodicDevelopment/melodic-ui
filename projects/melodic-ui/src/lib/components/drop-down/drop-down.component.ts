@@ -25,11 +25,12 @@ import { filter, skip } from 'rxjs';
 import { MDPopupComponent } from '../popup/popup.component';
 import { KeyboardService } from '../../services/keyboard.service';
 import { IKeyboardEvent } from '../../services/interfaces/ikeyboard-event.interface';
+import { IconRef } from '../../types';
 
 export interface IMDDropDownOption {
 	value: string | number;
 	label: string;
-	icon?: string;
+	icon?: IconRef;
 	selected?: boolean;
 }
 
