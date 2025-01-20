@@ -4,6 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { take } from 'rxjs';
+import { Day } from './types/date.types';
 
 @Directive({
 	standalone: true,
@@ -28,6 +29,9 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 	private _dateInputEl: HTMLInputElement = this._elementRef.nativeElement as HTMLInputElement;
 
 	public update: OutputEmitterRef<string> = output<string>();
+	public disabledDateFn: InputSignal<(day: Day) => boolean> = input<(day: Day) => boolean>(() => false);
+
+	// deprecated
 	public isPastDaysDisabled: InputSignal<boolean> = input<boolean>(false);
 
 	@HostListener('input')
@@ -76,6 +80,7 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 		const calendarRef = this._overlayRef.attach(calendarPortal);
 
 		calendarRef.setInput('isPastDaysDisabled', this.isPastDaysDisabled());
+		calendarRef.setInput('disabledDateFn', this.disabledDateFn());
 
 		if (this._dateInputEl.value) {
 			calendarRef.setInput('selectedDates', [new Date(`${this._dateInputEl.value} 00:00:00`)]);

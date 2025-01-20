@@ -20,14 +20,14 @@ export class TestDialogOneComponent implements OnInit, OnDestroy {
 	public menuOptions: IMDMenuOption[] = [
 		{
 			label: 'Menu Item 1',
-			icon: 'home',
+			icon: { type: 'material', icon: 'home' },
 			click: (item: unknown) => {
 				console.log('Menu item 1 clicked', item);
 			}
 		},
 		{
 			label: 'Menu Item 2',
-			icon: 'favorite',
+			icon: { type: 'material', icon: 'favorite' },
 			click: (item: unknown) => {
 				console.log('Menu item 2 clicked', item);
 			}

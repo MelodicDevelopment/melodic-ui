@@ -2,19 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, effect, input, InputSignal, OnInit, output, OutputEmitterRef, Signal, signal, WritableSignal } from '@angular/core';
 import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
-
-type Day = {
-	timestamp: number;
-	date: Date;
-	dayOfMonth: number;
-	selected: boolean;
-	currentMonth: boolean;
-	currentDay: boolean;
-};
-
-type Week = {
-	days: Day[];
-};
+import { Day, Week } from './types/date.types';
 
 @Component({
 	selector: 'md-date-picker',
@@ -31,7 +19,10 @@ export class MDDatePickerComponent implements OnInit {
 	private _calendarMonth: WritableSignal<Date> = signal<Date>(new Date());
 
 	public selectedDates: InputSignal<Date[]> = input<Date[]>([]);
+	public disabledDateFn: InputSignal<(day: Day) => boolean> = input<(day: Day) => boolean>(() => false);
 	public isMultiSelect: InputSignal<boolean> = input<boolean>(false);
+
+	// deprecated
 	public isPastDaysDisabled: InputSignal<boolean> = input<boolean>(false);
 
 	public change: OutputEmitterRef<Date[]> = output<Date[]>();
@@ -143,11 +134,18 @@ export class MDDatePickerComponent implements OnInit {
 		this.change.emit(this._selectedDates);
 	}
 
-	isDisabledDay = (day: Day): boolean => {
-		const isInPast = this.isDayInPast(day);
+	isDisabledDay(day: Day): boolean {
+		if (this.isPastDaysDisabled() && this.isDayInPast(day)) {
+			return true;
+		}
 
-		return isInPast && this.isPastDaysDisabled();
-	};
+		const disabledDateFn = this.disabledDateFn();
+		if (disabledDateFn !== undefined) {
+			return disabledDateFn(day);
+		}
+
+		return false;
+	}
 
 	private isDayInPast = (day: Day): boolean => {
 		const now = new Date();

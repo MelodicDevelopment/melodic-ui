@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit, sign
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IMDDropDownOption, IMDMenuOption, MDDialogService, MDAlertService } from '@melodic-ui';
+import { IMDDropDownOption, IMDMenuOption, MDDialogService, MDAlertService, Day } from '@melodic-ui';
 import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
 import { CustomDropDownOptionComponent } from '../shared/components/custom-dropdown-option/custom-dropdown-option.component';
 import { CustomPopupComponent } from '../shared/components/custom-popup/custom-popup.component';
@@ -255,6 +255,14 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 	setDate(): void {
 		const randomFutureDate = this.randomFutureDate();
 		this.selectedDates2.set([randomFutureDate]);
+	}
+
+	checkDate(day: Day): boolean {
+		const now = new Date();
+		now.setHours(0, 0, 0, 0);
+
+		// future dates disabled
+		return day.date > now;
 	}
 
 	captureDateFromDirective(value: unknown, type: string): void {

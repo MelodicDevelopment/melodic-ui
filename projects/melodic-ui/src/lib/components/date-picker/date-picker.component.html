@@ -24,15 +24,16 @@
 		@for (week of calendarWeeks(); let index = $index; track index) {
 			<div class="week">
 				@for (day of week.days; track day.date) {
+					@let disabledDay = isDisabledDay(day);
 					<div
 						class="day"
 						[ngClass]="{
 							'selected': day.selected,
 							'current': day.currentDay,
-							'disabled-day': isDisabledDay(day),
-							'outside-month': !day.currentMonth
+							'disabled-day': disabledDay,
+							'outside-month': day.currentMonth === false
 						}"
-						(click)="!isDisabledDay(day) && selectDate(day)"
+						(click)="disabledDay === false && selectDate(day)"
 					>
 						{{ day.dayOfMonth }}
 					</div>

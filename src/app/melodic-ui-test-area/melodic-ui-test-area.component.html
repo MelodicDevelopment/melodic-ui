@@ -241,6 +241,15 @@
 			[isPastDaysDisabled]="true"
 			(update)="captureDateFromDirective($event, 'update')"
 		/>
+		<input
+			type="date"
+			placeholder="YYYY-MM-DD"
+			value="2025-01-25"
+			md-form-input
+			md-date-picker-input
+			[disabledDateFn]="checkDate"
+			(update)="captureDateFromDirective($event, 'update')"
+		/>
 		<input type="text" placeholder="This is placeholder text" md-form-input />
 		<select md-form-input md-select-input>
 			<option value="">Select Option...</option>
