@@ -41,12 +41,12 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 		{
 			value: 1,
 			label: 'Option 1',
-			icon: 'home'
+			icon: { type: 'material', icon: 'home' }
 		},
 		{
 			value: 2,
 			label: 'Option 2',
-			icon: 'favorite'
+			icon: { type: 'material', icon: 'favorite' }
 		},
 		{
 			value: 3,
@@ -63,12 +63,12 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 		{
 			value: 6,
 			label: 'Option 6',
-			icon: 'home'
+			icon: { type: 'material', icon: 'home' }
 		},
 		{
 			value: 7,
 			label: 'Option 7',
-			icon: 'favorite'
+			icon: { type: 'material', icon: 'favorite' }
 		},
 		{
 			value: 8,
@@ -85,12 +85,12 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 		{
 			value: 11,
 			label: 'Option 11',
-			icon: 'home'
+			icon: { type: 'material', icon: 'home' }
 		},
 		{
 			value: 12,
 			label: 'Option 12',
-			icon: 'favorite'
+			icon: { type: 'material', icon: 'favorite' }
 		},
 		{
 			value: 13,
@@ -117,12 +117,12 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 		{
 			value: 'Option 1',
 			label: 'Option 1',
-			icon: 'home'
+			icon: { type: 'material', icon: 'home' }
 		},
 		{
 			value: 'Option 2',
 			label: 'Option 2',
-			icon: 'favorite'
+			icon: { type: 'material', icon: 'favorite' }
 		},
 		{
 			value: 'Option 3',
@@ -163,14 +163,14 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 	public menuOptions: IMDMenuOption[] = [
 		{
 			label: 'Menu Item 1',
-			icon: 'home',
+			icon: { type: 'material', icon: 'home' },
 			click: (item: unknown) => {
 				console.log('Menu item 1 clicked', item);
 			}
 		},
 		{
 			label: 'Menu Item 2',
-			icon: 'favorite',
+			icon: { type: 'material', icon: 'favorite' },
 			click: (item: unknown) => {
 				console.log('Menu item 2 clicked', item);
 			}

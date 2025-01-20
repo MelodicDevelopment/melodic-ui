@@ -22,7 +22,7 @@ import { IconRef, IconType } from '../../types';
 export const IconCache: { [key: string]: SafeHtml } = {};
 export const IconCachePromise: { [key: string]: Promise<SafeHtml> } = {};
 
-type IconRefObj = { type: 'material' | 'url'; icon: string };
+type IconRefObj = { type: IconType; icon: string };
 
 @Component({
 	selector: 'md-icon',
@@ -42,7 +42,7 @@ export class MDIconComponent implements OnInit {
 	private _isMaterialIcon = false;
 
 	public icon: InputSignal<IconRef | undefined> = input();
-	public iconType: InputSignal<IconType | undefined> = input<IconType | undefined>();
+	public iconType: InputSignal<IconType | undefined> = input<IconType | undefined>('url');
 
 	public iconString: WritableSignal<SafeHtml> = signal('');
 
@@ -54,14 +54,14 @@ export class MDIconComponent implements OnInit {
 		}
 
 		if (typeof this.icon() === 'string') {
-			if (this.iconType() === undefined || this.iconType() === 'material') {
-				// assume material icon
-				this.setIcon(this.icon() as string);
+			if (this.iconType() === undefined || this.iconType() === 'url') {
+				// url icon
+				this.setIcon(await this.getIcon(this.icon() as string), false);
 				return;
 			}
 
-			// url icon
-			this.setIcon(await this.getIcon(this.icon() as string), false);
+			// assume material icon
+			this.setIcon(this.icon() as string);
 			return;
 		}
 

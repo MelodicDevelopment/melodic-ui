@@ -78,13 +78,13 @@
 		<button md-button md-button-link disabled>Button Link Disabled</button>
 
 		<button md-button md-button-circle>
-			<md-icon icon="untitled-ui/general/plus" iconType="url"></md-icon>
+			<md-icon icon="untitled-ui/general/plus"></md-icon>
 		</button>
 		<button md-button>Default</button>
 
 		<button md-button-brand>Brand</button>
 		<button md-button-brand md-button-circle>
-			<md-icon icon="untitled-ui/general/plus" iconType="url"></md-icon>
+			<md-icon icon="untitled-ui/general/plus"></md-icon>
 		</button>
 
 		<button md-button-info>Information</button>
@@ -105,7 +105,7 @@
 
 		<button md-button-error>Error</button>
 		<button md-button-error md-button-circle>
-			<md-icon icon="untitled-ui/alerts/alert-triangle" iconType="url"></md-icon>
+			<md-icon icon="untitled-ui/alerts/alert-triangle"></md-icon>
 		</button>
 
 		<button md-button disabled>Disabled</button>
@@ -371,9 +371,9 @@
 <div class="component-group">
 	<md-header size="xs" variant="regular">Popups</md-header>
 
-	<div style="margin-top: 50px">
+	<div style="margin-top: 50px; display: flex; align-items: center; gap: 6px">
 		<label for="toggle-signal">Toggle popup clickaway</label>
-		<input type="checkbox" id="toggle-signal" [(ngModel)]="isPopupClickawayDisabled" />
+		<input type="checkbox" id="toggle-signal" [(ngModel)]="isPopupClickawayDisabled" md-form-input />
 	</div>
 
 	<div class="horizontal-spacer" style="padding: 100px">
@@ -402,7 +402,7 @@
 		<md-menu [menuItems]="menuOptions">Menu One</md-menu>
 		<md-menu [menuItems]="menuOptions" md-button-warning>Menu Two</md-menu>
 		<md-menu [menuItems]="menuOptions" md-button-error [closeOnAction]="false">Menu Three</md-menu>
-		<md-menu [menuItems]="menuOptions" class="square-md-menu" md-button triggerIcon="more_vert"></md-menu>
+		<md-menu [menuItems]="menuOptions" class="square-md-menu" md-button [triggerIcon]="{ type: 'material', icon: 'more_vert' }"></md-menu>
 		<md-menu [menuItems]="menuOptions" md-button-link>Menu Four</md-menu>
 	</div>
 </div>
