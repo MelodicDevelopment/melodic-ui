@@ -1,4 +1,6 @@
 :host {
+	--md-content-box-shadow: var(--md-drop-shadow-md);
+
 	position: relative;
 	display: block;
 	overflow: hidden;
@@ -6,7 +8,7 @@
 	color: var(--md-surface-primary-font-color);
 	border-radius: var(--md-radius-md);
 	border: var(--md-border-size-primary) var(--md-border-shape-primary) var(--md-surface-primary-border-color);
-	box-shadow: var(--md-drop-shadow-md);
+	box-shadow: var(--md-content-box-shadow);
 	padding: var(--md-spacing-xl);
 
 	&.brand {
