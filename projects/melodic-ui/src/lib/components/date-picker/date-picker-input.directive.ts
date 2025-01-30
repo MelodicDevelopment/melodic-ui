@@ -1,4 +1,4 @@
-import { Directive, ElementRef, forwardRef, Host, HostListener, inject, input, InputSignal, output, OutputEmitterRef, ViewContainerRef } from '@angular/core';
+import { Directive, ElementRef, forwardRef, HostListener, inject, input, InputSignal, output, OutputEmitterRef, ViewContainerRef } from '@angular/core';
 import { MDDatePickerComponent } from './date-picker.component';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
@@ -44,8 +44,11 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 	@HostListener('change')
 	onChange(): void {
 		const selectedDate: Date = new Date(`${this._dateInputEl.value} 00:00:00`);
-		const dateValue = this.setDateValue(this._dateInputEl.value ? [selectedDate] : []);
-		this.update.emit(dateValue);
+
+		console.log('selectedDate', selectedDate);
+
+		// const dateValue = this.setDateValue(this._dateInputEl.value ? [selectedDate] : []);
+		// this.update.emit(dateValue);
 	}
 
 	@HostListener('blur')
