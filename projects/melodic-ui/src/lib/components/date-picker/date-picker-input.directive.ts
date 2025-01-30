@@ -28,6 +28,8 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 	private _elementRef: ElementRef = inject(ElementRef);
 	private _dateInputEl: HTMLInputElement = this._elementRef.nativeElement as HTMLInputElement;
 
+	private _isActive: boolean = false;
+
 	public update: OutputEmitterRef<string> = output<string>();
 	public disabledDateFn: InputSignal<(day: Day) => boolean> = input<(day: Day) => boolean>(() => false);
 
@@ -48,7 +50,11 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 
 	@HostListener('blur')
 	onBlur(): void {
-		this.closeCalendar();
+		setTimeout(() => {
+			if (!this._isActive) {
+				this.closeCalendar();
+			}
+		}, 300);
 	}
 
 	@HostListener('focus')
@@ -87,11 +93,16 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 		calendarRef.setInput('isPastDaysDisabled', this.isPastDaysDisabled());
 		calendarRef.setInput('disabledDateFn', this.disabledDateFn());
 
+		(calendarRef.location.nativeElement as HTMLElement).addEventListener('mouseover', () => (this._isActive = true));
+		(calendarRef.location.nativeElement as HTMLElement).addEventListener('mouseout', () => (this._isActive = false));
+
 		if (this._dateInputEl.value) {
 			calendarRef.setInput('selectedDates', [new Date(`${this._dateInputEl.value} 00:00:00`)]);
 		}
 
 		calendarRef.instance.change.subscribe((dates: Date[]) => {
+			this._isActive = true;
+
 			const dateValue = this.setDateValue(dates);
 			this.update.emit(dateValue);
 
@@ -147,6 +158,7 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 		if (this._overlayRef) {
 			this._overlayRef.dispose();
 			this._overlayRef = null;
+			this._isActive = false;
 		}
 	}
 }
