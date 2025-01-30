@@ -34,8 +34,18 @@
 				height: 40px;
 
 				md-icon {
-					width: 16px;
-					height: 16px;
+					font-size: 24px;
+				}
+			}
+
+			span.month-year {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				button:last-child {
+					padding: var(--md-spacing-none);
+					min-width: 24px;
 				}
 			}
 		}
@@ -91,6 +101,16 @@
 				border-radius: var(--md-radius-full);
 				text-align: center;
 			}
+		}
+
+		div.month-year-select {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			bottom: 0px;
+			left: 0px;
+			background-color: var(--md-colors-base-white-transparent-80);
+			padding: var(--md-spacing-xl);
 		}
 	}
 }

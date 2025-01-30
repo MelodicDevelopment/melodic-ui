@@ -1,13 +1,18 @@
 <md-content-box>
 	<div class="calendar-header">
 		<button md-button-link (click)="changeMonth(-1)">
-			<md-icon icon="untitled-ui/arrows/chevron-left"></md-icon>
+			<md-icon>chevron_left</md-icon>
 		</button>
-		<button md-button-link (click)="resetMonth()">
-			<span>{{ monthYear() }}</span>
-		</button>
+		<span class="month-year">
+			<button md-button-link (click)="resetMonth()">
+				<span>{{ monthYear() }}</span>
+			</button>
+			<button md-button-link (click)="monthYearOptionsVisible.set(!monthYearOptionsVisible())">
+				<md-icon>arrow_drop_down</md-icon>
+			</button>
+		</span>
 		<button md-button-link (click)="changeMonth(1)">
-			<md-icon icon="untitled-ui/arrows/chevron-right"></md-icon>
+			<md-icon>chevron_right</md-icon>
 		</button>
 	</div>
 
@@ -41,4 +46,8 @@
 			</div>
 		}
 	</div>
+
+	@if (monthYearOptionsVisible() === true) {
+		<div class="month-year-select">select month / year</div>
+	}
 </md-content-box>

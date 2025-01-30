@@ -45,10 +45,10 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 	onChange(): void {
 		const selectedDate: Date = new Date(`${this._dateInputEl.value} 00:00:00`);
 
-		console.log('selectedDate', selectedDate);
-
-		// const dateValue = this.setDateValue(this._dateInputEl.value ? [selectedDate] : []);
-		// this.update.emit(dateValue);
+		if (!this.isValidDate(this._dateInputEl.value)) {
+			const dateValue = this.setDateValue(this._dateInputEl.value ? [selectedDate] : [], false);
+			this.update.emit(dateValue);
+		}
 	}
 
 	@HostListener('blur')
@@ -142,14 +142,16 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 		this._onTouched = fn;
 	}
 
-	private setDateValue(dates: Date[]): string {
+	private setDateValue(dates: Date[], setInput: boolean = true): string {
 		let dateValue: string = '';
 
 		if (dates.length === 1) {
 			dateValue = `${dates[0].getFullYear()}-${(dates[0].getMonth() + 1).toString().padStart(2, '0')}-${dates[0].getDate().toString().padStart(2, '0')}`;
 		}
 
-		this._dateInputEl.value = dateValue;
+		if (setInput) {
+			this._dateInputEl.value = dateValue;
+		}
 
 		this._onChange(dateValue);
 		this._onTouched();
@@ -163,5 +165,10 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 			this._overlayRef = null;
 			this._isActive = false;
 		}
+	}
+
+	private isValidDate(dateString: string): boolean {
+		const date = new Date(dateString);
+		return !isNaN(date.getTime());
 	}
 }
