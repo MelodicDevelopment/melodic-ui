@@ -5,6 +5,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { take } from 'rxjs';
 import { Day } from './types/date.types';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
 	standalone: true,
@@ -62,6 +63,24 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 
 	@HostListener('focus')
 	onFocus(): void {
+		this.buildCalendar();
+	}
+
+	@HostListener('mousedown')
+	onMouseDown(): void {
+		if (!this._isActive) {
+			this.buildCalendar();
+		}
+	}
+
+	constructor() {
+		if (this._dateInputEl.tagName !== 'INPUT' || this._dateInputEl.type !== 'date') {
+			console.error('The md-date-picker-input directive must be applied to an input element with type="date"');
+			return;
+		}
+	}
+
+	buildCalendar(): void {
 		if (this._overlayRef) {
 			return;
 		}
@@ -84,11 +103,21 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 				}
 			]);
 
+		const scrollStrategy = this._overlay.scrollStrategies.close();
+
 		this._overlayRef = this._overlay.create({
 			positionStrategy,
+			scrollStrategy,
 			hasBackdrop: true,
 			backdropClass: 'cdk-overlay-transparent-backdrop'
 		});
+
+		this._overlayRef
+			.detachments()
+			.pipe(take(1))
+			.subscribe(() => {
+				this.closeCalendar();
+			});
 
 		const calendarPortal = new ComponentPortal(MDDatePickerComponent, this._viewContainerRef);
 		const calendarRef = this._overlayRef.attach(calendarPortal);
@@ -116,13 +145,6 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 			.backdropClick()
 			.pipe(take(1))
 			.subscribe(() => this.closeCalendar());
-	}
-
-	constructor() {
-		if (this._dateInputEl.tagName !== 'INPUT' || this._dateInputEl.type !== 'date') {
-			console.error('The md-date-picker-input directive must be applied to an input element with type="date"');
-			return;
-		}
 	}
 
 	writeValue(value: Date[] | string): void {

@@ -48,6 +48,30 @@
 	</div>
 
 	@if (monthYearOptionsVisible() === true) {
-		<div class="month-year-select">select month / year</div>
+		<div class="month-year-select">
+			<button md-button (click)="monthYearOptionsVisible.set(false)">
+				<md-icon>close</md-icon>
+			</button>
+
+			<div class="year-list">
+				@for (year of yearOptions(); track $index) {
+					<div class="year-option">
+						<button md-button (click)="showMonthList(monthList)">
+							<span>{{ year }}</span>
+						</button>
+
+						<div class="month-list" #monthList>
+							@for (month of monthOptions(); track $index) {
+								<div class="month-option">
+									<button md-button (click)="setMonthYear(month.index, year)">
+										<span>{{ month.monthName }}</span>
+									</button>
+								</div>
+							}
+						</div>
+					</div>
+				}
+			</div>
+		</div>
 	}
 </md-content-box>

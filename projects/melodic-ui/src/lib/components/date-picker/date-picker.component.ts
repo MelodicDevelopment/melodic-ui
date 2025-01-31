@@ -33,7 +33,7 @@ export class MDDatePickerComponent implements OnInit {
 	public monthOptions: Signal<{ index: number; monthName: string }[]> = signal<{ index: number; monthName: string }[]>(this.getMonthNames());
 	public yearOptions: Signal<number[]> = computed(() => {
 		const years = [];
-		for (let i = this.minYear(); i <= this.maxYear(); i++) {
+		for (let i = this.maxYear(); i >= this.minYear(); i--) {
 			years.push(i);
 		}
 		return years;
@@ -156,6 +156,16 @@ export class MDDatePickerComponent implements OnInit {
 		}
 
 		return false;
+	}
+
+	showMonthList(monthList: HTMLElement): void {
+		monthList.classList.toggle('active');
+	}
+
+	setMonthYear(month: number, year: number): void {
+		this.monthYearOptionsVisible.set(false);
+		this._calendarMonth.set(new Date(year, month, 1));
+		this.buildCalendar();
 	}
 
 	private isDayInPast = (day: Day): boolean => {

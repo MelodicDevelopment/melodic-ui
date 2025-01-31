@@ -49,7 +49,6 @@ export class MDPopupComponent implements OnDestroy {
 	private _overlay: Overlay = inject(Overlay);
 	private _elementRef: ElementRef = inject(ElementRef);
 	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
-	private _scrollStrategyOptions: ScrollStrategyOptions = inject(ScrollStrategyOptions);
 
 	private _overlayRef: OverlayRef | null = null;
 	private _active: boolean = false;
