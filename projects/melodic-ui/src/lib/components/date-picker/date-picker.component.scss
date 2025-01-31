@@ -34,8 +34,18 @@
 				height: 40px;
 
 				md-icon {
-					width: 16px;
-					height: 16px;
+					font-size: 24px;
+				}
+			}
+
+			span.month-year {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				button:last-child {
+					padding: var(--md-spacing-none);
+					min-width: 24px;
 				}
 			}
 		}
@@ -90,6 +100,61 @@
 				height: 40px;
 				border-radius: var(--md-radius-full);
 				text-align: center;
+			}
+		}
+
+		div.month-year-select {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			bottom: 0px;
+			left: 0px;
+			background-color: var(--md-colors-base-white-transparent-90);
+			padding: var(--md-spacing-xl);
+			display: flex;
+			flex-direction: column;
+
+			justify-content: flex-start;
+			gap: var(--md-spacing-md);
+
+			div.year-list {
+				display: flex;
+				flex-direction: column;
+				gap: var(--md-spacing-md);
+				overflow: auto;
+				padding: var(--md-spacing-sm);
+
+				div.year-option {
+					display: flex;
+					flex-direction: column;
+					gap: var(--md-spacing-sm);
+					flex: 1;
+
+					button {
+						flex: 1;
+					}
+
+					div.month-list {
+						display: none;
+						justify-content: flex-start;
+						flex-wrap: wrap;
+						gap: var(--md-spacing-md);
+
+						&.active {
+							display: flex;
+						}
+
+						div.month-option {
+							display: flex;
+							flex: 1;
+							min-width: 48%;
+
+							button {
+								flex: 1;
+							}
+						}
+					}
+				}
 			}
 		}
 	}

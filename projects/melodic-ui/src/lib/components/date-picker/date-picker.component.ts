@@ -21,18 +21,29 @@ export class MDDatePickerComponent implements OnInit {
 	public selectedDates: InputSignal<Date[]> = input<Date[]>([]);
 	public disabledDateFn: InputSignal<(day: Day) => boolean> = input<(day: Day) => boolean>(() => false);
 	public isMultiSelect: InputSignal<boolean> = input<boolean>(false);
+	public maxYear: InputSignal<number> = input<number>(new Date().getFullYear());
+	public minYear: InputSignal<number> = input<number>(new Date().getFullYear() - 100);
 
 	// deprecated
 	public isPastDaysDisabled: InputSignal<boolean> = input<boolean>(false);
 
 	public change: OutputEmitterRef<Date[]> = output<Date[]>();
 
-	public monthYear: Signal<string> = computed(() => this._calendarMonth().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }));
-
+	public monthYear: Signal<string> = computed(() => this._calendarMonth().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+	public monthOptions: Signal<{ index: number; monthName: string }[]> = signal<{ index: number; monthName: string }[]>(this.getMonthNames());
+	public yearOptions: Signal<number[]> = computed(() => {
+		const years = [];
+		for (let i = this.maxYear(); i >= this.minYear(); i--) {
+			years.push(i);
+		}
+		return years;
+	});
 	public calendarWeeks: Signal<Week[]> = computed(() => {
 		this._selectedDates = this.selectedDates();
 		return this.buildCalendar();
 	});
+
+	public monthYearOptionsVisible: WritableSignal<boolean> = signal<boolean>(false);
 
 	ngOnInit(): void {
 		this._selectedDates = this.selectedDates();
@@ -147,6 +158,16 @@ export class MDDatePickerComponent implements OnInit {
 		return false;
 	}
 
+	showMonthList(monthList: HTMLElement): void {
+		monthList.classList.toggle('active');
+	}
+
+	setMonthYear(month: number, year: number): void {
+		this.monthYearOptionsVisible.set(false);
+		this._calendarMonth.set(new Date(year, month, 1));
+		this.buildCalendar();
+	}
+
 	private isDayInPast = (day: Day): boolean => {
 		const now = new Date();
 		now.setHours(0, 0, 0, 0);
@@ -163,5 +184,10 @@ export class MDDatePickerComponent implements OnInit {
 			currentMonth: currentMonth,
 			currentDay: currentDay()
 		};
+	}
+
+	private getMonthNames(): { index: number; monthName: string }[] {
+		const monthNames = [...Array(12)].map((_, i) => ({ index: i, monthName: new Date(2000, i).toLocaleDateString('en-US', { month: 'long' }) }));
+		return monthNames;
 	}
 }

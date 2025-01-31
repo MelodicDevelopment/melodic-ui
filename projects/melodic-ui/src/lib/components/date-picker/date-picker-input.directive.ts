@@ -5,6 +5,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { take } from 'rxjs';
 import { Day } from './types/date.types';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
 	standalone: true,
@@ -28,6 +29,8 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 	private _elementRef: ElementRef = inject(ElementRef);
 	private _dateInputEl: HTMLInputElement = this._elementRef.nativeElement as HTMLInputElement;
 
+	private _isActive: boolean = false;
+
 	public update: OutputEmitterRef<string> = output<string>();
 	public disabledDateFn: InputSignal<(day: Day) => boolean> = input<(day: Day) => boolean>(() => false);
 
@@ -42,12 +45,42 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 	@HostListener('change')
 	onChange(): void {
 		const selectedDate: Date = new Date(`${this._dateInputEl.value} 00:00:00`);
-		const dateValue = this.setDateValue(this._dateInputEl.value ? [selectedDate] : []);
-		this.update.emit(dateValue);
+
+		if (!this.isValidDate(this._dateInputEl.value)) {
+			const dateValue = this.setDateValue(this._dateInputEl.value ? [selectedDate] : [], false);
+			this.update.emit(dateValue);
+		}
+	}
+
+	@HostListener('blur')
+	onBlur(): void {
+		setTimeout(() => {
+			if (!this._isActive) {
+				this.closeCalendar();
+			}
+		}, 300);
 	}
 
 	@HostListener('focus')
 	onFocus(): void {
+		this.buildCalendar();
+	}
+
+	@HostListener('mousedown')
+	onMouseDown(): void {
+		if (!this._isActive) {
+			this.buildCalendar();
+		}
+	}
+
+	constructor() {
+		if (this._dateInputEl.tagName !== 'INPUT' || this._dateInputEl.type !== 'date') {
+			console.error('The md-date-picker-input directive must be applied to an input element with type="date"');
+			return;
+		}
+	}
+
+	buildCalendar(): void {
 		if (this._overlayRef) {
 			return;
 		}
@@ -70,11 +103,21 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 				}
 			]);
 
+		const scrollStrategy = this._overlay.scrollStrategies.close();
+
 		this._overlayRef = this._overlay.create({
 			positionStrategy,
+			scrollStrategy,
 			hasBackdrop: true,
 			backdropClass: 'cdk-overlay-transparent-backdrop'
 		});
+
+		this._overlayRef
+			.detachments()
+			.pipe(take(1))
+			.subscribe(() => {
+				this.closeCalendar();
+			});
 
 		const calendarPortal = new ComponentPortal(MDDatePickerComponent, this._viewContainerRef);
 		const calendarRef = this._overlayRef.attach(calendarPortal);
@@ -82,11 +125,16 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 		calendarRef.setInput('isPastDaysDisabled', this.isPastDaysDisabled());
 		calendarRef.setInput('disabledDateFn', this.disabledDateFn());
 
+		(calendarRef.location.nativeElement as HTMLElement).addEventListener('mouseover', () => (this._isActive = true));
+		(calendarRef.location.nativeElement as HTMLElement).addEventListener('mouseout', () => (this._isActive = false));
+
 		if (this._dateInputEl.value) {
 			calendarRef.setInput('selectedDates', [new Date(`${this._dateInputEl.value} 00:00:00`)]);
 		}
 
 		calendarRef.instance.change.subscribe((dates: Date[]) => {
+			this._isActive = true;
+
 			const dateValue = this.setDateValue(dates);
 			this.update.emit(dateValue);
 
@@ -97,13 +145,6 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 			.backdropClick()
 			.pipe(take(1))
 			.subscribe(() => this.closeCalendar());
-	}
-
-	constructor() {
-		if (this._dateInputEl.tagName !== 'INPUT' || this._dateInputEl.type !== 'date') {
-			console.error('The md-date-picker-input directive must be applied to an input element with type="date"');
-			return;
-		}
 	}
 
 	writeValue(value: Date[] | string): void {
@@ -123,14 +164,16 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 		this._onTouched = fn;
 	}
 
-	private setDateValue(dates: Date[]): string {
+	private setDateValue(dates: Date[], setInput: boolean = true): string {
 		let dateValue: string = '';
 
 		if (dates.length === 1) {
 			dateValue = `${dates[0].getFullYear()}-${(dates[0].getMonth() + 1).toString().padStart(2, '0')}-${dates[0].getDate().toString().padStart(2, '0')}`;
 		}
 
-		this._dateInputEl.value = dateValue;
+		if (setInput) {
+			this._dateInputEl.value = dateValue;
+		}
 
 		this._onChange(dateValue);
 		this._onTouched();
@@ -142,6 +185,12 @@ export class MDDatePickerInputDirective implements ControlValueAccessor {
 		if (this._overlayRef) {
 			this._overlayRef.dispose();
 			this._overlayRef = null;
+			this._isActive = false;
 		}
+	}
+
+	private isValidDate(dateString: string): boolean {
+		const date = new Date(dateString);
+		return !isNaN(date.getTime());
 	}
 }

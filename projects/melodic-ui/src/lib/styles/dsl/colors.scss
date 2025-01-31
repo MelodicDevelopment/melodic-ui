@@ -1,6 +1,16 @@
 :root {
 	// base colors
 	--md-colors-base-white: #ffffffff;
+	--md-colors-base-white-transparent-10: rgba(255, 255, 255, 0.1);
+	--md-colors-base-white-transparent-20: rgba(255, 255, 255, 0.2);
+	--md-colors-base-white-transparent-30: rgba(255, 255, 255, 0.3);
+	--md-colors-base-white-transparent-40: rgba(255, 255, 255, 0.4);
+	--md-colors-base-white-transparent-50: rgba(255, 255, 255, 0.5);
+	--md-colors-base-white-transparent-60: rgba(255, 255, 255, 0.6);
+	--md-colors-base-white-transparent-70: rgba(255, 255, 255, 0.7);
+	--md-colors-base-white-transparent-80: rgba(255, 255, 255, 0.8);
+	--md-colors-base-white-transparent-90: rgba(255, 255, 255, 0.9);
+	--md-colors-base-white-transparent-95: rgba(255, 255, 255, 0.95);
 	--md-colors-base-black: #000000ff;
 	--md-colors-base-black-transparent-10: rgba(0, 0, 0, 0.1);
 	--md-colors-base-black-transparent-20: rgba(0, 0, 0, 0.2);

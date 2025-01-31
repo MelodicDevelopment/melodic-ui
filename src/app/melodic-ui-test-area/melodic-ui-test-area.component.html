@@ -147,7 +147,7 @@
 	<md-header size="xs" variant="regular">Calendar Related</md-header>
 
 	<div class="horizontal-spacer">
-		<md-date-picker (change)="captureDate($event)" [isMultiSelect]="false" [isPastDaysDisabled]="true" [selectedDates]="selectedDates()"></md-date-picker>
+		<md-date-picker (change)="captureDate($event)" [isMultiSelect]="false" [selectedDates]="selectedDates()"></md-date-picker>
 		<div>
 			Selected Date:<br />
 			{{ selectedDates().join(', ') }}
@@ -163,6 +163,11 @@
 			Selected Date:<br />
 			{{ selectedDates2().join(', ') }}
 		</div>
+	</div>
+
+	<div class="horizontal-spacer">
+		<!-- <input type="date" placeholder="YYYY-MM-DD" value="2024-09-27" md-form-input /> -->
+		<input type="date" placeholder="YYYY-MM-DD" value="2024-09-27" md-form-input md-date-picker-input max="2025-04-01" />
 	</div>
 </div>
 

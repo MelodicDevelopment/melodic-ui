@@ -199,6 +199,9 @@ input[type='checkbox'][md-form-toggle] {
 }
 
 input[type='date'][md-date-picker-input] {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
@@ -206,14 +209,10 @@ input[type='date'][md-date-picker-input] {
 	&::-webkit-calendar-picker-indicator {
 		display: none;
 	}
-}
 
-div.md-date-picker-container {
-	position: relative;
-	display: flex;
-	flex: 1;
-
-	input[md-form-input] {
-		width: 100%;
+	&::after {
+		content: 'calendar_month';
+		@include material-icons();
+		font-size: 16px;
 	}
 }
