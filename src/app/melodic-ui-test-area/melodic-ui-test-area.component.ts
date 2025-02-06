@@ -160,6 +160,17 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 		}
 	];
 
+	public dropDownOptions5: IMDDropDownOption[] = [
+		{
+			value: 'Option 5',
+			label: 'Option 5'
+		},
+		{
+			value: 'Option 6',
+			label: 'Option 6'
+		}
+	];
+
 	public menuOptions: IMDMenuOption[] = [
 		{
 			label: 'Menu Item 1',
@@ -199,7 +210,8 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 
 	public dropdownFormGroup: FormGroup = new FormGroup({
 		dropdownInput1: new FormControl(null, Validators.required),
-		dropdownInput2: new FormControl('Option 3')
+		dropdownInput2: new FormControl('Option 3'),
+		dropdownInput3: new FormControl('Option 5')
 	});
 
 	public dateInputFormControl: FormControl = new FormControl(new Date().toLocaleDateString(), [Validators.required]);
@@ -214,6 +226,10 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 
 		this.dropdownFormGroup.get('dropdownInput2')?.valueChanges.subscribe((value) => {
 			console.log('Drop down input 2 changed:', value);
+		});
+
+		this.dropdownFormGroup.get('dropdownInput3')?.valueChanges.subscribe((value) => {
+			console.log('Drop down input 3 changed:', value);
 		});
 	}
 

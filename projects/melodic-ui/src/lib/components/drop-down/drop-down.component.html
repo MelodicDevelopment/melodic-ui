@@ -10,10 +10,12 @@
 		<div class="selected-options-list" [ngClass]="{ multiple: multiple() }">
 			@for (option of selectedOptions(); track option.value) {
 				<span class="selected-option">
-					@if (option.icon !== undefined) {
-						<md-icon [icon]="option.icon"></md-icon>
+					@if (optionComponent() !== undefined) {
+						<ng-container *ngComponentOutlet="optionComponent()!; inputs: { option }"></ng-container>
+					} @else {
+						<ng-container *ngTemplateOutlet="selectedOptionTemplate; context: { option }"></ng-container>
 					}
-					{{ option.label }}
+
 					@if (!disabled()) {
 						<md-icon class="remove" (click)="optionSelected(option, $event)">close</md-icon>
 					}
@@ -43,6 +45,13 @@
 		}
 	</div>
 </md-popup>
+
+<ng-template #selectedOptionTemplate let-option="option">
+	@if (option.icon !== undefined) {
+		<md-icon [icon]="option.icon"></md-icon>
+	}
+	{{ option.label }}
+</ng-template>
 
 <ng-template #optionTemplate let-option="option">
 	<div class="option-template">

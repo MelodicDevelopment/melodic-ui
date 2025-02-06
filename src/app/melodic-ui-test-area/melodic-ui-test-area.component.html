@@ -217,11 +217,19 @@
 
 	<div class="horizontal-spacer">
 		<form [formGroup]="dropdownFormGroup">
-			<md-drop-down formControlName="dropdownInput1" [options]="dropDownOptions3" placeholder="Make a selection..." [typeAhead]="true"></md-drop-down
-			><br /><br />
+			<md-drop-down formControlName="dropdownInput1" [options]="dropDownOptions3" placeholder="Make a selection..." [typeAhead]="true"></md-drop-down>
+			<br /><br />
 			<md-drop-down
 				formControlName="dropdownInput2"
 				[options]="dropDownOptions4"
+				placeholder="Make a selection..."
+				[optionComponent]="customDropDownOptionComponent"
+			></md-drop-down>
+			<br /><br />
+			<md-drop-down
+				formControlName="dropdownInput3"
+				[options]="dropDownOptions5"
+				[multiple]="true"
 				placeholder="Make a selection..."
 				[optionComponent]="customDropDownOptionComponent"
 			></md-drop-down>
