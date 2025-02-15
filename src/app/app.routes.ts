@@ -34,7 +34,8 @@ export const routes: Routes = [
 						children: [
 							{
 								path: ':id',
-								component: MelodicUiTestAreaComponent
+								component: MelodicUiTestAreaComponent,
+								data: { someData: '123' }
 							}
 						]
 					},

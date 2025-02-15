@@ -6,6 +6,7 @@ interface IRoutePath {
 	path: string;
 	rawPath: string;
 	title?: string;
+	data?: unknown;
 }
 
 @Injectable({
@@ -41,7 +42,12 @@ export class RouterService {
 						path = activeRoute.routeConfig?.path?.replace(`:${param}`, value);
 					});
 
-					paths.push({ path: path || '', rawPath: activeRoute.routeConfig?.path || '', title: activeRoute.snapshot.title });
+					paths.push({
+						path: path || '',
+						rawPath: activeRoute.routeConfig?.path || '',
+						title: activeRoute.snapshot.title,
+						data: activeRoute.snapshot.data
+					});
 				}
 
 				const rootPathIndex = paths.findIndex((path) => path.path === '');
@@ -50,7 +56,8 @@ export class RouterService {
 					paths.unshift({
 						path: '',
 						rawPath: rootPath?.path as string,
-						title: rootPath?.title as string
+						title: rootPath?.title as string,
+						data: rootPath?.data
 					});
 				}
 
