@@ -6,7 +6,7 @@ interface IRoutePath {
 	path: string;
 	rawPath: string;
 	title?: string;
-	data?: unknown;
+	data?: Data;
 }
 
 @Injectable({
