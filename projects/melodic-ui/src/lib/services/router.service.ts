@@ -30,9 +30,19 @@ export class RouterService {
 
 				// Navigate through child routes to find the active route
 				let activeRoute = route;
+
 				while (activeRoute.firstChild) {
 					activeRoute = activeRoute.firstChild;
 					paths.push({ path: `${activeRoute.routeConfig?.path}`, title: activeRoute.snapshot.title });
+				}
+
+				const rootPathIndex = paths.findIndex((path) => path.path === '');
+				const rootPath = this._router.config.find((route) => route.path === '');
+				if (rootPathIndex === -1 || rootPathIndex > 0) {
+					paths.unshift({
+						path: '',
+						title: rootPath?.title as string
+					});
 				}
 
 				const routeData = activeRoute.snapshot.data;

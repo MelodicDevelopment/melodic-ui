@@ -6,6 +6,11 @@ export const routes: Routes = [
 	{
 		path: '',
 		component: MelodicUiTestAreaComponent,
+		title: 'Home'
+	},
+	{
+		path: 'test',
+		component: MelodicUiTestAreaComponent,
 		children: [
 			{
 				path: 'test1',
@@ -20,7 +25,24 @@ export const routes: Routes = [
 			{
 				path: 'test3',
 				component: MelodicUiTestAreaComponent,
-				title: 'Test 3'
+				title: 'Test 3',
+				children: [
+					{
+						path: 'a',
+						component: MelodicUiTestAreaComponent,
+						title: 'Test 3: A'
+					},
+					{
+						path: 'b',
+						component: MelodicUiTestAreaComponent,
+						title: 'Test 3: B'
+					},
+					{
+						path: 'c',
+						component: MelodicUiTestAreaComponent,
+						title: 'Test 3: C'
+					}
+				]
 			}
 		]
 	},
