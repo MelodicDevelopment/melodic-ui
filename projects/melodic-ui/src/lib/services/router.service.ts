@@ -4,6 +4,7 @@ import { filter, map } from 'rxjs/operators';
 
 interface IRoutePath {
 	path: string;
+	rawPath: string;
 	title?: string;
 }
 
@@ -33,7 +34,14 @@ export class RouterService {
 
 				while (activeRoute.firstChild) {
 					activeRoute = activeRoute.firstChild;
-					paths.push({ path: `${activeRoute.routeConfig?.path}`, title: activeRoute.snapshot.title });
+
+					let path = activeRoute.routeConfig?.path;
+					Object.keys(activeRoute.snapshot.params).forEach((param) => {
+						const value = activeRoute.snapshot.params[param];
+						path = activeRoute.routeConfig?.path?.replace(`:${param}`, value);
+					});
+
+					paths.push({ path: path || '', rawPath: activeRoute.routeConfig?.path || '', title: activeRoute.snapshot.title });
 				}
 
 				const rootPathIndex = paths.findIndex((path) => path.path === '');
@@ -41,6 +49,7 @@ export class RouterService {
 				if (rootPathIndex === -1 || rootPathIndex > 0) {
 					paths.unshift({
 						path: '',
+						rawPath: rootPath?.path as string,
 						title: rootPath?.title as string
 					});
 				}
