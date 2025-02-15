@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit, signal, Type, WritableSignal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, effect, inject, OnInit, signal, Type, WritableSignal } from '@angular/core';
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IMDDropDownOption, IMDMenuOption, MDDialogService, MDAlertService, Day } from '@melodic-ui';
+import { IMDDropDownOption, IMDMenuOption, MDDialogService, MDAlertService, Day, RouterService } from '@melodic-ui';
 import { TestDialogOneComponent } from '../shared/components/dialogs/test-dialog-one/test-dialog-one/test-dialog-one.component';
 import { CustomDropDownOptionComponent } from '../shared/components/custom-dropdown-option/custom-dropdown-option.component';
 import { CustomPopupComponent } from '../shared/components/custom-popup/custom-popup.component';
 import { CustomToolTipComponent } from '../shared/components/custom-tool-tip/custom-tool-tip.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
 	selector: 'app-melodic-ui-test-area',
 	standalone: true,
-	imports: [CommonModule, FormsModule, ReactiveFormsModule, MD_COMPONENTS, MD_DIRECTIVES, CustomPopupComponent],
+	imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, MD_COMPONENTS, MD_DIRECTIVES, CustomPopupComponent],
 	templateUrl: './melodic-ui-test-area.component.html',
 	styleUrl: './melodic-ui-test-area.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush
@@ -20,6 +21,16 @@ import { CustomToolTipComponent } from '../shared/components/custom-tool-tip/cus
 export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 	private _dialogService: MDDialogService = inject(MDDialogService);
 	private _alertService: MDAlertService = inject(MDAlertService);
+	private _routerService: RouterService = inject(RouterService);
+
+	constructor() {
+		effect(() => {
+			console.log('Route Data:', this._routerService.routeData());
+			console.log('Query Params:', this._routerService.queryParams());
+			console.log('Route Params:', this._routerService.routeParams());
+			console.log('Route Path:', this._routerService.routePath());
+		});
+	}
 
 	public progressBarValueSuccess: number = 90;
 	public progressBarValueWarning: number = 75;

@@ -5,7 +5,24 @@ import { MelodicRxTestAreaComponent } from './melodic-rx-test-area/melodic-rx-te
 export const routes: Routes = [
 	{
 		path: '',
-		component: MelodicUiTestAreaComponent
+		component: MelodicUiTestAreaComponent,
+		children: [
+			{
+				path: 'test1',
+				component: MelodicUiTestAreaComponent,
+				title: 'Test 1'
+			},
+			{
+				path: 'test2',
+				component: MelodicUiTestAreaComponent,
+				title: 'Test 2'
+			},
+			{
+				path: 'test3',
+				component: MelodicUiTestAreaComponent,
+				title: 'Test 3'
+			}
+		]
 	},
 	{
 		path: 'melodic-rx-test-area',
