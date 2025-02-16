@@ -2,7 +2,7 @@ import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, Data, Params } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 
-interface IRoutePath {
+export interface IRoutePath {
 	path: string;
 	rawPath: string;
 	title?: string;
