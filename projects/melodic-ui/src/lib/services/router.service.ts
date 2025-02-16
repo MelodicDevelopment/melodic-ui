@@ -38,6 +38,11 @@ export class RouterService {
 					activeRoute = activeRoute.firstChild;
 
 					let path = `${currentPath}/${activeRoute.routeConfig?.path}`;
+
+					if (path === '/') {
+						continue;
+					}
+
 					Object.keys(activeRoute.snapshot.params).forEach((param) => {
 						const value = activeRoute.snapshot.params[param];
 						path = path?.replace(`:${param}`, value);
