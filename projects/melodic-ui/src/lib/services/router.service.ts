@@ -32,14 +32,15 @@ export class RouterService {
 
 				// Navigate through child routes to find the active route
 				let activeRoute = route;
+				let currentPath = '';
 
 				while (activeRoute.firstChild) {
 					activeRoute = activeRoute.firstChild;
 
-					let path = activeRoute.routeConfig?.path;
+					let path = `${currentPath}/${activeRoute.routeConfig?.path}`;
 					Object.keys(activeRoute.snapshot.params).forEach((param) => {
 						const value = activeRoute.snapshot.params[param];
-						path = activeRoute.routeConfig?.path?.replace(`:${param}`, value);
+						path = path?.replace(`:${param}`, value);
 					});
 
 					paths.push({
@@ -48,6 +49,8 @@ export class RouterService {
 						title: activeRoute.snapshot.title,
 						data: activeRoute.snapshot.data
 					});
+
+					currentPath = path;
 				}
 
 				const rootPathIndex = paths.findIndex((path) => path.path === '');
