@@ -28,7 +28,7 @@ import { IKeyboardEvent } from '../../services/interfaces/ikeyboard-event.interf
 import { IconRef } from '../../types';
 
 export interface IMDDropDownOption {
-	value: string | number;
+	value: string | number | null;
 	label: string;
 	icon?: IconRef;
 	selected?: boolean;
@@ -199,7 +199,9 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 
 		if (value) {
 			if (Array.isArray(value)) {
-				this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number>).includes(o.value) }))]);
+				this.internalOptions.set([
+					...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number | null>).includes(o.value) }))
+				]);
 				return;
 			}
 

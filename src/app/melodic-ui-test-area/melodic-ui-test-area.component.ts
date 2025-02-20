@@ -50,6 +50,10 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 
 	public dropDownOptions1: IMDDropDownOption[] = [
 		{
+			value: null,
+			label: 'Select an Option'
+		},
+		{
 			value: 1,
 			label: 'Option 1',
 			icon: { type: 'material', icon: 'home' }
