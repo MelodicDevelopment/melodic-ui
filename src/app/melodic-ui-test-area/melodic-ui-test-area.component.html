@@ -227,6 +227,7 @@
 	<div class="horizontal-spacer">
 		<form [formGroup]="dropdownFormGroup">
 			<md-drop-down formControlName="dropdownInput1" [options]="dropDownOptions3" placeholder="Make a selection..." [typeAhead]="true"></md-drop-down>
+			<button md-button (click)="dropdownFormGroup.get('dropdownInput1')?.setValue(null)">Test</button>
 			<br /><br />
 			<md-drop-down
 				formControlName="dropdownInput2"

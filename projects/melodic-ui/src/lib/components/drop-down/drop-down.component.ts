@@ -192,6 +192,11 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 			this._popupRef.hide();
 		}
 
+		if (!value) {
+			this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: false }))]);
+			return;
+		}
+
 		if (value) {
 			if (Array.isArray(value)) {
 				this.internalOptions.set([...this.internalOptions().map((o) => ({ ...o, selected: (value as Array<string | number>).includes(o.value) }))]);
