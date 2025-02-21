@@ -20,6 +20,7 @@ export class RouterService {
 	public queryParams: WritableSignal<Params> = signal<Params>({});
 	public routeParams: WritableSignal<Params> = signal<Params>({});
 	public routePath: WritableSignal<IRoutePath[]> = signal<IRoutePath[]>([]);
+	public activeRoute: WritableSignal<ActivatedRoute> = signal<ActivatedRoute>({} as ActivatedRoute);
 
 	constructor() {
 		this._router.events
@@ -78,6 +79,7 @@ export class RouterService {
 				this.queryParams.set(queryParams);
 				this.routeParams.set(routeParams);
 				this.routePath.set(routePath);
+				this.activeRoute.set(activeRoute);
 			});
 	}
 }
