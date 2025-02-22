@@ -76,6 +76,7 @@ export class MDPopupComponent implements OnDestroy {
 	public offsets: InputSignal<PopupOffsetType> = input<PopupOffsetType>({});
 	public arrow: InputSignal<boolean> = input<boolean>(true);
 	public disabled: InputSignal<boolean> = input<boolean>(false);
+	public scrollStrategy: InputSignal<'reposition' | 'close' | 'block' | 'noop'> = input<'reposition' | 'close' | 'block' | 'noop'>('reposition');
 
 	public disableClickaway: InputSignal<boolean> = input<boolean>(false);
 
@@ -136,7 +137,7 @@ export class MDPopupComponent implements OnDestroy {
 				}
 			]);
 
-		const scrollStrategy = this._overlay.scrollStrategies.close();
+		const scrollStrategy = this._overlay.scrollStrategies[this.scrollStrategy()]();
 
 		this._overlayRef = this._overlay.create({
 			positionStrategy,
@@ -155,7 +156,7 @@ export class MDPopupComponent implements OnDestroy {
 
 		setTimeout(() => {
 			document.addEventListener('click', this._outsideClickRef);
-			document.addEventListener('scroll', this._outsideClickRef);
+			//document.addEventListener('scroll', this._outsideClickRef);
 		}, 100); // delay to prevent immediate closing
 	}
 
