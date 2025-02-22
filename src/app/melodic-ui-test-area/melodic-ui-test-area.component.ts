@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, effect, inject, OnInit, signal, Type, WritableSignal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, effect, ElementRef, inject, OnInit, signal, Type, WritableSignal } from '@angular/core';
 import { MD_COMPONENTS } from '../shared/md-components';
 import { MD_DIRECTIVES } from '../shared/md-directives';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -22,6 +22,8 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 	private _dialogService: MDDialogService = inject(MDDialogService);
 	private _alertService: MDAlertService = inject(MDAlertService);
 	private _routerService: RouterService = inject(RouterService);
+
+	public elementRef: ElementRef = inject(ElementRef);
 
 	constructor() {
 		effect(() => {

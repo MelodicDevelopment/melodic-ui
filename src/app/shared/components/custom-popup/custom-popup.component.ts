@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, ElementRef, input, InputSignal } from '@angular/core';
 import { MDPopupComponent, PopupPositionType } from '@melodic-ui';
 
 @Component({
@@ -13,4 +13,5 @@ export class CustomPopupComponent {
 	public position: InputSignal<PopupPositionType> = input<PopupPositionType>('left-top');
 
 	public isPopupClickawayDisabled: InputSignal<boolean> = input<boolean>(false);
+	public scrollableContainer: InputSignal<ElementRef | undefined> = input<ElementRef>();
 }

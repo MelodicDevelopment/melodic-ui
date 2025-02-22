@@ -6,5 +6,6 @@ body {
 	margin: var(--md-spacing-none);
 	padding: var(--md-spacing-none);
 	height: 100%;
+	overflow: hidden;
 	@include text-styles(get-text(sm, regular)...);
 }

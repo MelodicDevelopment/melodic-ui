@@ -4,6 +4,7 @@ import {
 	inject,
 	input,
 	InputSignal,
+	NgZone,
 	OnDestroy,
 	output,
 	OutputEmitterRef,
@@ -13,7 +14,7 @@ import {
 	ViewEncapsulation
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Overlay, OverlayRef, PositionStrategy, ScrollStrategyOptions } from '@angular/cdk/overlay';
+import { CdkScrollable, Overlay, OverlayRef, PositionStrategy, ScrollDispatcher, ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 
 export type PopupTriggerType = 'click' | 'hover';
@@ -49,6 +50,8 @@ export class MDPopupComponent implements OnDestroy {
 	private _overlay: Overlay = inject(Overlay);
 	private _elementRef: ElementRef = inject(ElementRef);
 	private _viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
+	private _scrollDispatcher: ScrollDispatcher = inject(ScrollDispatcher);
+	private _ngZone: NgZone = inject(NgZone);
 
 	private _overlayRef: OverlayRef | null = null;
 	private _active: boolean = false;
@@ -77,6 +80,7 @@ export class MDPopupComponent implements OnDestroy {
 	public arrow: InputSignal<boolean> = input<boolean>(true);
 	public disabled: InputSignal<boolean> = input<boolean>(false);
 	public scrollStrategy: InputSignal<'reposition' | 'close' | 'block' | 'noop'> = input<'reposition' | 'close' | 'block' | 'noop'>('reposition');
+	public scrollContainer: InputSignal<ElementRef | undefined> = input<ElementRef>();
 
 	public disableClickaway: InputSignal<boolean> = input<boolean>(false);
 
@@ -126,9 +130,17 @@ export class MDPopupComponent implements OnDestroy {
 			return;
 		}
 
+		const documentElementRef = new ElementRef<HTMLElement>(document.documentElement);
+
+		const scrollableContainers: CdkScrollable[] = [this.registerScrollableElement(documentElementRef)];
+		if (this.scrollContainer()) {
+			scrollableContainers.push(this.registerScrollableElement(this.scrollContainer() as ElementRef));
+		}
+
 		const positionStrategy: PositionStrategy = this._overlay
 			.position()
 			.flexibleConnectedTo(this._elementRef)
+			.withScrollableContainers(scrollableContainers)
 			.withPositions([
 				{
 					...this._positions[this.position()],
@@ -156,7 +168,6 @@ export class MDPopupComponent implements OnDestroy {
 
 		setTimeout(() => {
 			document.addEventListener('click', this._outsideClickRef);
-			//document.addEventListener('scroll', this._outsideClickRef);
 		}, 100); // delay to prevent immediate closing
 	}
 
@@ -184,5 +195,11 @@ export class MDPopupComponent implements OnDestroy {
 
 	private isEventOutside(event: Event): boolean {
 		return !(this._popupContent as HTMLElement).contains(event.target as HTMLElement);
+	}
+
+	private registerScrollableElement(elementRef: ElementRef): CdkScrollable {
+		const scrollable = new CdkScrollable(elementRef, this._scrollDispatcher, this._ngZone);
+		this._scrollDispatcher.register(scrollable);
+		return scrollable;
 	}
 }

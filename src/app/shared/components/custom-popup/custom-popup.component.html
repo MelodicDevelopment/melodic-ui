@@ -1,4 +1,4 @@
-<md-popup [disableClickaway]="isPopupClickawayDisabled()" [position]="position()">
+<md-popup [disableClickaway]="isPopupClickawayDisabled()" [position]="position()" [scrollContainer]="scrollableContainer()" [scrollStrategy]="'close'">
 	<div md-popup-target>
 		<button md-button>{{ position() }}</button>
 	</div>
