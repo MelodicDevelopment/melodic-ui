@@ -226,10 +226,18 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 	];
 
 	public dropdownFormGroup: FormGroup = new FormGroup({
-		dropdownInput1: new FormControl(null, Validators.required),
+		dropdownInput1: new FormControl({ value: null, disabled: true }, Validators.required),
 		dropdownInput2: new FormControl('Option 3'),
 		dropdownInput3: new FormControl('Option 5')
 	});
+
+	public toggleDropdownInput1Disabled(): void {
+		if (this.dropdownFormGroup.get('dropdownInput1')?.disabled) {
+			this.dropdownFormGroup.get('dropdownInput1')?.enable();
+		} else {
+			this.dropdownFormGroup.get('dropdownInput1')?.disable();
+		}
+	}
 
 	public dateInputFormControl: FormControl = new FormControl(new Date().toLocaleDateString(), [Validators.required]);
 
@@ -251,6 +259,7 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 	}
 
 	public buttonGroupDisabled: WritableSignal<boolean> = signal<boolean>(false);
+	public isDropDownDisabled: WritableSignal<boolean> = signal<boolean>(false);
 
 	ngAfterViewInit(): void {
 		this.buttonGroupDisabled.set(true);
@@ -266,6 +275,10 @@ export class MelodicUiTestAreaComponent implements OnInit, AfterViewInit {
 		} else {
 			this.buttonGroupForm.get('buttonGroupInput')?.disable();
 		}
+	}
+
+	toggleDropDownDisabled(): void {
+		this.isDropDownDisabled.set(!this.isDropDownDisabled());
 	}
 
 	captureDate(dates: Date[]): void {

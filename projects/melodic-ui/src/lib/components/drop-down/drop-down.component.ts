@@ -5,6 +5,7 @@ import {
 	computed,
 	ElementRef,
 	forwardRef,
+	HostBinding,
 	inject,
 	input,
 	InputSignal,
@@ -76,7 +77,7 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 	public maxTypeAheadLength: InputSignal<number> = input(24);
 	public multiple: InputSignal<boolean> = input(false);
 	public placeholder: InputSignal<string> = input('');
-	public disabled: InputSignal<boolean> = input(false);
+	public disabled: InputSignal<boolean | undefined> = input();
 	public optionComponent: InputSignal<Type<Component> | undefined> = input();
 
 	public input: OutputEmitterRef<unknown> = output<unknown>();
@@ -86,6 +87,7 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 
 	public isActive: WritableSignal<boolean> = signal(false);
 
+	public internalDisabled: WritableSignal<boolean> = signal(false);
 	public internalOptions: WritableSignal<IMDDropDownOptionInternal[]> = signal([]);
 	public selectedOptions: Signal<IMDDropDownOption[]> = computed(() => {
 		return this.internalOptions().filter((o) => o.selected);
@@ -125,6 +127,28 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 			)
 			.subscribe((event) => {
 				this.navigateOptions(event);
+			});
+
+		toObservable(this.disabled)
+			.pipe(
+				filter((disabled) => disabled !== undefined),
+				takeUntilDestroyed()
+			)
+			.subscribe((disabled) => {
+				this.internalDisabled.set(disabled);
+			});
+
+		toObservable(this.internalDisabled)
+			.pipe(
+				filter((disabled) => disabled !== undefined),
+				takeUntilDestroyed()
+			)
+			.subscribe((disabled) => {
+				(this._elementRef.nativeElement as HTMLElement).removeAttribute('disabled');
+
+				if (disabled) {
+					this._elementRef.nativeElement.setAttribute('disabled', 'true');
+				}
 			});
 	}
 
@@ -217,6 +241,10 @@ export class MDDropDownComponent implements ControlValueAccessor, OnInit, AfterV
 
 	public registerOnTouched(fn: any): void {
 		this.onTouched = fn;
+	}
+
+	public setDisabledState(isDisabled: boolean): void {
+		this.internalDisabled.set(isDisabled);
 	}
 
 	public onInput(event: Event): void {

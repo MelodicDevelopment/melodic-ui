@@ -195,39 +195,52 @@
 
 	<div class="horizontal-spacer">
 		<md-drop-down
-			[options]="dropDownOptions2"
+			[options]="dropDownOptions1"
 			(change)="dropDownChange($event)"
 			placeholder="Make a selection..."
-			[multiple]="true"
-			[value]="['Option 2', 'Option 3']"
-		></md-drop-down>
-	</div>
-
-	<div class="horizontal-spacer">
-		<md-drop-down
-			[options]="dropDownOptions2"
-			(change)="dropDownChange($event)"
-			placeholder="Make a selection..."
-			[multiple]="true"
-			[value]="['Option 2', 'Option 3']"
-		></md-drop-down>
-	</div>
-
-	<div class="horizontal-spacer">
-		<md-drop-down
-			[options]="dropDownOptions2"
-			(change)="dropDownChange($event)"
-			placeholder="Make a selection..."
-			[multiple]="true"
-			[value]="['Option 2', 'Option 3']"
+			[value]="dropDownOptions1Value()"
 			[disabled]="true"
 		></md-drop-down>
+		<button md-button (click)="testUpdateDropDownOptions1Value()">Test</button>
+	</div>
+
+	<div class="horizontal-spacer">
+		<md-drop-down
+			[options]="dropDownOptions2"
+			(change)="dropDownChange($event)"
+			placeholder="Make a selection..."
+			[multiple]="true"
+			[value]="['Option 2', 'Option 3']"
+		></md-drop-down>
+	</div>
+
+	<div class="horizontal-spacer">
+		<md-drop-down
+			[options]="dropDownOptions2"
+			(change)="dropDownChange($event)"
+			placeholder="Make a selection..."
+			[multiple]="true"
+			[value]="['Option 2', 'Option 3']"
+		></md-drop-down>
+	</div>
+
+	<div class="horizontal-spacer">
+		<md-drop-down
+			[options]="dropDownOptions2"
+			(change)="dropDownChange($event)"
+			placeholder="Make a selection..."
+			[multiple]="true"
+			[value]="['Option 2', 'Option 3']"
+			[disabled]="isDropDownDisabled()"
+		></md-drop-down>
+		<button md-button (click)="toggleDropDownDisabled()">Disable</button>
 	</div>
 
 	<div class="horizontal-spacer">
 		<form [formGroup]="dropdownFormGroup">
 			<md-drop-down formControlName="dropdownInput1" [options]="dropDownOptions3" placeholder="Make a selection..." [typeAhead]="true"></md-drop-down>
-			<button md-button (click)="dropdownFormGroup.get('dropdownInput1')?.setValue(null)">Test</button>
+			<button md-button (click)="dropdownFormGroup.get('dropdownInput1')?.setValue(null)">Clear Value</button>
+			<button md-button (click)="toggleDropdownInput1Disabled()">Toggle Disabled</button>
 			<br /><br />
 			<md-drop-down
 				formControlName="dropdownInput2"

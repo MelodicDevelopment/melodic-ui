@@ -27,6 +27,36 @@ md-drop-down {
 		}
 	}
 
+	&[disabled='true'] {
+		pointer-events: none;
+		background-color: var(--md-surface-disabled-background-color);
+		border-color: var(--md-surface-disabled-border-color);
+
+		md-popup {
+			div.dropdown-input-wrapper {
+				&::after {
+					color: var(--md-surface-disabled-font-color);
+				}
+
+				&.active {
+					&::after {
+						color: var(--md-surface-disabled-font-color);
+					}
+				}
+
+				div.selected-options-list {
+					&.multiple {
+						span.selected-option {
+							background-color: var(--md-surface-disabled-background-color);
+							border-color: var(--md-surface-disabled-border-color);
+							color: var(--md-surface-disabled-font-color);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	md-popup {
 		display: block;
 		flex: 1;

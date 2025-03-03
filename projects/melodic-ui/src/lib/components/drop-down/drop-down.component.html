@@ -4,7 +4,7 @@
 	popupClass="md-drop-down-options"
 	(onOpen)="scrollToActiveOrSelected()"
 	(onClose)="onOptionsClose()"
-	[disabled]="disabled()"
+	[disabled]="internalDisabled()"
 >
 	<div md-popup-target class="dropdown-input-wrapper" [ngClass]="{ active: isActive() }">
 		<div class="selected-options-list" [ngClass]="{ multiple: multiple() }">
@@ -16,7 +16,7 @@
 						<ng-container *ngTemplateOutlet="selectedOptionTemplate; context: { option }"></ng-container>
 					}
 
-					@if (!disabled()) {
+					@if (!internalDisabled()) {
 						<md-icon class="remove" (click)="optionSelected(option, $event)">close</md-icon>
 					}
 				</span>
@@ -27,7 +27,7 @@
 			@if (selectedOptions().length === 0 && !isActive()) {
 				<div class="placeholder">{{ placeholder() }}</div>
 			}
-			@if (typeAhead() && !disabled()) {
+			@if (typeAhead() && !internalDisabled()) {
 				<div class="text-field" contenteditable="true" (input)="onInput($event)" (focus)="focus.emit()" (blur)="blur.emit()"></div>
 			}
 		</div>
