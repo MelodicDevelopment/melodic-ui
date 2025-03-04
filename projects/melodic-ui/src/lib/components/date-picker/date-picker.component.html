@@ -7,7 +7,7 @@
 			<button md-button-link (click)="resetMonth()">
 				<span>{{ monthYear() }}</span>
 			</button>
-			<button md-button-link (click)="monthYearOptionsVisible.set(!monthYearOptionsVisible())">
+			<button md-button-link (click)="showOptionList()">
 				<md-icon>arrow_drop_down</md-icon>
 			</button>
 		</span>
@@ -49,27 +49,23 @@
 
 	@if (monthYearOptionsVisible() === true) {
 		<div class="month-year-select">
-			<button md-button (click)="monthYearOptionsVisible.set(false)">
-				<md-icon>close</md-icon>
-			</button>
+			<div class="month-year-header">
+				<span>
+					<button md-button-link (click)="rebuildYearOptionList()">
+						{{ monthYearSelectTitle() }}
+					</button>
+				</span>
 
-			<div class="year-list">
-				@for (year of yearOptions(); track $index) {
-					<div class="year-option">
-						<button md-button (click)="showMonthList(monthList)">
-							<span>{{ year }}</span>
-						</button>
+				<button class="close-btn" md-button (click)="monthYearOptionsVisible.set(false)">
+					<md-icon>close</md-icon>
+				</button>
+			</div>
 
-						<div class="month-list" #monthList>
-							@for (month of monthOptions(); track $index) {
-								<div class="month-option">
-									<button md-button (click)="setMonthYear(month.index, year)">
-										<span>{{ month.monthName }}</span>
-									</button>
-								</div>
-							}
-						</div>
-					</div>
+			<div class="option-list">
+				@for (option of yearMonthOptions(); track $index) {
+					<button class="option" md-button-link (click)="showOptionList(option)">
+						<span>{{ option.label }}</span>
+					</button>
 				}
 			</div>
 		</div>

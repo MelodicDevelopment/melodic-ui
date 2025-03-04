@@ -109,7 +109,7 @@
 			right: 0px;
 			bottom: 0px;
 			left: 0px;
-			background-color: var(--md-colors-base-white-transparent-90);
+			background-color: var(--md-colors-base-white-transparent-95);
 			padding: var(--md-spacing-xl);
 			display: flex;
 			flex-direction: column;
@@ -117,43 +117,36 @@
 			justify-content: flex-start;
 			gap: var(--md-spacing-md);
 
-			div.year-list {
+			div.month-year-header {
 				display: flex;
-				flex-direction: column;
-				gap: var(--md-spacing-md);
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: var(--md-spacing-md);
+				padding: var(--md-spacing-none) var(--md-spacing-md);
+
+				span {
+					@include text-styles(get-text(md, semibold)...);
+				}
+
+				button.close-btn {
+					width: 32px;
+					height: 32px;
+					padding: var(--md-spacing-none);
+
+					md-icon {
+						font-size: 14px;
+					}
+				}
+			}
+
+			div.option-list {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
 				overflow: auto;
-				padding: var(--md-spacing-sm);
+				gap: var(--md-spacing-2xl);
 
-				div.year-option {
-					display: flex;
-					flex-direction: column;
-					gap: var(--md-spacing-sm);
-					flex: 1;
-
-					button {
-						flex: 1;
-					}
-
-					div.month-list {
-						display: none;
-						justify-content: flex-start;
-						flex-wrap: wrap;
-						gap: var(--md-spacing-md);
-
-						&.active {
-							display: flex;
-						}
-
-						div.month-option {
-							display: flex;
-							flex: 1;
-							min-width: 48%;
-
-							button {
-								flex: 1;
-							}
-						}
-					}
+				button {
+					@include text-styles(get-text(sm, regular)...);
 				}
 			}
 		}

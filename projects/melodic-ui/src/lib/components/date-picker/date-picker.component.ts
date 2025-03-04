@@ -4,6 +4,12 @@ import { MDContentBoxComponent } from '../content-box/content-box.component';
 import { MDIconComponent } from '../icon/icon.component';
 import { Day, Week } from './types/date.types';
 
+interface IYearMonthOption {
+	value: number;
+	label: string;
+	type: 'month' | 'year';
+}
+
 @Component({
 	selector: 'md-date-picker',
 	standalone: true,
@@ -24,6 +30,9 @@ export class MDDatePickerComponent implements OnInit {
 	public maxYear: InputSignal<number> = input<number>(new Date().getFullYear());
 	public minYear: InputSignal<number> = input<number>(new Date().getFullYear() - 100);
 
+	public monthYearSelectTitle: WritableSignal<string> = signal<string>('Year');
+	public selectedYear: WritableSignal<number | undefined> = signal<number | undefined>(undefined);
+
 	// deprecated
 	public isPastDaysDisabled: InputSignal<boolean> = input<boolean>(false);
 
@@ -43,6 +52,7 @@ export class MDDatePickerComponent implements OnInit {
 		return this.buildCalendar();
 	});
 
+	public yearMonthOptions: WritableSignal<IYearMonthOption[]> = signal<IYearMonthOption[]>([]);
 	public monthYearOptionsVisible: WritableSignal<boolean> = signal<boolean>(false);
 
 	ngOnInit(): void {
@@ -158,11 +168,43 @@ export class MDDatePickerComponent implements OnInit {
 		return false;
 	}
 
-	showMonthList(monthList: HTMLElement): void {
+	showMonthList(monthList: HTMLElement, year: number): void {
+		this.monthYearSelectTitle.set(`${year}`);
 		monthList.classList.toggle('active');
 	}
 
+	rebuildYearOptionList(): void {
+		this.yearMonthOptions.set(this.yearOptions().map((year) => ({ value: year, label: `${year}`, type: 'year' })));
+		this.selectedYear.set(undefined);
+		this.monthYearSelectTitle.set('Year');
+		this.monthYearOptionsVisible.set(true);
+	}
+
+	showOptionList(option?: IYearMonthOption): void {
+		if (option === undefined) {
+			this.rebuildYearOptionList();
+			return;
+		}
+
+		if (option) {
+			if (option.type === 'year') {
+				this.selectedYear.set(option.value);
+				this.yearMonthOptions.set(this.monthOptions().map((month) => ({ value: month.index, label: month.monthName, type: 'month' })));
+				this.monthYearSelectTitle.set(option.label);
+				this.monthYearOptionsVisible.set(true);
+				return;
+			}
+
+			if (option.type === 'month') {
+				this.setMonthYear(option.value, this.selectedYear() as number);
+				this.monthYearOptionsVisible.set(false);
+				return;
+			}
+		}
+	}
+
 	setMonthYear(month: number, year: number): void {
+		this.selectedYear.set(undefined);
 		this.monthYearOptionsVisible.set(false);
 		this._calendarMonth.set(new Date(year, month, 1));
 		this.buildCalendar();
@@ -187,7 +229,7 @@ export class MDDatePickerComponent implements OnInit {
 	}
 
 	private getMonthNames(): { index: number; monthName: string }[] {
-		const monthNames = [...Array(12)].map((_, i) => ({ index: i, monthName: new Date(2000, i).toLocaleDateString('en-US', { month: 'long' }) }));
+		const monthNames = [...Array(12)].map((_, i) => ({ index: i, monthName: new Date(2000, i).toLocaleDateString('en-US', { month: 'short' }) }));
 		return monthNames;
 	}
 }
